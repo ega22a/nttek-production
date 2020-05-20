@@ -1,0 +1,22 @@
+[
+    {
+        "mime": "application/pdf",
+        "extension": ".pdf"
+    },
+    {
+        "mime": "image/jpg",
+        "extension": ".jpg"
+    },
+    {
+        "mime": "image/jpeg",
+        "extension": ".jpeg"
+    },
+    {
+        "mime": "image/png",
+        "extension": ".png"
+    },
+    {
+        "mime": "image/gif",
+        "extension": ".gif"
+    }
+]

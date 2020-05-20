@@ -1,0 +1,16 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php
+
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.php
+
+<FilesMatch ".(htaccess|htpasswd|tpl|sql|bsdesign|ini|json)$">
+    Order Allow,Deny
+    Deny from all
+    Allow from 127.0.0.1
+</FilesMatch>
+
+Options All -Indexes

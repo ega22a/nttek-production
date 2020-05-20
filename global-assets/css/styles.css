@@ -1,0 +1,41 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0;
+}
+
+body {
+    background-color: rgb(250,250,250);
+}
+
+#alerts-area {
+    position: fixed;
+    top: 85px;
+    right: 25px;
+    min-width: 25vw;
+    max-width: 50vw;
+    max-height: calc(100vh - 50px);
+    z-index: 1000000;
+    overflow: hidden;
+}
+
+#button-login:hover,
+#button-logout:hover {
+    color: #ffffff !important;
+}
+
+.dropdown-submenu > .dropdown-menu {
+    margin: 5px !important;
+}
+
+.custom-file-label:after {
+    content: "Выбрать файл" !important;
+}
+
+.custom-file-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 145px;
+
+}

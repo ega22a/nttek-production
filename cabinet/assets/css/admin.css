@@ -1,0 +1,15 @@
+.admin-module-switch {
+    cursor: pointer;
+}
+
+.custom-file-label:after {
+    content: "Выбрать файл" !important;
+}
+
+.admin-user-tr-buttons {
+    float: right;
+}
+
+.admin-user-tr-buttons > i {
+    cursor: pointer;
+}
