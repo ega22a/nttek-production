@@ -43,7 +43,8 @@
             }
         },
         "enrollment": {
-            "date": "28.07.2020",
+            "date": "15.08.2020",
+            "startDate": 1591588800,
             "email": "enrollee@nttek.ru",
             "telephone": "+7 (3435) 41-79-63"
         }

@@ -4,7 +4,7 @@
                 <h2>Очное отделение</h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-sm">
-                        <caption>Таблица актуальна на <?php echo Date("d.m.Y H:m:s") . " UTC+5"; ?></caption>
+                        <caption>Таблица актуальна на <?php echo Date("d.m.Y H:i:s") . " GTM+5"; ?></caption>
                         <thead style="text-align: center;">
                             <tr>
                                 <th rowspan="2">Специальность</th>
@@ -42,7 +42,7 @@
                 <h2>Заочное отделение</h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-sm">
-                        <caption>Таблица актуальна на <?php echo Date("d.m.Y H:m:s") . " UTC+5"; ?></caption>
+                        <caption>Таблица актуальна на <?php echo Date("d.m.Y H:i:s") . " GTM+5"; ?></caption>
                         <thead style="text-align: center;">
                             <tr>
                                 <th rowspan="2">Специальность</th>

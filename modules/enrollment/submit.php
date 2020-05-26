@@ -6,18 +6,24 @@
         if (isset($_COOKIE["token"])) {
             header("Location: /", true, 302); 
         } else {
+            $json = json_decode(file_get_contents(__DIR__  . "/../../configurations/json/about.json"));
             require DATABASE;
             $tengine -> set("database", $database);
             $tengine -> display("../../../../global-templates/header");
             $tengine -> display("../../../../global-templates/header-menu");
-            switch ($_GET["type"]) {
-                case "extramural":
-                    $tengine -> display("extramural");
-                break;
-                case "fulltime":
-                default:
-                    $tengine -> display("fulltime");
-                break;
+            if (time() >= $json -> school -> enrollment -> startDate && time() <= strtotime($json -> school -> enrollment -> date))
+                switch ($_GET["type"]) {
+                    case "extramural":
+                        $tengine -> display("extramural");
+                    break;
+                    case "fulltime":
+                    default:
+                        $tengine -> display("fulltime");
+                    break;
+                }
+            else {
+                $tengine -> set("time", $json -> school -> enrollment);
+                $tengine -> display("time");
             }
         }
     } else

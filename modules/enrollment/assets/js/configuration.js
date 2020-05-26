@@ -30,7 +30,8 @@ function listClick(_this) {
                 inp.checked = data.data[key] == "1" ? true : false;
                 action.vanilla[_k] = data.data[key] == "1" ? true : false;
             }
-        }
+        } else if (action.what == "attached-docs" && key != "id")
+            action.vanilla[_k] = data.data[key] == "1" ? true : false;
     }
 }
 
@@ -45,8 +46,14 @@ for (button of buttonsInsertLine)
             isNew: true,
             what: type,
         }
-        if (type == "attached-docs")
+        if (type == "attached-docs") {
             document.getElementById("attached-docs-input-latin-name").value = `${makeRandomString(8)}-${Date.now()}`;
+            action.data = {
+                forOnline: $(this).data("number") == "2" || $(this).data("number") == "4" ? true : false,
+                forExtramural: $(this).data("number") == "3" || $(this).data("number") == "4" ? true : false,
+                number: $(this).data("number")
+            }
+        }
     }
 
 document.getElementById("modal-save-button").onclick = function() {
@@ -63,6 +70,10 @@ document.getElementById("modal-save-button").onclick = function() {
                 form.append(input.getAttribute("id").split(`${action.what}-input-`)[1], typeof(input.files[0]) !== "undefined" ? input.files[0] : null);
         }
         if (action.isNew) {
+            if (action.what == "attached-docs") {
+                form.append("for-extramural", action.data.forExtramural);
+                form.append("for-online", action.data.forOnline);
+            }
             $.ajax({
                 url: "../api/secretary/configuration/fields/new",
                 data: form,
@@ -85,10 +96,13 @@ document.getElementById("modal-save-button").onclick = function() {
                             child.setAttribute("data-json", JSON.stringify(_thumb));
                             if (action.what == "attached-docs") {
                                 child.innerHTML = `<span>${_thumb.data.name}</span>`;
-                                child.innerHTML += _thumb.data["for-extramural"] == "1" ? "<i class=\"fas fa-briefcase\" style=\"float: right;margin-top:3px;\"></i>" : "";
+                                child.innerHTML += _thumb.data["is-nessesary"] == "1" ? "<i class=\"fas fa-exclamation-triangle\" style=\"float: right;margin-top:3px;\"></i>" : "";
                             } else
                                 child.innerHTML = `<span>${_thumb.data.name}</span>`;
-                            document.getElementById(`v-pills-configurations-${action.what}`).children[0].appendChild(child);
+                            if (action.what == "attached-docs")
+                                document.getElementById(`attached-docs-list-group-${action.data.number}`).appendChild(child);
+                            else
+                                document.getElementById(`v-pills-configurations-${action.what}`).children[0].appendChild(child);
                             setTimeout(() => { $("#modal-spinner").modal("hide"); }, 500);
                             $("#modal-edit-new").modal("hide");
                         break;
@@ -134,7 +148,7 @@ document.getElementById("modal-save-button").onclick = function() {
                                 action.item.setAttribute("data-json", JSON.stringify(_thumb));
                                 if (action.what == "attached-docs") {
                                     action.item.innerHTML = `<span>${_thumb.data.name}</span>`;
-                                    action.item.innerHTML += _thumb.data["for-extramural"] == "1" ? "<i class=\"fas fa-briefcase\" style=\"float: right;margin-top:3px;\"></i>" : "";
+                                    action.item.innerHTML += _thumb.data["is-nessesary"] == "1" ? "<i class=\"fas fa-exclamation-triangle\" style=\"float: right;margin-top:3px;\"></i>" : "";
                                 } else
                                     action.item.innerHTML = `<span>${_thumb.data.name}</span>`;
                                 setTimeout(() => { $("#modal-spinner").modal("hide"); }, 500);

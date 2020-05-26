@@ -103,18 +103,6 @@
                                     <label class="custom-control-label" for="attached-docs-input-is-nessesary">Обязательный документ</label>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12">
-                                <div class="custom-control custom-switch">
-                                    <input class="custom-control-input" type="checkbox" id="attached-docs-input-for-extramural">
-                                    <label class="custom-control-label" for="attached-docs-input-for-extramural">Документ нужен только для заочной формы</label>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <div class="custom-control custom-switch">
-                                    <input class="custom-control-input" type="checkbox" id="attached-docs-input-for-online">
-                                    <label class="custom-control-label" for="attached-docs-input-for-online">Документ нужен только для подачи онлайн</label>
-                                </div>
-                            </div>
                         </div>
                     </form>
                     <form id="modal-form-docs-for-review" style="display: none;" class="validate">
@@ -269,15 +257,114 @@
                             <button class="btn btn-primary btn-block button-push-line" data-type="category-of-citizen" type="button" style="margin-top: 15px;">Добавить запись</button>
                         </div>
                         <div id="v-pills-configurations-attached-docs" class="tab-pane fade show" role="tabpanel" aria-labelledby="v-pills-configurations-attached-docs-pill">
-                            <div class="list-group">
-                                <?php
-                                    $thumb = $this -> database -> query("SELECT * FROM `enr_attached_docs`;");
-                                    while ($row = $thumb -> fetch_assoc()) {
-                                ?>
-                                    <a class="list-group-item list-group-item-action" onclick="listClick(this);" data-json='<?php echo json_encode(["action" => "attached-docs", "data" => $row]); ?>'><span><?php echo $row["name"]; ?></span><?php echo $row["forExtramural"] ? "<i class=\"fas fa-briefcase\" style=\"float: right;margin-top:3px;\"></i>" : ""; ?></a>
-                                <?php } ?>
+                            <div role="tablist" id="accordion-3" class="accordion">
+                                <div class="card">
+                                    <div class="card-header" role="tab">
+                                        <h5 class="mb-0">
+                                            <a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-3 .item-1" href="#accordion-3 .item-1">Очная форма</a>
+                                        </h5>
+                                    </div>
+                                    <div class="collapse item-1" role="tabpanel" data-parent="#accordion-3">
+                                        <div class="card-body">
+                                            <div role="tablist" id="accordion-4" class="accordion">
+                                                <div class="card">
+                                                    <div class="card-header" role="tab">
+                                                        <h5 class="mb-0">
+                                                            <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-4 .item-1-1" href="#accordion-4 .item-1-1">Личный прием</a>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="collapse item-1-1" role="tabpanel" data-parent="#accordion-4">
+                                                        <div class="card-body">
+                                                            <ul class="list-group" id="attached-docs-list-group-1">
+                                                                <?php
+                                                                    $thumb = $this -> database -> query("SELECT * FROM `enr_attached_docs` WHERE `forOnline` = 0 AND `forExtramural` = 0;");
+                                                                    while ($row = $thumb -> fetch_assoc()) {
+                                                                ?>
+                                                                    <a class="list-group-item list-group-item-action" onclick="listClick(this);" data-json='<?php echo json_encode(["action" => "attached-docs", "data" => $row]); ?>'><span><?php echo $row["name"]; ?></span><?php echo $row["isNessesary"] ? "<i class=\"fas fa-exclamation-triangle\" style=\"float: right;margin-top:3px;\"></i>" : ""; ?></a>
+                                                                <?php } ?>
+                                                            </ul>
+                                                            <button class="btn btn-primary btn-block button-push-line" data-type="attached-docs" data-number="1" type="button" style="margin-top: 15px;">Добавить запись</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" role="tab">
+                                                        <h5 class="mb-0">
+                                                            <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-4 .item-2-1" href="#accordion-4 .item-2-1">Онлайн прием</a>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="collapse item-2-1" role="tabpanel" data-parent="#accordion-4">
+                                                        <div class="card-body">
+                                                            <ul class="list-group" id="attached-docs-list-group-2">
+                                                                <?php
+                                                                    $thumb = $this -> database -> query("SELECT * FROM `enr_attached_docs` WHERE `forOnline` = 1 AND `forExtramural` = 0;");
+                                                                    while ($row = $thumb -> fetch_assoc()) {
+                                                                ?>
+                                                                    <a class="list-group-item list-group-item-action" onclick="listClick(this);" data-json='<?php echo json_encode(["action" => "attached-docs", "data" => $row]); ?>'><span><?php echo $row["name"]; ?></span><?php echo $row["isNessesary"] ? "<i class=\"fas fa-exclamation-triangle\" style=\"float: right;margin-top:3px;\"></i>" : ""; ?></a>
+                                                                <?php } ?>
+                                                            </ul>
+                                                            <button class="btn btn-primary btn-block button-push-line" data-type="attached-docs" data-number="2" type="button" style="margin-top: 15px;">Добавить запись</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" role="tab">
+                                        <h5 class="mb-0">
+                                            <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-3 .item-2" href="#accordion-3 .item-2">Заочная форма</a>
+                                        </h5>
+                                    </div>
+                                    <div class="collapse item-2" role="tabpanel" data-parent="#accordion-3">
+                                        <div class="card-body">
+                                            <div role="tablist" id="accordion-5" class="accordion">
+                                                <div class="card">
+                                                    <div class="card-header" role="tab">
+                                                        <h5 class="mb-0">
+                                                            <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-5 .item-1-1" href="#accordion-5 .item-1-1">Личный прием</a>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="collapse item-1-1" role="tabpanel" data-parent="#accordion-5">
+                                                        <div class="card-body">
+                                                            <ul class="list-group" id="attached-docs-list-group-3">
+                                                                <?php
+                                                                    $thumb = $this -> database -> query("SELECT * FROM `enr_attached_docs` WHERE `forOnline` = 0 AND `forExtramural` = 1;");
+                                                                    while ($row = $thumb -> fetch_assoc()) {
+                                                                ?>
+                                                                    <a class="list-group-item list-group-item-action" onclick="listClick(this);" data-json='<?php echo json_encode(["action" => "attached-docs", "data" => $row]); ?>'><span><?php echo $row["name"]; ?></span><?php echo $row["isNessesary"] ? "<i class=\"fas fa-exclamation-triangle\" style=\"float: right;margin-top:3px;\"></i>" : ""; ?></a>
+                                                                <?php } ?>
+                                                            </ul>
+                                                            <button class="btn btn-primary btn-block button-push-line" data-type="attached-docs" data-number="3" type="button" style="margin-top: 15px;">Добавить запись</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" role="tab">
+                                                        <h5 class="mb-0">
+                                                            <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-5 .item-2-1" href="#accordion-5 .item-2-1">Онлайн прием</a>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="collapse item-2-1" role="tabpanel" data-parent="#accordion-5">
+                                                        <div class="card-body">
+                                                            <ul class="list-group" id="attached-docs-list-group-4">
+                                                                <?php
+                                                                    $thumb = $this -> database -> query("SELECT * FROM `enr_attached_docs` WHERE `forOnline` = 1 AND `forExtramural` = 1;");
+                                                                    while ($row = $thumb -> fetch_assoc()) {
+                                                                ?>
+                                                                    <a class="list-group-item list-group-item-action" onclick="listClick(this);" data-json='<?php echo json_encode(["action" => "attached-docs", "data" => $row]); ?>'><span><?php echo $row["name"]; ?></span><?php echo $row["isNessesary"] ? "<i class=\"fas fa-exclamation-triangle\" style=\"float: right;margin-top:3px;\"></i>" : ""; ?></a>
+                                                                <?php } ?>
+                                                            </ul>
+                                                            <button class="btn btn-primary btn-block button-push-line" data-type="attached-docs" data-number="4" type="button" style="margin-top: 15px;">Добавить запись</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <button class="btn btn-primary btn-block button-push-line" data-type="attached-docs" type="button" style="margin-top: 15px;">Добавить запись</button>
                         </div>
                         <div id="v-pills-configurations-docs-for-review" class="tab-pane fade show" role="tabpanel" aria-labelledby="v-pills-configurations-docs-for-review-pill">
                             <div class="list-group">
