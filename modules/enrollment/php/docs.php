@@ -325,7 +325,7 @@
                             $pdf -> Ln();
                             $edicationalDoc = json_decode($crypt -> decrypt($enrolleeData["previousSchoolDocData"]));
                             $pdf -> Cell(72, 5, $pdf -> cyrilic("Серия, номер документа об образовании:"));
-                            $pdf -> Cell(53, 5, "{$edicationalDoc -> series} {$edicationalDoc -> number}", "B", 0, "C");
+                            $pdf -> Cell(53, 5, $pdf -> cyrilic("{$edicationalDoc -> series} {$edicationalDoc -> number}"), "B", 0, "C");
                             $pdf -> Cell(25, 5, $pdf -> cyrilic("дата выдачи:"), 0, 0, "C");
                             $edicationalDoc -> date = explode("-", $edicationalDoc -> date);
                             $pdf -> Cell(40, 5, "{$edicationalDoc -> date[2]}.{$edicationalDoc -> date[1]}.{$edicationalDoc -> date[0]}", "B", 0, "C");
@@ -336,7 +336,7 @@
                             $pdf -> Cell(2, 5, "");
                             $pdf -> Cell(27, 5, $pdf -> cyrilic("В общежитии:"));
                             if (intval($enrolleeData["hostel"]) == 1)
-                                $pdf -> Cell(40, 5, $pdf -> cyrilic("Нужадюсь"), "B", 0, "C");
+                                $pdf -> Cell(40, 5, $pdf -> cyrilic("Нуждаюсь"), "B", 0, "C");
                             elseif (intval($enrolleeData["hostel"]) == 0)
                                 $pdf -> Cell(40, 5, $pdf -> cyrilic("Не нуждаюсь"), "B", 0, "C");
                             $pdf -> Ln();
@@ -440,6 +440,8 @@
                             foreach ($attachedDocs as $value)
                                 $attachedDocsNames[] = $database -> query("SELECT `name` FROM `enr_attached_docs` WHERE `id` = {$value}") -> fetch_assoc()["name"];
                             $pdf -> createTable($attachedDocsNames);
+                            $pdf -> Ln();
+                            $pdf -> MultiCell(190, 5, $pdf -> cyrilic("Ознакомлен с наличием/отсутствием аккредитации по выбранной специальности"), 0, "L");
                             $pdf -> Ln(10);
                             $pdf -> Cell(15, 5, "");
                             $pdf -> Cell(160, 5, $pdf -> cyrilic("Поступающие, предоставившие в Приёмную комиссию заведомо подложные документы,"), "B", 0, "C");
@@ -549,7 +551,7 @@
                             $pdf -> Ln();
                             $edicationalDoc = json_decode($crypt -> decrypt($enrolleeData["previousSchoolDocData"]));
                             $pdf -> Cell(72, 5, $pdf -> cyrilic("Серия, номер документа об образовании:"));
-                            $pdf -> Cell(53, 5, "{$edicationalDoc -> series} {$edicationalDoc -> number}", "B", 0, "C");
+                            $pdf -> Cell(53, 5, $pdf -> cyrilic("{$edicationalDoc -> series} {$edicationalDoc -> number}"), "B", 0, "C");
                             $pdf -> Cell(25, 5, $pdf -> cyrilic("дата выдачи:"), 0, 0, "C");
                             $edicationalDoc -> date = explode("-", $edicationalDoc -> date);
                             $pdf -> Cell(40, 5, "{$edicationalDoc -> date[2]}.{$edicationalDoc -> date[1]}.{$edicationalDoc -> date[0]}", "B", 0, "C");
@@ -635,6 +637,8 @@
                             foreach ($attachedDocs as $value)
                                 $attachedDocsNames[] = $database -> query("SELECT `name` FROM `enr_attached_docs` WHERE `id` = {$value}") -> fetch_assoc()["name"];
                             $pdf -> createTable($attachedDocsNames);
+                            $pdf -> Ln();
+                            $pdf -> MultiCell(190, 5, $pdf -> cyrilic("Ознакомлен с наличием/отсутствием аккредитации по выбранной специальности"), 0, "L");
                             $pdf -> Ln(10);
                             $pdf -> Cell(15, 5, "");
                             $pdf -> Cell(160, 5, $pdf -> cyrilic("Поступающие, предоставившие в Приёмную комиссию заведомо подложные документы,"), "B", 0, "C");
@@ -1085,7 +1089,7 @@
                         $pdf -> MultiCell(190, 5, $pdf -> cyrilic("В случае нарушения вышеприведённых ОБЯЗАТЕЛЬСТВ расторгнуть договор о проживании в студенческом общежитии."));
                         $pdf -> Ln();
                         $pdf -> SetFont("PTSerif", "B", 13);
-                        $pdf -> MultiCell(190, 5, $pdf -> cyrilic("Я озознаю, что заключенное Заявление на проживание в студенческом общежитии НЕ ЯВЛЯЕТСЯ гарантией на предоставление места в студентческом общежитии."));
+                        $pdf -> MultiCell(190, 5, $pdf -> cyrilic("Заключенное Заявление на проживание в студенческом общежитии НЕ ЯВЛЯЕТСЯ гарантией на предоставление места в студентческом общежитии."));
                         return $pdf -> Output("S");
                     } else
                         return false;

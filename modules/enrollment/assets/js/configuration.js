@@ -53,6 +53,12 @@ for (button of buttonsInsertLine)
                 forExtramural: $(this).data("number") == "3" || $(this).data("number") == "4" ? true : false,
                 number: $(this).data("number")
             }
+        } else if (type == "specialty") {
+            action.data = {
+                number: $(this).data("number")
+            }
+            if (action.data.number == "1")
+                document.getElementById("specialty-input-for-extramural").checked = true;
         }
     }
 
@@ -101,6 +107,8 @@ document.getElementById("modal-save-button").onclick = function() {
                                 child.innerHTML = `<span>${_thumb.data.name}</span>`;
                             if (action.what == "attached-docs")
                                 document.getElementById(`attached-docs-list-group-${action.data.number}`).appendChild(child);
+                            else if (action.what == "specialty")
+                                document.getElementById(`specialty-list-group-${action.data.number}`).appendChild(child);
                             else
                                 document.getElementById(`v-pills-configurations-${action.what}`).children[0].appendChild(child);
                             setTimeout(() => { $("#modal-spinner").modal("hide"); }, 500);

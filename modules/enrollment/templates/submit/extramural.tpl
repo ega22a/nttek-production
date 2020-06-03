@@ -251,12 +251,6 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label>Дополнительные сведения о себе (увлечения):</label>
-                        <textarea class="form-control" id="form-about" rows="3" placeholder="Опишите свои увлечения, способности и т.д." maxlength="200"></textarea>
-                    </div>
-                </div>
                 <h4>Сведения о работе</h4>
                 <div class="form-row">
                     <div class="form-group col-md-6">

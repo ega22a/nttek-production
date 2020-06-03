@@ -18,6 +18,10 @@
             {
                 "name": "Корпус 2",
                 "address": "Россия, Свердловская область, г. Нижний Тагил, ул. Садовая, д. 22"
+            },
+            {
+                "name": "Общежитие",
+                "address":"622001, Россия, Свердловская область, г. Нижний Тагил, ул. Ленина, д. 2"
             }
         ],
         "name": {
@@ -32,7 +36,7 @@
             "short": "ГАПОУ СО \"НТТЭК\""
         },
         "telephones": {
-            "enrollment": "+7 (3435) 41-79-63"
+            "enrollment": "+7 (3435) 41-75-58"
         },
         "docs": {
             "enrollment": {
@@ -46,7 +50,129 @@
             "date": "15.08.2020",
             "startDate": 1591588800,
             "email": "enrollee@nttek.ru",
-            "telephone": "+7 (3435) 41-79-63"
+            "telephone": "+7 (3435) 41-75-58",
+            "address": {
+                "main": "622001, Россия, Свердловская область, г. Нижний Тагил, ул. Ленина, д. 2",
+                "ext": ", общежитие, 1 этаж"
+            },
+            "indexPage": {
+                "schedule": {
+                    "monday": [
+                        "09:00",
+                        "17:30"
+                    ],
+                    "tuesday": [
+                        "09:00",
+                        "17:30"
+                    ],
+                    "wednesday": [
+                        "09:00",
+                        "17:30"
+                    ],
+                    "thursday": [
+                        "09:00",
+                        "17:30"
+                    ],
+                    "friday": [
+                        "09:00",
+                        "16:30"
+                    ],
+                    "saturday": [],
+                    "sunday": []
+                },
+                "docsList": [
+                    {
+                        "name": "Положение о Приемной комиссии",
+                        "href": "https://nttek.ru/upload/nttek/Polozhenie_o_priemnoy_komissii.pdf",
+                        "isTarget": false
+                    },
+                    {
+                        "name": "Порядок приема на обучение по образовательным программам СПО",
+                        "href": "https://nttek.ru/upload/nttek/Poryadok_priema.pdf",
+                        "isTarget": false
+                    },
+                    {
+                        "name": "Порядок учета индивидуальных достижений и договора о целевом обучении при поступлении в Государственное автономное профессиональное образовательное учреждение Свердловской области &laquo;Нижнетагильский торгово-экономический колледж&raquo; на 2019-2020 учебный год",
+                        "href": "https://nttek.ru/upload/nttek/Poryadok_ucheta_individualnykh_dostizheniy.pdf",
+                        "isTarget": false
+                    },
+                    {
+                        "name": "Перечень документов, предоставляемых абитуриентом в приемную комиссию",
+                        "href": "https://nttek.ru/upload/nttek/Perechen_dokumentov_v_priemnuyu_komissiyu.pdf",
+                        "isTarget": false
+                    },
+                    {
+                        "name": "Творческое испытание для поступающих по специальности 42.02.01 &laquo;Реклама&raquo;",
+                        "href": "https://nttek.ru/upload/Vstupitelny_Reklama_2020.pdf",
+                        "isTarget": false
+                    },
+                    {
+                        "name": "Контрольные цифры приема на 2020-2021 учебный год",
+                        "href": "https://nttek.ru/upload/nttek/Informatsia_o_prieme_na_2020_Na_sayt.pdf",
+                        "isTarget": false
+                    },
+                    {
+                        "name": "О результатах приема  в ГАПОУ СО &laquo;НТТЭК&raquo; В 2019 году",
+                        "href": "https://nttek.ru/upload/nttek/doc2017/O_rezultatakh_priema_v_2019_godu.pdf",
+                        "isTarget": false
+                    },
+                    {
+                        "name": "Договор на оказание платных образовательных услуг",
+                        "href": "",
+                        "isTarget": false
+                    }
+                ],
+                "contacts": [
+                    {
+                        "faIcon": "fa fa-users",
+                        "name": "Приемная комиссия",
+                        "subName": "",
+                        "telephones": [
+                            "+7 (3435) 41-75-58"
+                        ],
+                        "emails": [
+                            "enrollee@nttek.ru"
+                        ],
+                        "social": {
+                            "vk": "club_nttek"
+                        }
+                    },
+                    {
+                        "faIcon": "fa fa-user",
+                        "name": "Приемная директора",
+                        "subName": "",
+                        "telephones": [
+                            "+7 (3435) 41-79-63"
+                        ],
+                        "emails": [
+                            "nttet@e-tagil.ru"
+                        ],
+                        "social": {}
+                    },
+                    {
+                        "faIcon": "fa fa-user",
+                        "name": "Заместитель директора по воспитательной работе",
+                        "subName": "Демьяненко Светлана Александровна",
+                        "telephones": [
+                            "+7 (3435) 25-33-23"
+                        ],
+                        "emails": [],
+                        "social": {}
+                    },
+                    {
+                        "faIcon": "fas fa-graduation-cap",
+                        "name": "Заочное отделение",
+                        "subName": "",
+                        "telephones": [
+                            "+7 (3435) 41-75-02"
+                        ],
+                        "emails": [
+                            "zo_nttek@mail.ru"
+                        ],
+                        "social": {}
+                    }
+                ]
+            }
         }
     }
 }

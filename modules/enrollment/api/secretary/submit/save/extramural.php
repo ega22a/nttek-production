@@ -8,7 +8,7 @@
             $enrollee_data = [];
             $errors_array = [];
             foreach ($_POST as $key => $value) {
-                if (in_array($key, ["lastname", "firstname", "sex", "birthday", "telephone", "email", "birth-country", "birth-region", "birth-city", "place-country", "place-region", "region-city", "place-street", "place-house", "place-zip-code", "passport-series", "passport-number", "passport-date", "passport-place", "passport-code", "specialty", "pay", "previous-fullname", "previous-date", "previous-level", "previous-doc-type", "previous-doc-series", "previous-doc-number", "previous-doc-date", "language", "category-of-citizen"])) {
+                if (in_array($key, ["lastname", "firstname", "sex", "birthday", "telephone", "email", "birth-country", "birth-region", "birth-city", "place-country", "place-region", "region-city", "place-street", "place-house", "place-zip-code", "passport-series", "passport-number", "passport-date", "passport-place", "passport-code", "specialty", "pay", "previous-fullname", "previous-date", "previous-level", "previous-doc-type", "previous-doc-number", "previous-doc-date", "language", "category-of-citizen"])) {
                     if (empty($value))
                         $errors_array[] = $key;
                     else {
@@ -95,7 +95,7 @@
                                                         "degree" => intval($enrollee_data["previous-level"]),
                                                         "previousSchoolDoc" => intval($enrollee_data["previous-doc-type"]),
                                                         "previousSchoolDocData" => $crypt -> encrypt(json_encode([
-                                                            "series" => $enrollee_data["previous-doc-series"],
+                                                            "series" => isset($enrollee_data["previous-doc-series"]) ? $enrollee_data["previous-doc-series"] : "-",
                                                             "number" => $enrollee_data["previous-doc-number"],
                                                             "date" => $enrollee_data["previous-doc-date"],
                                                         ])),

@@ -225,8 +225,8 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Серия<span class="text-danger">*</span>:</label>
-                                        <input class="form-control" type="text" id="fulltime-form-previous-doc-series" required="" placeholder="Например, 123456">
+                                        <label>Серия:</label>
+                                        <input class="form-control" type="text" id="fulltime-form-previous-doc-series" placeholder="Например, 123456">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Номер<span class="text-danger">*</span>:</label>
@@ -316,8 +316,8 @@
                                             <input class="form-control" type="tel" id="fulltime-form-mother-telephone" placeholder="+7 (900) 000 00-00" required="" data-mask="+7 (900) 000 00-00">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label>Рабочий телефон<span class="text-danger">*</span>:</label>
-                                            <input class="form-control" type="tel" id="fulltime-form-mother-job-telephone" placeholder="+7 (900) 000 00-00" required="" data-mask="+7 (900) 000 00-00">
+                                            <label>Рабочий телефон:</label>
+                                            <input class="form-control" type="tel" id="fulltime-form-mother-job-telephone" placeholder="+7 (900) 000 00-00" data-mask="+7 (900) 000 00-00">
                                         </div>
                                         <div class="d-flex flex-column justify-content-end align-items-start form-group col-md-4">
                                             <div class="custom-control custom-switch">
@@ -359,8 +359,8 @@
                                             <input class="form-control" type="tel" id="fulltime-form-father-telephone" placeholder="+7 (900) 000 00-00" required="" data-mask="+7 (900) 000 00-00">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label>Рабочий телефон<span class="text-danger">*</span>:</label>
-                                            <input class="form-control" type="tel" id="fulltime-form-father-job-telephone" placeholder="+7 (900) 000 00-00" required="" data-mask="+7 (900) 000 00-00">
+                                            <label>Рабочий телефон:</label>
+                                            <input class="form-control" type="tel" id="fulltime-form-father-job-telephone" placeholder="+7 (900) 000 00-00" data-mask="+7 (900) 000 00-00">
                                         </div>
                                         <div class="d-flex flex-column justify-content-end align-items-start form-group col-md-4">
                                             <div class="custom-control custom-control-inline custom-switch">
@@ -611,8 +611,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Серия<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="text" id="extramural-form-previous-doc-series" required="" placeholder="Например, 123456">
+                                    <label>Серия:</label>
+                                    <input class="form-control" type="text" id="extramural-form-previous-doc-series" placeholder="Например, 123456">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Номер<span class="text-danger">*</span>:</label>
@@ -647,12 +647,6 @@
                                             <?php }
                                         } ?>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label>Дополнительные сведения о себе (увлечения):</label>
-                                    <textarea class="form-control" id="extramural-form-about" rows="3" placeholder="Опишите свои увлечения, способности и т.д." maxlength="200"></textarea>
                                 </div>
                             </div>
                             <h4>Сведения о работе</h4>

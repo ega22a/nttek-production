@@ -28,12 +28,7 @@
                                 <label for="specialty-input-contract">Количество мест на договор:</label>
                                 <input class="form-control" type="number" id="specialty-input-contract" placeholder="Количество мест на договор" required="">
                             </div>
-                            <div class="form-group col-md-12">
-                                <div class="custom-control custom-switch">
-                                    <input class="custom-control-input" type="checkbox" id="specialty-input-for-extramural">
-                                    <label class="custom-control-label" for="specialty-input-for-extramural">Специальность только для заочной формы</label>
-                                </div>
-                            </div>
+                            <input style="display: none;" type="checkbox" id="specialty-input-for-extramural">
                         </div>
                     </form>
                     <form id="modal-form-educational-levels" style="display: none;" class="validate">
@@ -191,15 +186,48 @@
                     </div>
                     <div class="border rounded col-md-9 tab-content" style="padding: 15px;margin-bottom: 15px;">
                         <div id="v-pills-configurations-specialty" class="tab-pane fade show active" role="tabpanel" aria-labelledby="v-pills-configurations-specialty-pill">
-                            <div class="list-group">
-                                <?php
-                                    $thumb = $this -> database -> query("SELECT * FROM `enr_specialties`;");
-                                    while ($row = $thumb -> fetch_assoc()) {
-                                ?>
-                                    <a class="list-group-item list-group-item-action" onclick="listClick(this);" data-json='<?php echo json_encode(["action" => "specialty", "data" => $row]); ?>'><span><?php echo $row["fullname"]; ?></span></a>
-                                <?php } ?>
+                            <div role="tablist" id="accordion-6" class="accordion">
+                                <div class="card">
+                                    <div role="tab" class="card-header">
+                                        <h5 class="mb-0">
+                                            <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-6 .item-1" href="#accordion-6 .item-1">Очная форма</a>
+                                        </h5>
+                                    </div>
+                                    <div role="tabpanel" data-parent="#accordion-6" class="collapse item-1">
+                                        <div class="card-body">
+                                            <div class="list-group" id="specialty-list-group-0">
+                                                <?php
+                                                    $thumb = $this -> database -> query("SELECT * FROM `enr_specialties` WHERE `forExtramural` = 0;");
+                                                    while ($row = $thumb -> fetch_assoc()) {
+                                                ?>
+                                                    <a class="list-group-item list-group-item-action" onclick="listClick(this);" data-json='<?php echo json_encode(["action" => "specialty", "data" => $row]); ?>'><span><?php echo $row["fullname"]; ?></span></a>
+                                                <?php } ?>
+                                            </div>
+                                            <button class="btn btn-primary btn-block button-push-line" data-type="specialty" data-number="0" type="button" style="margin-top: 15px;">Добавить запись</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div role="tab" class="card-header">
+                                        <h5 class="mb-0">
+                                            <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-6 .item-2" href="#accordion-6 .item-2">Заочная форма</a>
+                                        </h5>
+                                    </div>
+                                    <div role="tabpanel" data-parent="#accordion-6" class="collapse item-2">
+                                        <div class="card-body">
+                                            <div class="list-group" id="specialty-list-group-1">
+                                                <?php
+                                                    $thumb = $this -> database -> query("SELECT * FROM `enr_specialties` WHERE `forExtramural` = 1;");
+                                                    while ($row = $thumb -> fetch_assoc()) {
+                                                ?>
+                                                    <a class="list-group-item list-group-item-action" onclick="listClick(this);" data-json='<?php echo json_encode(["action" => "specialty", "data" => $row]); ?>'><span><?php echo $row["fullname"]; ?></span></a>
+                                                <?php } ?>
+                                            </div>
+                                            <button class="btn btn-primary btn-block button-push-line" data-type="specialty" data-number="1" type="button" style="margin-top: 15px;">Добавить запись</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <button class="btn btn-primary btn-block button-push-line" data-type="specialty" type="button" style="margin-top: 15px;">Добавить запись</button>
                         </div>
                         <div id="v-pills-configurations-educational-levels" class="tab-pane fade show" role="tabpanel" aria-labelledby="v-pills-configurations-educational-levels-pill">
                             <div class="list-group">

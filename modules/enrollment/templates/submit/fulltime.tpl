@@ -34,8 +34,8 @@
                                     <input class="form-control" type="tel" id="form-representative-telephone" placeholder="+7 (900) 000 00-00" required="" data-mask="+7 (900) 000 00-00">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Рабочий телефон<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="tel" id="form-representative-job-telephone" placeholder="+7 (900) 000 00-00" required="" data-mask="+7 (900) 000 00-00">
+                                    <label>Рабочий телефон:</label>
+                                    <input class="form-control" type="tel" id="form-representative-job-telephone" placeholder="+7 (900) 000 00-00" data-mask="+7 (900) 000 00-00">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Кем приходится<span class="text-danger">*</span>:</label>
@@ -342,8 +342,8 @@
                                     <input class="form-control" type="tel" id="form-mother-telephone" placeholder="+7 (900) 000 00-00" required="" data-mask="+7 (900) 000 00-00">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Рабочий телефон<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="tel" id="form-mother-job-telephone" placeholder="+7 (900) 000 00-00" required="" data-mask="+7 (900) 000 00-00">
+                                    <label>Рабочий телефон:</label>
+                                    <input class="form-control" type="tel" id="form-mother-job-telephone" placeholder="+7 (900) 000 00-00" data-mask="+7 (900) 000 00-00">
                                 </div>
                                 <div class="d-flex flex-column justify-content-end align-items-start form-group col-md-4">
                                     <div class="custom-control custom-switch">
@@ -385,8 +385,8 @@
                                     <input class="form-control" type="tel" id="form-father-telephone" placeholder="+7 (900) 000 00-00" required="" data-mask="+7 (900) 000 00-00">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Рабочий телефон<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="tel" id="form-father-job-telephone" placeholder="+7 (900) 000 00-00" required="" data-mask="+7 (900) 000 00-00">
+                                    <label>Рабочий телефон:</label>
+                                    <input class="form-control" type="tel" id="form-father-job-telephone" placeholder="+7 (900) 000 00-00" data-mask="+7 (900) 000 00-00">
                                 </div>
                                 <div class="d-flex flex-column justify-content-end align-items-start form-group col-md-4">
                                     <div class="custom-control custom-control-inline custom-switch">

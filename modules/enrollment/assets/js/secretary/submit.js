@@ -13,7 +13,6 @@ document.getElementById("fulltime-form-mother-checkbox-not-working").onclick = f
         jobTelephone.setAttribute("disabled", true);
         jobName.removeAttribute("required");
         jobPosition.removeAttribute("required");
-        jobTelephone.removeAttribute("required");
         jobName.parentNode.children[0].innerHTML = "Место работы:";
         jobPosition.parentNode.children[0].innerHTML = "Должность:";
         jobTelephone.parentNode.children[0].innerHTML = "Рабочий телефон:";
@@ -23,10 +22,8 @@ document.getElementById("fulltime-form-mother-checkbox-not-working").onclick = f
         jobTelephone.removeAttribute("disabled");
         jobName.setAttribute("required", true);
         jobPosition.setAttribute("required", true);
-        jobTelephone.setAttribute("required", true);
         jobName.parentNode.children[0].innerHTML = "Место работы<span class=\"text-danger\">*</span>:";
         jobPosition.parentNode.children[0].innerHTML = "Должность<span class=\"text-danger\">*</span>:";
-        jobTelephone.parentNode.children[0].innerHTML = "Рабочий телефон<span class=\"text-danger\">*</span>:";
     }
 }
 
@@ -67,7 +64,6 @@ document.getElementById("fulltime-form-mother-checkbox-do-not-have").onclick = f
         telephone.removeAttribute("required");
         jobName.removeAttribute("required");
         jobPosition.removeAttribute("required");
-        jobTelephone.removeAttribute("required");
         if (document.getElementById("fulltime-form-father-checkbox-do-not-have").checked)
             $("#modal-representative").modal();
     } else {
@@ -84,13 +80,11 @@ document.getElementById("fulltime-form-mother-checkbox-do-not-have").onclick = f
         telephone.setAttribute("required", true);
         jobName.setAttribute("required", true);
         jobPosition.setAttribute("required", true);
-        jobTelephone.setAttribute("required", true);
         firstname.parentNode.children[0].innerHTML = "Имя<span class=\"text-danger\">*</span>:";
         lastname.parentNode.children[0].innerHTML = "Фамилия<span class=\"text-danger\">*</span>:";
         telephone.parentNode.children[0].innerHTML = "Контактный мобильный телефон<span class=\"text-danger\">*</span>:";
         jobName.parentNode.children[0].innerHTML = "Место работы<span class=\"text-danger\">*</span>:";
         jobPosition.parentNode.children[0].innerHTML = "Должность<span class=\"text-danger\">*</span>:";
-        jobTelephone.parentNode.children[0].innerHTML = "Рабочий телефон<span class=\"text-danger\">*</span>:";
     }
     if (this.checked && document.getElementById("fulltime-form-father-checkbox-do-not-have").checked) {
         document.getElementById("fulltime-form-representative-lastname").removeAttribute("disabled");
@@ -104,7 +98,6 @@ document.getElementById("fulltime-form-mother-checkbox-do-not-have").onclick = f
         document.getElementById("fulltime-form-representative-checkbox-not-working").removeAttribute("disabled");
         document.getElementById("fulltime-form-representative-lastname").setAttribute("required", true);
         document.getElementById("fulltime-form-representative-firstname").setAttribute("required", true);
-        document.getElementById("fulltime-form-representative-job-telephone").setAttribute("required", true);
         document.getElementById("fulltime-form-representative-job-position").setAttribute("required", true);
         document.getElementById("fulltime-form-representative-job-name").setAttribute("required", true);
         document.getElementById("fulltime-form-representative-telephone").setAttribute("required", true);
@@ -114,7 +107,6 @@ document.getElementById("fulltime-form-mother-checkbox-do-not-have").onclick = f
         document.getElementById("fulltime-form-representative-telephone").parentNode.children[0].innerHTML = "Контактный мобильный телефон<span class=\"text-danger\">*</span>:";
         document.getElementById("fulltime-form-representative-job-name").parentNode.children[0].innerHTML = "Место работы<span class=\"text-danger\">*</span>:";
         document.getElementById("fulltime-form-representative-job-position").parentNode.children[0].innerHTML = "Должность<span class=\"text-danger\">*</span>:";
-        document.getElementById("fulltime-form-representative-job-telephone").parentNode.children[0].innerHTML = "Рабочий телефон<span class=\"text-danger\">*</span>:";
         document.getElementById("fulltime-form-representative-who").parentNode.children[0].innerHTML = "Кем приходится<span class=\"text-danger\">*</span>:";
     } else {
         document.getElementById("fulltime-form-representative-lastname").setAttribute("disabled", true);
@@ -128,7 +120,6 @@ document.getElementById("fulltime-form-mother-checkbox-do-not-have").onclick = f
         document.getElementById("fulltime-form-representative-checkbox-not-working").setAttribute("disabled", true);
         document.getElementById("fulltime-form-representative-lastname").removeAttribute("required");
         document.getElementById("fulltime-form-representative-firstname").removeAttribute("required");
-        document.getElementById("fulltime-form-representative-job-telephone").removeAttribute("required");
         document.getElementById("fulltime-form-representative-job-position").removeAttribute("required");
         document.getElementById("fulltime-form-representative-job-name").removeAttribute("required");
         document.getElementById("fulltime-form-representative-telephone").removeAttribute("required");
@@ -157,7 +148,6 @@ document.getElementById("fulltime-form-father-checkbox-not-working").onclick = f
         jobTelephone.setAttribute("disabled", true);
         jobName.removeAttribute("required");
         jobPosition.removeAttribute("required");
-        jobTelephone.removeAttribute("required");
         jobName.parentNode.children[0].innerHTML = "Место работы:";
         jobPosition.parentNode.children[0].innerHTML = "Должность:";
         jobTelephone.parentNode.children[0].innerHTML = "Рабочий телефон:";
@@ -167,10 +157,8 @@ document.getElementById("fulltime-form-father-checkbox-not-working").onclick = f
         jobTelephone.removeAttribute("disabled");
         jobName.setAttribute("required", true);
         jobPosition.setAttribute("required", true);
-        jobTelephone.setAttribute("required", true);
         jobName.parentNode.children[0].innerHTML = "Место работы<span class=\"text-danger\">*</span>:";
         jobPosition.parentNode.children[0].innerHTML = "Должность<span class=\"text-danger\">*</span>:";
-        jobTelephone.parentNode.children[0].innerHTML = "Рабочий телефон<span class=\"text-danger\">*</span>:";
     }
 }
 
@@ -211,7 +199,6 @@ document.getElementById("fulltime-form-father-checkbox-do-not-have").onclick = f
         telephone.removeAttribute("required");
         jobName.removeAttribute("required");
         jobPosition.removeAttribute("required");
-        jobTelephone.removeAttribute("required");
         if (document.getElementById("fulltime-form-mother-checkbox-do-not-have").checked)
             $("#modal-representative").modal();
     } else {
@@ -228,13 +215,11 @@ document.getElementById("fulltime-form-father-checkbox-do-not-have").onclick = f
         telephone.setAttribute("required", true);
         jobName.setAttribute("required", true);
         jobPosition.setAttribute("required", true);
-        jobTelephone.setAttribute("required", true);
         firstname.parentNode.children[0].innerHTML = "Имя<span class=\"text-danger\">*</span>:";
         lastname.parentNode.children[0].innerHTML = "Фамилия<span class=\"text-danger\">*</span>:";
         telephone.parentNode.children[0].innerHTML = "Контактный мобильный телефон<span class=\"text-danger\">*</span>:";
         jobName.parentNode.children[0].innerHTML = "Место работы<span class=\"text-danger\">*</span>:";
         jobPosition.parentNode.children[0].innerHTML = "Должность<span class=\"text-danger\">*</span>:";
-        jobTelephone.parentNode.children[0].innerHTML = "Рабочий телефон<span class=\"text-danger\">*</span>:";
     }
     if (this.checked && document.getElementById("fulltime-form-mother-checkbox-do-not-have").checked) {
         document.getElementById("fulltime-form-representative-lastname").removeAttribute("disabled");
@@ -248,7 +233,6 @@ document.getElementById("fulltime-form-father-checkbox-do-not-have").onclick = f
         document.getElementById("fulltime-form-representative-checkbox-not-working").removeAttribute("disabled");
         document.getElementById("fulltime-form-representative-lastname").setAttribute("required", true);
         document.getElementById("fulltime-form-representative-firstname").setAttribute("required", true);
-        document.getElementById("fulltime-form-representative-job-telephone").setAttribute("required", true);
         document.getElementById("fulltime-form-representative-job-position").setAttribute("required", true);
         document.getElementById("fulltime-form-representative-job-name").setAttribute("required", true);
         document.getElementById("fulltime-form-representative-telephone").setAttribute("required", true);
@@ -258,7 +242,6 @@ document.getElementById("fulltime-form-father-checkbox-do-not-have").onclick = f
         document.getElementById("fulltime-form-representative-telephone").parentNode.children[0].innerHTML = "Контактный мобильный телефон<span class=\"text-danger\">*</span>:";
         document.getElementById("fulltime-form-representative-job-name").parentNode.children[0].innerHTML = "Место работы<span class=\"text-danger\">*</span>:";
         document.getElementById("fulltime-form-representative-job-position").parentNode.children[0].innerHTML = "Должность<span class=\"text-danger\">*</span>:";
-        document.getElementById("fulltime-form-representative-job-telephone").parentNode.children[0].innerHTML = "Рабочий телефон<span class=\"text-danger\">*</span>:";
         document.getElementById("fulltime-form-representative-who").parentNode.children[0].innerHTML = "Кем приходится<span class=\"text-danger\">*</span>:";
     } else {
         document.getElementById("fulltime-form-representative-lastname").setAttribute("disabled", true);
@@ -272,7 +255,6 @@ document.getElementById("fulltime-form-father-checkbox-do-not-have").onclick = f
         document.getElementById("fulltime-form-representative-checkbox-not-working").setAttribute("disabled", true);
         document.getElementById("fulltime-form-representative-lastname").removeAttribute("required");
         document.getElementById("fulltime-form-representative-firstname").removeAttribute("required");
-        document.getElementById("fulltime-form-representative-job-telephone").removeAttribute("required");
         document.getElementById("fulltime-form-representative-job-position").removeAttribute("required");
         document.getElementById("fulltime-form-representative-job-name").removeAttribute("required");
         document.getElementById("fulltime-form-representative-telephone").removeAttribute("required");
@@ -282,7 +264,6 @@ document.getElementById("fulltime-form-father-checkbox-do-not-have").onclick = f
         document.getElementById("fulltime-form-representative-telephone").parentNode.children[0].innerHTML = "Контактный мобильный телефон:";
         document.getElementById("fulltime-form-representative-job-name").parentNode.children[0].innerHTML = "Место работы:";
         document.getElementById("fulltime-form-representative-job-position").parentNode.children[0].innerHTML = "Должность:";
-        document.getElementById("fulltime-form-representative-job-telephone").parentNode.children[0].innerHTML = "Рабочий телефон:";
         document.getElementById("fulltime-form-representative-who").parentNode.children[0].innerHTML = "Кем приходится:";
         document.getElementById("fulltime-form-representative-checkbox-not-working").checked = false;
     }
@@ -301,7 +282,6 @@ document.getElementById("fulltime-form-representative-checkbox-not-working").onc
         jobTelephone.setAttribute("disabled", true);
         jobName.removeAttribute("required");
         jobPosition.removeAttribute("required");
-        jobTelephone.removeAttribute("required");
         jobName.parentNode.children[0].innerHTML = "Место работы:";
         jobPosition.parentNode.children[0].innerHTML = "Должность:";
         jobTelephone.parentNode.children[0].innerHTML = "Рабочий телефон:";
@@ -311,10 +291,8 @@ document.getElementById("fulltime-form-representative-checkbox-not-working").onc
         jobTelephone.removeAttribute("disabled");
         jobName.setAttribute("required", true);
         jobPosition.setAttribute("required", true);
-        jobTelephone.setAttribute("required", true);
         jobName.parentNode.children[0].innerHTML = "Место работы<span class=\"text-danger\">*</span>:";
         jobPosition.parentNode.children[0].innerHTML = "Должность<span class=\"text-danger\">*</span>:";
-        jobTelephone.parentNode.children[0].innerHTML = "Рабочий телефон<span class=\"text-danger\">*</span>:";
     }
 }
 
