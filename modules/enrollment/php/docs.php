@@ -235,7 +235,7 @@
                             $pdf -> Ln();
                             $pdf -> Cell(25, 5, $pdf -> cyrilic("образования:"));
                             $specialty = $database -> query("SELECT `fullname` FROM `enr_specialties` WHERE `id` = {$enrolleeData["specialty"]};") -> fetch_assoc()["fullname"];
-                            $pdf -> MultiCell(165, 5, $pdf -> cyrilic($specialty), "B", "C");
+                            $pdf -> MultiCell(165, 5, $pdf -> cyrilic(explode("@", $specialty)[0]), "B", "C");
                             $pdf -> Cell(25, 5, "");
                             $pdf -> SetFont("PTSerif", "", 7);
                             $pdf -> Cell(165, 5, $pdf -> cyrilic("(код, наименование специальности)"), 0, 0, "C");
@@ -462,7 +462,7 @@
                             $pdf -> Cell(190, 5, $pdf -> cyrilic("специальности среднего профессионального образования:"));
                             $pdf -> Ln();
                             $specialty = $database -> query("SELECT `fullname` FROM `enr_specialties` WHERE `id` = {$enrolleeData["specialty"]};") -> fetch_assoc()["fullname"];
-                            $pdf -> MultiCell(190, 5, $pdf -> cyrilic($specialty), "B", "C");
+                            $pdf -> MultiCell(190, 5, $pdf -> cyrilic(explode("@", $specialty)[0]), "B", "C");
                             $pdf -> SetFont("PTSerif", "", 7);
                             $pdf -> Cell(190, 5, $pdf -> cyrilic("(код, наименование специальности)"), 0, 0, "C");
                             $pdf -> SetFont("PTSerif", "", 10);
@@ -1223,6 +1223,7 @@
                 require __DIR__ . "/../../../libraries/fpdf/scripts/pdf-mc-tables.php";
                 require_once __DIR__ . "/../../../configurations/main.php";
                 require __DIR__ . "/../../../configurations/cipher-keys.php";
+                $crypt = new CryptService($ciphers["database"]);
                 class listOfEnrolleesPdf extends PDF_MC_Table {
                     function header() {
                         $this -> SetFont("PTSerif", "B", 12);
@@ -1272,7 +1273,7 @@
                             $pdf -> AddPage();
                         $pdf -> SetFont("PTSerif", "B", 12);
                         $pdf -> SetWidths([14.38, 95, 23.03, 25.92, 31.67]);
-                        $pdf -> MultiCell(190, 5, $pdf -> cyrilic("{$specialty["fullname"]}"), 0, "C");
+                        $pdf -> MultiCell(190, 5, $pdf -> cyrilic(explode("@", $specialty["fullname"])[0]), 0, "C");
                         $pdf -> SetAligns(["C", "C", "C", "C", "C"]);
                         $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Средний балл"), $pdf -> cyrilic("Оригинал"), $pdf -> cyrilic("Общежитие")]);
                         $pdf -> SetAligns(["L", "L", "C", "C", "C"]);
@@ -1282,9 +1283,9 @@
                             "previousGrade" => 0,
                         ];
                         $pdf -> SetFillColor(255, 255, 255);
-                        $enrollees = $database -> query("SELECT `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
+                        $enrollees = $database -> query("SELECT `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
                         if ($enrollees -> num_rows != 0)
-                            while ($enrollee = $database -> fetch_assoc()) {
+                            while ($enrollee = $enrollees -> fetch_assoc()) {
                                 $fill = [];
                                 if ($counters["item"] > intval($specialty["budget"]))
                                     $pdf -> SetFont("PTSerif", "I", 12);
@@ -1313,7 +1314,7 @@
                             $pdf -> AddPage();
                         $pdf -> SetFont("PTSerif", "B", 12);
                         $pdf -> SetWidths([14.4, 115.14, 25.92, 34.54]);
-                        $pdf -> MultiCell(190, 5, $pdf -> cyrilic("{$specialty["fullname"]}"), 0, "C");
+                        $pdf -> MultiCell(190, 5, $pdf -> cyrilic(explode("@", $specialty["fullname"])[0]), 0, "C");
                         $pdf -> SetAligns(["C", "C", "C", "C"]);
                         $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Средний балл"), $pdf -> cyrilic("Оригинал")]);
                         $pdf -> SetAligns(["L", "L", "C", "C"]);
@@ -1323,9 +1324,9 @@
                             "previousGrade" => 0,
                         ];
                         $pdf -> SetFillColor(255, 255, 255);
-                        $enrollees = $database -> query("SELECT `firstname`, `lastname`, `patronymic`, `averageMark`, `paysType`, `withOriginalDiploma` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
+                        $enrollees = $database -> query("SELECT `firstname`, `lastname`, `patronymic`, `averageMark`, `paysType`, `withOriginalDiploma` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
                         if ($enrollees -> num_rows != 0)
-                            while ($enrollee = $database -> fetch_assoc()) {
+                            while ($enrollee = $enrollees -> fetch_assoc()) {
                                 $fill = [];
                                 if ($counters["item"] > intval($specialty["budget"]))
                                     $pdf -> SetFont("PTSerif", "I", 12);
@@ -1358,6 +1359,7 @@
                 require __DIR__ . "/../../../libraries/fpdf/scripts/pdf-mc-tables.php";
                 require_once __DIR__ . "/../../../configurations/main.php";
                 require __DIR__ . "/../../../configurations/cipher-keys.php";
+                $crypt = new CryptService($ciphers["database"]);
                 class listOfHostelPdf extends PDF_MC_Table {
                     function header() {
                         $this -> SetFont("PTSerif", "B", 12);

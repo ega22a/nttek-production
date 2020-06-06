@@ -116,7 +116,7 @@
                     $firstTab = true;
                     while ($row = $specialties -> fetch_assoc()) { ?>
                         <div id="v-pills-statements-<?php echo boolval($row["forExtramural"]) ? "extramural" : "fulltime"; ?>-<?php echo $row["id"]; ?>" class="tab-pane fade <?php echo $firstTab ? "show active" : ""; $firstTab = false; ?>" role="tabpanel" aria-labelledby="v-pills-statements-<?php echo boolval($row["forExtramural"]) ? "extramural" : "fulltime"; ?>-<?php echo $row["id"]; ?>-pill">
-                            <h3><?php echo $row["fullname"]; ?></h3>
+                            <h3><?php echo explode("@", $row["fullname"])[0] . (!empty(explode("@", $row["fullname"])[1]) ? " <i>" . explode("@", $row["fullname"])[1] . "</i>" : ""); ?></h3>
                             <?php $enrollies = $this -> database -> query("SELECT `id`, `lastname`, `firstname`, `patronymic`, `paysType` FROM `enr_statements` WHERE `specialty` = {$row["id"]} AND `educationalType` = '" . (boolval($row["forExtramural"]) ? "extramural" : "fulltime") . "' AND `isChecked` = 0;");
                             if ($enrollies -> num_rows != 0) {
                                 $firstElement = true;

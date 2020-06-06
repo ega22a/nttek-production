@@ -382,7 +382,7 @@
                                         <select class="custom-select" id="form-enrollee-specialty">
                                             <?php $specialties = $this -> database -> query("SELECT * FROM `enr_specialties` WHERE `forExtramural` = " . (boolval($isFulltime) ? "0" : "1") . " ORDER BY `fullname` ASC;");
                                             while ($row = $specialties -> fetch_assoc()) { ?>
-                                                <option value="<?php echo $row["id"]; ?>" <?php echo $row["id"] == $this -> statement["specialty"] ? "selected" : ""; ?>><?php echo $row["fullname"]; ?></option>
+                                                <option value="<?php echo $row["id"]; ?>" <?php echo $row["id"] == $this -> statement["specialty"] ? "selected" : ""; ?>><?php echo explode("@", $row["fullname"])[0] . (!empty(explode("@", $row["fullname"])[0]) ? "*" . explode("@", $row["fullname"])[1] : ""); ?></option>
                                             <?php } ?>
                                         </select>
                                         <button class="btn btn-primary btn-block" type="button" style="margin-top: 15px;" id="button-specialty-save">Сохранить</button>

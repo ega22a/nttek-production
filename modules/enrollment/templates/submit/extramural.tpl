@@ -164,7 +164,7 @@
                                     <?php $list = $this -> database -> query("SELECT `id`, `fullname` FROM `enr_specialties` WHERE `forExtramural` = 1 ORDER BY `fullname` ASC;");
                                     if ($list -> num_rows != 0) {
                                         while ($field = $list -> fetch_assoc()) { ?>
-                                            <option value="<?php echo $field["id"]; ?>"><?php echo $field["fullname"]; ?></option>
+                                            <option value="<?php echo $field["id"]; ?>"><?php echo explode("@", $field["fullname"])[0] . (!empty(explode("@", $field["fullname"])[1]) ? "*" . explode("@", $field["fullname"])[1] : ""); ?></option>
                                         <?php }
                                     } ?>
                                 </select>

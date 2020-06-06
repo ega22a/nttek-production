@@ -202,7 +202,7 @@
                                     <?php $list = $this -> database -> query("SELECT `id`, `fullname` FROM `enr_specialties` WHERE `forExtramural` = 0 ORDER BY `fullname` ASC;");
                                     if ($list -> num_rows != 0) {
                                         while ($field = $list -> fetch_assoc()) { ?>
-                                            <option value="<?php echo $field["id"]; ?>"><?php echo $field["fullname"]; ?></option>
+                                            <option value="<?php echo $field["id"]; ?>"><?php echo explode("@", $field["fullname"])[0] . (!empty(explode("@", $field["fullname"])[1]) ? "*" . explode("@", $field["fullname"])[1] : ""); ?></option>
                                         <?php }
                                     } ?>
                                 </select>
@@ -289,7 +289,7 @@
                                     <?php $list = $this -> database -> query("SELECT * FROM `enr_hostel_rooms`;");
                                     if ($list -> num_rows != 0) {
                                         while ($field = $list -> fetch_assoc()) { ?>
-                                            <option value="<?php echo $field["id"]; ?>"><?php echo "{$field["name"]} (Цена: {$field["price"]} р.)"; ?></option>
+                                            <option value="<?php echo $field["id"]; ?>"><?php echo "{$field["name"]}"; ?></option>
                                         <?php }
                                     } ?>
                                 </select>

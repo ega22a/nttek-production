@@ -55,7 +55,7 @@
                     $counter = 10;
                     while ($row = $specialties -> fetch_assoc()) { ?>
                         <div id="v-pills-statements-<?php echo boolval($row["forExtramural"]) ? "extramural" : "fulltime"; ?>-<?php echo $row["id"]; ?>" class="tab-pane fade <?php echo $counter == 10 ? "show active" : ""; ?>" role="tabpanel" aria-labelledby="v-pills-statements-<?php echo boolval($row["forExtramural"]) ? "extramural" : "fulltime"; ?>-<?php echo $row["id"]; ?>-pill">
-                            <h3><?php echo $row["fullname"]; ?></h3>
+                            <h3><?php echo explode("@", $row["fullname"])[0] . (!empty(explode("@", $row["fullname"])[1]) ? " <i>" . explode("@", $row["fullname"])[1] . "</i>" : ""); ?></h3>
                             <p>Мест на бюджет: <b><?php echo $row["budget"]; ?></b></p>
                             <p>Мест на договор: <b><?php echo $row["contract"]; ?></b></p>
                             <div role="tablist" id="accordion-<?php echo $counter; ?>" class="accordion">

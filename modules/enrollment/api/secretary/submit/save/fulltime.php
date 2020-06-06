@@ -104,6 +104,9 @@
                 } else
                     unset($_POST[$key]);
             }
+            foreach ($errors_array as $key => $value)
+                if (in_array($value, ["mother-job-telephone", "father-job-telephone", "representative-job-telephone", "morher-patronymic", "father-patronymic", "representative-patronymic"]))
+                    unset($errors_array[$key]);
             if (empty($errors_array)) {
                 require_once __DIR__ . "/../../../../../../configurations/main.php";
                 require __DIR__ . "/../../../../../../configurations/cipher-keys.php";

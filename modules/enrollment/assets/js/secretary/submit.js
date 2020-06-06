@@ -357,6 +357,7 @@ document.getElementById("button-confirm-fulltime").onclick = function() {
                     break;
                     default:
                         createAlert(`Ошибка при обработке заявления. Побробнее: <b>${data.status}</b>.`);
+                        console.log(data);
                     break;
                 }
                 setTimeout(() => { $("#modal-spinner").modal("hide"); }, 500);
@@ -423,6 +424,7 @@ document.getElementById("button-confirm-extramural").onclick = function() {
                     break;
                     default:
                         createAlert(`Ошибка при обработке заявления. Побробнее: <b>${data.status}</b>.`, "alert-danger");
+                        console.log(data);
                     break;
                 }
                 setTimeout(() => { $("#modal-spinner").modal("hide"); }, 500);

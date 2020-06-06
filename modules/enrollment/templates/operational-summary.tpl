@@ -26,7 +26,7 @@
                             <?php $specialties = $this -> database -> query("SELECT `fullname`, `budget`, `contract`, `id` FROM `enr_specialties` WHERE `forExtramural` = 0;");
                             while ($specialty = $specialties -> fetch_assoc()) { ?>
                                 <tr>
-                                    <td><?php echo $specialty["fullname"]; ?></td>
+                                    <td><?php echo explode("@", $specialty["fullname"])[0] . (!empty(explode("@", $specialty["fullname"])[0]) ? " <i>" . explode("@", $specialty["fullname"])[1] . "</i>" : ""); ?></td>
                                     <?php $levels = $this -> database -> query("SELECT `id` FROM `enr_education_levels`;");
                                     while ($level = $levels -> fetch_assoc()) {
                                         echo "
@@ -64,7 +64,7 @@
                             <?php $specialties = $this -> database -> query("SELECT `fullname`, `budget`, `contract`, `id` FROM `enr_specialties` WHERE `forExtramural` = 1;");
                             while ($specialty = $specialties -> fetch_assoc()) { ?>
                                 <tr>
-                                    <td><?php echo $specialty["fullname"]; ?></td>
+                                    <td><?php echo explode("@", $specialty["fullname"])[0] . (!empty(explode("@", $specialty["fullname"])[1]) ? " <i>" . explode("@", $specialty["fullname"])[1] . "</i>" : ""); ?></td>
                                     <?php $levels = $this -> database -> query("SELECT `id` FROM `enr_education_levels`;");
                                     while ($level = $levels -> fetch_assoc()) {
                                         echo "

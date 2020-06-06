@@ -30,6 +30,7 @@
                             </div>
                             <input style="display: none;" type="checkbox" id="specialty-input-for-extramural">
                         </div>
+                        <sub><strong>Примечание:</strong> используйте символ "<code>@</code>" как символ, разделяющий видимое и невидимое полное наимнование (невидимая часть - после специального символа).</sub>
                     </form>
                     <form id="modal-form-educational-levels" style="display: none;" class="validate">
                         <div class="form-row">
