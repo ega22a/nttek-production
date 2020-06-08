@@ -95,7 +95,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Отчество (при наличии):</label>
-                                <input class="form-control" type="text" id="form-patronymic" required="" placeholder="Отчество">
+                                <input class="form-control" type="text" id="form-patronymic" placeholder="Отчество">
                             </div>
                             <div class="form-group col-md-2">
                                 <label>Пол<span class="text-danger">*</span>:</label>

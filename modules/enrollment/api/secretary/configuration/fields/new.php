@@ -7,7 +7,7 @@
             require __DIR__ . "/../../../../../../configurations/database/class.php";
             switch (strval($_POST["form-type"])) {
                 case "specialty":
-                    if (!empty($_POST["fullname"]) && !empty($_POST["shortname"]) && !empty($_POST["composite-key"]) && !empty($_POST["budget"]) && !empty($_POST["contract"]) && !empty($_POST["for-extramural"])) {
+                    if (!empty($_POST["fullname"]) && !empty($_POST["shortname"]) && !empty($_POST["composite-key"]) && !isset($_POST["budget"]) && !isset($_POST["contract"]) && !empty($_POST["for-extramural"])) {
                         $data = [
                             "name" => $database -> real_escape_string(strval($_POST["fullname"])),
                             "fullname" => $database -> real_escape_string(strval($_POST["fullname"])),
@@ -94,7 +94,7 @@
                         ]);
                 break;
                 case "hostel-rooms":
-                    if (!empty($_POST["name"]) && !empty($_POST["price"])) {
+                    if (!empty($_POST["name"]) && !isset($_POST["price"])) {
                         $data = [
                             "name" => $database -> real_escape_string(strval($_POST["name"])),
                             "price" => floatval($_POST["price"]),

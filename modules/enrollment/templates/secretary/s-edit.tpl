@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Отчество (при наличии):</label>
-                                    <input class="form-control" type="text" id="form-patronymic" required="" placeholder="Отчество" <?php echo !empty($this -> statement["patronymic"]) ? $this -> crypt -> decrypt($this -> statement["patronymic"]) : ""; ?>">
+                                    <input class="form-control" type="text" id="form-patronymic" placeholder="Отчество" value="<?php echo !empty($this -> statement["patronymic"]) ? $this -> crypt -> decrypt($this -> statement["patronymic"]) : ""; ?>">
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Пол<span class="text-danger">*</span>:</label>
@@ -129,7 +129,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-2">
                                     <label>Серия<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="text" id="form-passport-series" placeholder="00 00" required="" data-mask="00 00" value="<?php echo $passport -> series; ?>">
+                                    <input class="form-control" type="text" id="form-passport-series" required="" placeholder="00 00" data-mask="00 00" value="<?php echo $passport -> series; ?>">
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Номер<span class="text-danger">*</span>:</label>
@@ -195,8 +195,8 @@
                                 </div>
                                 <?php $schoolDoc = json_decode($this -> crypt -> decrypt($this -> statement["previousSchoolDocData"])); ?>
                                 <div class="form-group col-md-4">
-                                    <label>Серия<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="text" id="form-previous-doc-series" required="" placeholder="Например, 123456" value="<?php echo $schoolDoc -> series; ?>">
+                                    <label>Серия:</label>
+                                    <input class="form-control" type="text" id="form-previous-doc-series" placeholder="Например, 123456" value="<?php echo $schoolDoc -> series; ?>">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Номер<span class="text-danger">*</span>:</label>
@@ -236,7 +236,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Дополнительные сведения о себе (увлечения):</label>
-                                    <textarea class="form-control" id="form-about" rows="3" placeholder="Опишите свои увлечения, способности и т.д." maxlength="200"><?php echo $this -> crypt -> decrypt($this -> statement["about"]); ?></textarea>
+                                    <textarea class="form-control" id="form-about" rows="3" placeholder="Опишите свои увлечения, способности и т.д." maxlength="200"><?php echo stripcslashes($this -> crypt -> decrypt($this -> statement["about"])); ?></textarea>
                                 </div>
                             </div>
                             <?php if (boolval($isFulltime)) { ?>
@@ -259,7 +259,7 @@
                                         </div>
                                         <div class="form-group col-md-8">
                                             <label>Место работы:</label>
-                                            <input class="form-control" type="text" id="form-mother-job-name" placeholder="Например, ГАПОУ СО &quot;НТТЭК&quot;" value="<?php echo !empty($mother) ? $mother -> jobName : ""; ?>">
+                                            <input class="form-control" type="text" id="form-mother-job-name" placeholder="Например, ГАПОУ СО &quot;НТТЭК&quot;" value='<?php echo stripcslashes(!empty($mother) ? $mother -> jobName : ""); ?>'>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Должность:</label>
@@ -293,7 +293,7 @@
                                         </div>
                                         <div class="form-group col-md-8">
                                             <label>Место работы:</label>
-                                            <input class="form-control" type="text" id="form-father-job-name" placeholder="Например, ГАПОУ СО &quot;НТТЭК&quot;" value="<?php echo !empty($father) ? $father -> jobName : ""; ?>">
+                                            <input class="form-control" type="text" id="form-father-job-name" placeholder="Например, ГАПОУ СО &quot;НТТЭК&quot;" value='<?php echo stripcslashes(!empty($father) ? $father -> jobName : ""); ?>'>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Должность:</label>
@@ -327,7 +327,7 @@
                                         </div>
                                         <div class="form-group col-md-8">
                                             <label>Место работы:</label>
-                                            <input class="form-control" type="text" id="form-representative-job-name" placeholder="Например, ГАПОУ СО &quot;НТТЭК&quot;" value="<?php echo !empty($representative) ? $representative -> jobName : ""; ?>">
+                                            <input class="form-control" type="text" id="form-representative-job-name" placeholder="Например, ГАПОУ СО &quot;НТТЭК&quot;" value='<?php echo stripcslashes(!empty($representative) ? $representative -> jobName : ""); ?>'>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Должность:</label>
@@ -382,7 +382,7 @@
                                         <select class="custom-select" id="form-enrollee-specialty">
                                             <?php $specialties = $this -> database -> query("SELECT * FROM `enr_specialties` WHERE `forExtramural` = " . (boolval($isFulltime) ? "0" : "1") . " ORDER BY `fullname` ASC;");
                                             while ($row = $specialties -> fetch_assoc()) { ?>
-                                                <option value="<?php echo $row["id"]; ?>" <?php echo $row["id"] == $this -> statement["specialty"] ? "selected" : ""; ?>><?php echo explode("@", $row["fullname"])[0] . (!empty(explode("@", $row["fullname"])[0]) ? "*" . explode("@", $row["fullname"])[1] : ""); ?></option>
+                                                <option value="<?php echo $row["id"]; ?>" <?php echo $row["id"] == $this -> statement["specialty"] ? "selected" : ""; ?>><?php echo explode("@", $row["fullname"])[0] . (!empty(explode("@", $row["fullname"])[1]) ? "*" . explode("@", $row["fullname"])[1] : ""); ?></option>
                                             <?php } ?>
                                         </select>
                                         <button class="btn btn-primary btn-block" type="button" style="margin-top: 15px;" id="button-specialty-save">Сохранить</button>

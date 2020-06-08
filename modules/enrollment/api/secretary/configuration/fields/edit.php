@@ -19,11 +19,11 @@
                                 $sql .= "`shortname` = '{$database -> real_escape_string(strval($_POST["shortname"]))}', ";
                             if (!empty($_POST["composite-key"]))
                                 $sql .= "`compositeKey` = '{$database -> real_escape_string(strval($_POST["composite-key"]))}', ";
-                            if (!empty($_POST["budget"])) {
+                            if (!isset($_POST["budget"])) {
                                 $thumb = intval($_POST["budget"]);
                                 $sql .= "`budget` = {$thumb}, ";
                             }
-                            if (!empty($_POST["contract"])) {
+                            if (!isset($_POST["contract"])) {
                                 $thumb = intval($_POST["contract"]);
                                 $sql .= "`contract` = {$thumb}, ";
                             }
@@ -43,8 +43,8 @@
                                     "fullname" => !empty($_POST["fullname"]) ? $_POST["fullname"] : $check_field["fullname"],
                                     "shortname" => !empty($_POST["shortname"]) ? $_POST["shortname"] : $check_field["shortname"],
                                     "composite-key" => !empty($_POST["composite-key"]) ? $_POST["composite-key"] : $check_field["compositeKey"],
-                                    "budget" => !empty($_POST["budget"]) ? $_POST["budget"] : $check_field["budget"],
-                                    "contract" => !empty($_POST["contract"]) ? $_POST["contract"] : $check_field["contract"],
+                                    "budget" => !isset($_POST["budget"]) ? $_POST["budget"] : $check_field["budget"],
+                                    "contract" => !isset($_POST["contract"]) ? $_POST["contract"] : $check_field["contract"],
                                     "for-extramural" => !empty($_POST["for-extramural"]) ? strtolower(strval($_POST["for-extramural"])) == "true" ? 1 : 0 : $check_field["forExtramural"],
                                 ],
                             ]);
@@ -128,7 +128,7 @@
                             $sql = "";
                             if (!empty($_POST["name"]))
                                 $sql .= "`name` = '{$database -> real_escape_string(strval($_POST["name"]))}', ";
-                            if (!empty($_POST["price"])) {
+                            if (!isset($_POST["price"])) {
                                 $thumb = floatval($_POST["price"]);
                                 $sql .= "`price` = $thumb, ";
                             }
@@ -141,7 +141,7 @@
                                 "data" => [
                                     "id" => $id,
                                     "name" => !empty($_POST["name"]) ? $_POST["name"] : $check_field["name"],
-                                    "price" => !empty($_POST["price"]) ? floatval($_POST["price"]) : $check_field["price"],
+                                    "price" => !isset($_POST["price"]) ? floatval($_POST["price"]) : $check_field["price"],
                                 ],
                             ]);
                         } else

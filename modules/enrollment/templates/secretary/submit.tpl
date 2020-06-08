@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Отчество (при наличии):</label>
-                                        <input class="form-control" type="text" id="fulltime-form-patronymic" required="" placeholder="Отчество">
+                                        <input class="form-control" type="text" id="fulltime-form-patronymic" placeholder="Отчество">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Пол<span class="text-danger">*</span>:</label>
@@ -99,30 +99,30 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label>Страна<span class="text-danger">*</span>:</label>
-                                        <input class="form-control" type="text" id="fulltime-form-birth-country" placeholder="Например, Россия" required="">
+                                        <input class="form-control" type="text" id="fulltime-form-birth-country" placeholder="Например, Россия" required="" value="Россия">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Субъект страны<span class="text-danger">*</span>:</label>
-                                        <input class="form-control" type="text" id="fulltime-form-birth-region" placeholder="Например, Свердловская область" required="">
+                                        <input class="form-control" type="text" id="fulltime-form-birth-region" placeholder="Например, Свердловская область" required="" value="Свердловская область">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Населённый пункт<span class="text-danger">*</span>:</label>
-                                        <input class="form-control" type="text" id="fulltime-form-birth-city" placeholder="Например, Нижний Тагил" required="">
+                                        <input class="form-control" type="text" id="fulltime-form-birth-city" placeholder="Например, Нижний Тагил" required="" value="Нижний Тагил">
                                     </div>
                                 </div>
                                 <h4>Адрес фактического проживания</h4>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label>Страна<span class="text-danger">*</span>:</label>
-                                        <input class="form-control" type="text" id="fulltime-form-place-country" placeholder="Например, Россия" required="">
+                                        <input class="form-control" type="text" id="fulltime-form-place-country" placeholder="Например, Россия" required="" value="Россия">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Субъект страны<span class="text-danger">*</span>:</label>
-                                        <input class="form-control" type="text" id="fulltime-form-place-region" placeholder="Например, Свердловская область" required="">
+                                        <input class="form-control" type="text" id="fulltime-form-place-region" placeholder="Например, Свердловская область" required="" value="Свердловская область">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Населённый пункт<span class="text-danger">*</span>:</label>
-                                        <input class="form-control" type="text" id="fulltime-form-place-city" placeholder="Например, Нижний Тагил" required="">
+                                        <input class="form-control" type="text" id="fulltime-form-place-city" placeholder="Например, Нижний Тагил" required="" value="Нижний Тагил">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Улица<span class="text-danger">*</span>:</label>
@@ -455,7 +455,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Отчество (при наличии):</label>
-                                    <input class="form-control" type="text" id="extramural-form-patronymic" required="" placeholder="Отчество">
+                                    <input class="form-control" type="text" id="extramural-form-patronymic" placeholder="Отчество">
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Пол<span class="text-danger">*</span>:</label>
@@ -485,30 +485,30 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label>Страна<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="text" id="extramural-form-birth-country" placeholder="Например, Россия" required="">
+                                    <input class="form-control" type="text" id="extramural-form-birth-country" placeholder="Например, Россия" required="" value="Россия">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Субъект страны<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="text" id="extramural-form-birth-region" placeholder="Например, Свердловская область" required="">
+                                    <input class="form-control" type="text" id="extramural-form-birth-region" placeholder="Например, Свердловская область" required="" value="Свердловская область">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Населённый пункт<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="text" id="extramural-form-birth-city" placeholder="Например, Нижний Тагил" required="">
+                                    <input class="form-control" type="text" id="extramural-form-birth-city" placeholder="Например, Нижний Тагил" required="" value="Нижний Тагил">
                                 </div>
                             </div>
                             <h4>Адрес фактического проживания</h4>
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label>Страна<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="text" id="extramural-form-place-country" placeholder="Например, Россия" required="">
+                                    <input class="form-control" type="text" id="extramural-form-place-country" placeholder="Например, Россия" required="" value="Россия">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Субъект страны<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="text" id="extramural-form-place-region" placeholder="Например, Свердловская область" required="">
+                                    <input class="form-control" type="text" id="extramural-form-place-region" placeholder="Например, Свердловская область" required="" value="Свердловская область">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Населённый пункт<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="text" id="extramural-form-place-city" placeholder="Например, Нижний Тагил" required="">
+                                    <input class="form-control" type="text" id="extramural-form-place-city" placeholder="Например, Нижний Тагил" required="" value="Нижний Тагил">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Улица<span class="text-danger">*</span>:</label>

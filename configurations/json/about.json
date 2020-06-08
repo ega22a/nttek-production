@@ -120,6 +120,11 @@
                         "name": "Договор на оказание платных образовательных услуг",
                         "href": "https://nttek.ru/Dogovor_na_okazaniE_platnykh_obrazovatelnykh_uslug_2020.docx",
                         "isTarget": false
+                    },
+                    {
+                        "name": "Согласие на обработку и хранение персональных данных",
+                        "href": "https://assistant.nttek.ru/download?id=7",
+                        "isTarget": false
                     }
                 ],
                 "contacts": [
