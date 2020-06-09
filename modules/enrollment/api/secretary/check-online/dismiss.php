@@ -31,10 +31,20 @@
                             <p>Если у Вас остались вопросы, то их можно задать, написав на следующий адрес электронной почты: <a href=\"mailto:{$college -> enrollment -> email}\">{$college -> enrollment -> email}</a>.</p>
                             <hr>
                             <sub>Это письмо было сгенерировано автоматически. На него не нужно отвечать!</sub>";
-                        $mail -> send();
-                        echo json_encode([
-                            "status" => "OK",
-                        ]);
+                        $isExeption = false;
+                        try {
+                            $mail -> send();
+                        } catch (Exception $e) {
+                            echo json_decode([
+                                "status" => $e,
+                            ]);
+                            $isExeption = true;
+                        } finally {
+                            if (!$isExeption)
+                                echo json_encode([
+                                    "status" => "OK",
+                                ]);
+                        }
                     } else
                         echo json_encode([
                             "status" => "ENROLLEE_IS_NOT_FOUND",

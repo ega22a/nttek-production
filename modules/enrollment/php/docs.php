@@ -780,9 +780,9 @@
                         "count" => $database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$enrolleeData["id"]}") -> fetch_assoc()["compositeKey"],
                         "year" => Date("Y", $enrolleeData["timestamp"]),
                     ];
-                    $pdf -> Cell(130, 5, $pdf -> cyrilic("Р А С П И С К А № {$key["count"]}-{$key["level"]}-{$key["specialty"]}/{$key["year"]} ({$enrolleeData["id"]})"), 0, 0, "C");
+                    $pdf -> Cell(100, 5, $pdf -> cyrilic("Р А С П И С К А № {$key["count"]}-{$key["level"]}-{$key["specialty"]}/{$key["year"]} ({$enrolleeData["id"]})"), 0, 0, "C");
                     $pdf -> Ln();
-                    $pdf -> Cell(68.5, 5, $pdf -> cyrilic("о приёме документов ("), 0, 0, "R");
+                    $pdf -> Cell(38.5, 5, $pdf -> cyrilic("о приёме документов ("), 0, 0, "R");
                     $pdf -> SetX($pdf -> GetX() - 1);
                     if ($enrolleeData["educationalType"] == "fulltime")
                         $pdf -> Cell(36, 5, $pdf -> cyrilic("дневное отделение"), "B");
@@ -792,12 +792,12 @@
                     $pdf -> Cell(2, 5, ")");
                     $pdf -> Ln();
                     $pdf -> SetFont("PTSerif", "", 10);
-                    $pdf -> Cell(130, 5, $pdf -> cyrilic("Настоящая расписка подтверждает, что абитуриент"));
+                    $pdf -> Cell(100, 5, $pdf -> cyrilic("Настоящая расписка подтверждает, что абитуриент"));
                     $pdf -> Ln();
-                    $pdf -> Cell(130, 5, $pdf -> cyrilic("{$crypt -> decrypt($enrolleeData["lastname"])} {$crypt -> decrypt($enrolleeData["firstname"])} {$crypt -> decrypt($enrolleeData["patronymic"])}"), "B", 0, "C");
+                    $pdf -> Cell(100, 5, $pdf -> cyrilic("{$crypt -> decrypt($enrolleeData["lastname"])} {$crypt -> decrypt($enrolleeData["firstname"])} {$crypt -> decrypt($enrolleeData["patronymic"])}"), "B", 0, "C");
                     $pdf -> Ln();
                     $pdf -> SetFont("PTSerif", "", 7);
-                    $pdf -> Cell(130, 5, $pdf -> cyrilic("(фамилия, имя, отчество (при наличии))"), 0, 0, "C");
+                    $pdf -> Cell(100, 5, $pdf -> cyrilic("(фамилия, имя, отчество (при наличии))"), 0, 0, "C");
                     $pdf -> Ln();
                     $pdf -> SetFont("PTSerif", "", 10);
                     $pdf -> MultiCell(130, 5, $pdf -> cyrilic(($enrolleeData["sex"] == "1" ? "подал" : "подала") . " в Приемную комиссию {$json -> school -> name -> halfShort -> genitive} следующие документы:"));
@@ -816,6 +816,7 @@
                     $pdf -> MultiCell(130, 5, $pdf -> cyrilic("    Обращаем Ваше внимание на то, что эта расписка является удостоверяющим документом в Приемной комиссии {$json -> school -> name -> short}. Выдача или принятие документов в Приемной комиссии возможна только при предъявлении данной Расписки или документа, удостоверяющего личность (паспорт). Вся информация отражена на сайте Образовательной организации."));
                     $pdf -> Ln();
                     $pdf -> SetFont("PTSerif", "B", 10);
+                    $y = $pdf -> GetY();
                     if (!boolval($enrolleeData["isOnline"]) && empty($enrolleeData["usersId"])) {
                         $_auth_enrollee = [
                             "login" => create_random_string(6),
@@ -842,19 +843,19 @@
                         $pdf -> Cell(20, 5, $pdf -> cyrilic("Пароль:"));
                         $pdf -> SetFont("PTMono", "", 10);
                         $pdf -> Cell(80, 5, $_auth_enrollee["password"]);
-                        $pdf -> SetFont("PTSerif", "", 10);
-                        $pdf -> Ln();
-                        $pdf -> Cell(20, 5, $pdf -> cyrilic("Сайт:"));
-                        $pdf -> SetFont("PTMono", "", 10);
-                        $pdf -> Cell(80, 5, "https://{$json -> address}");
-                        $pdf -> SetFont("PTSerif", "", 10);
-                        $pdf -> Ln();
-                        $pdf -> Cell(20, 5, $pdf -> cyrilic("Телефон:"));
-                        $pdf -> SetFont("PTMono", "", 10);
-                        $pdf -> Cell(80, 5, "{$json -> school -> telephones -> enrollment}");
-                        $pdf -> SetFont("PTSerif", "", 10);
-                        $pdf -> Image("https://{$json -> address}/api/qr?text=https://{$json -> address}/login", 110, $y - 5, 30, 30, "PNG");
                     }
+                    $pdf -> SetFont("PTSerif", "", 10);
+                    $pdf -> Ln();
+                    $pdf -> Cell(20, 5, $pdf -> cyrilic("Сайт:"));
+                    $pdf -> SetFont("PTMono", "", 10);
+                    $pdf -> Cell(80, 5, "https://{$json -> address}");
+                    $pdf -> SetFont("PTSerif", "", 10);
+                    $pdf -> Ln();
+                    $pdf -> Cell(20, 5, $pdf -> cyrilic("Телефон:"));
+                    $pdf -> SetFont("PTMono", "", 10);
+                    $pdf -> Cell(80, 5, "{$json -> school -> telephones -> enrollment}");
+                    $pdf -> SetFont("PTSerif", "", 10);
+                    $pdf -> Image("https://{$json -> address}/api/qr?text=https://{$json -> address}/login", 115, 5, 30, 30, "PNG");
                     return $pdf -> Output("S");
                 }
                 $database -> close();

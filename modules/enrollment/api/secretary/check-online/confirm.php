@@ -86,10 +86,20 @@
                                             $mail -> addStringAttachment(statement($_user, $id), "statement.pdf");
                                             if (boolval($enrollee["hostel"]))
                                                 $mail -> addStringAttachment(hostel($_user, $id), "hostel.pdf");
-                                            $mail -> send();
-                                            echo json_encode([
-                                                "status" => "OK",
-                                            ]);
+                                            $isExeption = false;
+                                            try {
+                                                $mail -> send();
+                                            } catch (Exception $e) {
+                                                echo json_decode([
+                                                    "status" => $e,
+                                                ]);
+                                                $isExeption = true;
+                                            } finally {
+                                                if (!$isExeption)
+                                                    echo json_encode([
+                                                        "status" => "OK",
+                                                    ]);
+                                            }
                                         } else
                                             echo json_encode([
                                                 "status" => "DB_ERROR",
