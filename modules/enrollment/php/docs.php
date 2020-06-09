@@ -1148,9 +1148,9 @@
                         ];
                         while ($specialty = $specialties -> fetch_assoc()) {
                             $calculate = [
-                                "allDocs" => intval($database -> query("SELECT COUNT(`id`) FROM `enr_statements` WHERE `specialty` = {$specialty["id"]};") -> fetch_assoc()["COUNT(`id`)"]),
-                                "originalDiploma" => intval($database -> query("SELECT COUNT(`id`) FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `withOriginalDiploma` = 1") -> fetch_assoc()["COUNT(`id`)"]),
-                                "contracts" => intval($database -> query("SELECT COUNT(`id`) FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `paysType` = 2;") -> fetch_assoc()["COUNT(`id`)"]),
+                                "allDocs" => intval($database -> query("SELECT COUNT(`id`) FROM `enr_statements` WHERE `degree` = {$level["id"]} AND `specialty` = {$specialty["id"]};") -> fetch_assoc()["COUNT(`id`)"]),
+                                "originalDiploma" => intval($database -> query("SELECT COUNT(`id`) FROM `enr_statements` WHERE `degree` = {$level["id"]} AND `specialty` = {$specialty["id"]} AND `withOriginalDiploma` = 1") -> fetch_assoc()["COUNT(`id`)"]),
+                                "contracts" => intval($database -> query("SELECT COUNT(`id`) FROM `enr_statements` WHERE `degree` = {$level["id"]} AND `specialty` = {$specialty["id"]} AND `paysType` = 2;") -> fetch_assoc()["COUNT(`id`)"]),
                             ];
                             $counters["allDocs"] += $calculate["allDocs"];
                             $counters["originalDiploma"] += $calculate["originalDiploma"];
@@ -1190,9 +1190,9 @@
                         ];
                         while ($specialty = $specialties -> fetch_assoc()) {
                             $calculate = [
-                                "allDocs" => intval($database -> query("SELECT COUNT(`id`) FROM `enr_statements` WHERE `specialty` = {$specialty["id"]};") -> fetch_assoc()["COUNT(`id`)"]),
-                                "originalDiploma" => intval($database -> query("SELECT COUNT(`id`) FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `withOriginalDiploma` = 1") -> fetch_assoc()["COUNT(`id`)"]),
-                                "contracts" => intval($database -> query("SELECT COUNT(`id`) FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `paysType` = 2;") -> fetch_assoc()["COUNT(`id`)"]),
+                                "allDocs" => intval($database -> query("SELECT COUNT(`id`) FROM `enr_statements` WHERE `degree` = {$level["id"]} AND `specialty` = {$specialty["id"]};") -> fetch_assoc()["COUNT(`id`)"]),
+                                "originalDiploma" => intval($database -> query("SELECT COUNT(`id`) FROM `enr_statements` WHERE `degree` = {$level["id"]} AND `specialty` = {$specialty["id"]} AND `withOriginalDiploma` = 1") -> fetch_assoc()["COUNT(`id`)"]),
+                                "contracts" => intval($database -> query("SELECT COUNT(`id`) FROM `enr_statements` WHERE `degree` = {$level["id"]} AND `specialty` = {$specialty["id"]} AND `paysType` = 2;") -> fetch_assoc()["COUNT(`id`)"]),
                             ];
                             $counters["allDocs"] += $calculate["allDocs"];
                             $counters["originalDiploma"] += $calculate["originalDiploma"];
@@ -1298,7 +1298,7 @@
                                     $pdf -> SetFillColor(51, 153, 255);
                                     $fill = [true, true, true, true, true];
                                 }
-                                $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $enrollee["averageMark"], (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), (boolval($enrollee["hostel"]) ? "+" : "-")], $fill);
+                                $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $enrollee["averageMark"], (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), (boolval($enrollee["hostel"]) ? "+" : "-")], $fill);
                                 $counters["item"]++;
                                 $counters["previousGrade"] = floatval($enrollee["averageMark"]);
                             }
@@ -1339,7 +1339,7 @@
                                     $pdf -> SetFillColor(51, 153, 255);
                                     $fill = [true, true, true, true, true];
                                 }
-                                $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), !empty($enrollee["averageMark"]) ? $enrollee["averageMark"] : "-", (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-")], $fill);
+                                $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), !empty($enrollee["averageMark"]) ? $enrollee["averageMark"] : "-", (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-")], $fill);
                                 $counters["item"]++;
                                 $counters["previousGrade"] = floatval($enrollee["averageMark"]);
                             }
@@ -1394,7 +1394,7 @@
                 if ($enrollees -> num_rows != 0)
                     while ($enrollee = $enrollees -> fetch_assoc()) {
                         $sub_data = [
-                            "fullname" => "{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : ""),
+                            "fullname" => "{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : ""),
                             "hostelNumber" => intval($enrollee["hostelNumber"]),
                             "birthday" => explode("-", $crypt -> decrypt($enrollee["birthday"])),
                             "specialty" => $database -> query("SELECT `shortname` FROM `enr_specialties` WHERE `id` = {$enrollee["specialty"]};") -> fetch_assoc()["shortname"],

@@ -18,7 +18,6 @@
             $mail -> Host = "ssl://" . $auth["host"];
             $mail -> Port = $auth["port"];
             $mail -> IsHTML(true);
-            $mail -> From($auth["login"]);
             $mail -> SetFrom($auth["login"], 'АИС Ассистент');
         } catch (Exception $e) {
             http_response_code(500);
