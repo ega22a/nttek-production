@@ -56,6 +56,9 @@
                                         if ($database -> query("SELECT `id` FROM `enr_educational_docs` WHERE `id` = {$enrollee_data["previous-doc-type"]};") -> num_rows == 1) {
                                             if ($database -> query("SELECT `id` FROM `enr_languages` WHERE `id` = {$enrollee_data["language"]};") -> num_rows == 1) {
                                                 if ($database -> query("SELECT `id` FROM `enr_category_of_citizen` WHERE `id` = {$enrollee_data["category-of-citizen"]};") -> num_rows == 1 || $enrollee_data["category-of-citizen"] == -1) {
+                                                    foreach ($enrollee_data as $enr_key => $enr_value)
+                                                        if (is_string($enr_value))
+                                                            $enrollee_data[$enr_key] = trim($enr_value);
                                                     $sql = [
                                                         "lastname" => $crypt -> encrypt($enrollee_data["lastname"]),
                                                         "firstname" => $crypt -> encrypt($enrollee_data["firstname"]),
@@ -70,8 +73,8 @@
                                                             "city" => $enrollee_data["place-city"],
                                                             "street" => $enrollee_data["place-street"],
                                                             "house" => $enrollee_data["place-house"],
-                                                            "building" => isset($enrollee_data["place-building"]) ? isset($enrollee_data["place-building"]) : NULL,
-                                                            "flat" => isset($enrollee_data["place-flat"]) ? isset($enrollee_data["place-flat"]) : NULL,
+                                                            "building" => isset($enrollee_data["place-building"]) ? $enrollee_data["place-building"] : NULL,
+                                                            "flat" => isset($enrollee_data["place-flat"]) ? $enrollee_data["place-flat"] : NULL,
                                                         ])),
                                                         "telephone" => $crypt -> encrypt($enrollee_data["telephone"]),
                                                         "homeTelephone" => isset($enrollee_data["home-telephone"]) ? $crypt -> encrypt($enrollee_data["home-telephone"]) : NULL,

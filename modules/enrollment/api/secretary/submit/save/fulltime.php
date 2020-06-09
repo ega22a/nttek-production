@@ -140,6 +140,9 @@
                                                                 $hostel_number = 1;
                                                         } else
                                                             $hostel_number = 1;
+                                                        foreach ($enrollee_data as $enr_key => $enr_value)
+                                                            if (is_string($enr_value))
+                                                                $enrollee_data[$enr_key] = trim($enr_value);
                                                         $sql = [
                                                             "lastname" => $crypt -> encrypt($enrollee_data["lastname"]),
                                                             "firstname" => $crypt -> encrypt($enrollee_data["firstname"]),
@@ -154,8 +157,8 @@
                                                                 "city" => $enrollee_data["place-city"],
                                                                 "street" => $enrollee_data["place-street"],
                                                                 "house" => $enrollee_data["place-house"],
-                                                                "building" => isset($enrollee_data["place-building"]) ? isset($enrollee_data["place-building"]) : NULL,
-                                                                "flat" => isset($enrollee_data["place-flat"]) ? isset($enrollee_data["place-flat"]) : NULL,
+                                                                "building" => isset($enrollee_data["place-building"]) ? $enrollee_data["place-building"] : NULL,
+                                                                "flat" => isset($enrollee_data["place-flat"]) ? $enrollee_data["place-flat"] : NULL,
                                                             ])),
                                                             "telephone" => $crypt -> encrypt($enrollee_data["telephone"]),
                                                             "homeTelephone" => isset($enrollee_data["home-telephone"]) ? $crypt -> encrypt($enrollee_data["home-telephone"]) : NULL,
