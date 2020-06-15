@@ -213,8 +213,8 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>Серия<span class="text-danger">*</span>:</label>
-                        <input class="form-control" type="text" id="form-previous-doc-series" required="" placeholder="Например, 123456">
+                        <label>Серия:</label>
+                        <input class="form-control" type="text" id="form-previous-doc-series" placeholder="Например, 123456">
                     </div>
                     <div class="form-group col-md-6">
                         <label>Номер<span class="text-danger">*</span>:</label>

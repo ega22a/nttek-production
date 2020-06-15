@@ -386,11 +386,6 @@ document.getElementById("button-confirm-extramural").onclick = function() {
                 break;
             }
         }
-        var _about = "";
-        document.getElementById("extramural-form-about").value.split("\n").forEach((item) => {
-            _about += `${item} `;
-        });
-        enrollee.set("about", _about);
         $("#modal-statement-receipt").modal();
         $("#modal-spinner").modal();
         $.ajax({

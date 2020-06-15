@@ -28,11 +28,6 @@ document.getElementById("button-confirm").onclick = function() {
                 break;
             }
         }
-        var _about = "";
-        document.getElementById("form-about").value.split("\n").forEach((item) => {
-            _about += `${item} `;
-        });
-        enrollee.set("about", _about);
         createConfirm(`Нажмите кнопку "Подтвердить", чтобы отправить Ваши данные в приемную комиссию. После успешной отправки всех данных на сервер, Вам придет письмо на адрес <b>${enrollee.get("email")}</b> в котором будут указаны дальнейшие действия.`, () => {
             $("#modal-spinner").modal();
             $.ajax({

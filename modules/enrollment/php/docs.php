@@ -159,7 +159,7 @@
                         $pdf -> Cell(6, 5, $pdf -> cyrilic("от"));
                         $petrovich -> setSex(intval($enrolleeData["sex"]));
                         $patronymic = !empty($crypt -> decrypt($enrolleeData["patronymic"])) ? $petrovich -> middlename($crypt -> decrypt($enrolleeData["patronymic"]), Petrovich::CASE_GENITIVE) : "";
-                        $pdf -> Cell(87, 5, $pdf -> cyrilic("{$petrovich -> lastname($crypt -> decrypt($enrolleeData["lastname"]), Petrovich::CASE_GENITIVE)} {$petrovich -> lastname($crypt -> decrypt($enrolleeData["firstname"]), Petrovich::CASE_GENITIVE)} {$patronymic}"), "B");
+                        $pdf -> Cell(87, 5, $pdf -> cyrilic("{$petrovich -> lastname($crypt -> decrypt($enrolleeData["lastname"]), Petrovich::CASE_GENITIVE)} {$petrovich -> firstname($crypt -> decrypt($enrolleeData["firstname"]), Petrovich::CASE_GENITIVE)} {$patronymic}"), "B");
                         $pdf -> Ln();
                         $pdf -> Cell(30, 5, $pdf -> cyrilic("Зачислить на"));
                         $pdf -> Cell(23, 5, "", "B");
@@ -780,9 +780,12 @@
                         "count" => $database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$enrolleeData["id"]}") -> fetch_assoc()["compositeKey"],
                         "year" => Date("Y", $enrolleeData["timestamp"]),
                     ];
+                    $some_y = $pdf -> GetY();
+                    $pdf -> Image("https://{$json -> address}/api/qr?text=https://{$json -> address}/login", 115, 5, 30, 30, "PNG");
+                    $pdf -> SetY($some_y);
                     $pdf -> Cell(100, 5, $pdf -> cyrilic("Р А С П И С К А № {$key["count"]}-{$key["level"]}-{$key["specialty"]}/{$key["year"]} ({$enrolleeData["id"]})"), 0, 0, "C");
                     $pdf -> Ln();
-                    $pdf -> Cell(38.5, 5, $pdf -> cyrilic("о приёме документов ("), 0, 0, "R");
+                    $pdf -> Cell(53.5, 5, $pdf -> cyrilic("о приёме документов ("), 0, 0, "R");
                     $pdf -> SetX($pdf -> GetX() - 1);
                     if ($enrolleeData["educationalType"] == "fulltime")
                         $pdf -> Cell(36, 5, $pdf -> cyrilic("дневное отделение"), "B");
@@ -855,7 +858,6 @@
                     $pdf -> SetFont("PTMono", "", 10);
                     $pdf -> Cell(80, 5, "{$json -> school -> telephones -> enrollment}");
                     $pdf -> SetFont("PTSerif", "", 10);
-                    $pdf -> Image("https://{$json -> address}/api/qr?text=https://{$json -> address}/login", 115, 5, 30, 30, "PNG");
                     return $pdf -> Output("S");
                 }
                 $database -> close();

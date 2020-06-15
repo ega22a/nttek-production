@@ -79,14 +79,14 @@
                                                         <li class="list-group-item d-flex justify-content-between align-items-center <?php echo $average == $enrollee["averageMark"] ? "bg-warning" : ""; ?>" data-id="<?php echo $enrollee["id"]; ?>">
                                                             <span><?php echo "{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? " " . $crypt -> decrypt($enrollee["patronymic"]) : "") . " ({$enrollee["averageMark"]})" . (boolval($enrollee["isOnline"]) ? "<i class=\"fas fa-cloud\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Онлайн-заявление\"></i>" : "") . (boolval($enrollee["isOnline"]) && !boolval($enrollee["withStatement"]) ? "<i class=\"fas fa-user-alt-slash\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Оригинала заявления нет!\"></i>" : (boolval($enrollee["isOnline"]) && boolval($enrollee["withStatement"]) ? "<i class=\"fas fa-user-alt\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Оригинал заявления присутствует!\"></i>" : "")); ?></span>
                                                             <div class="btn-group btn-group-sm float-right" role="group">
-                                                                <button class="btn btn-outline-danger button-enrollee-delete" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Удалить">
-                                                                    <i class="fas fa-eraser"></i>
-                                                                </button>
                                                                 <button class="btn btn-outline-primary button-enrollee-archive" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Архив документов">
                                                                     <i class="fas fa-archive"></i>
                                                                 </button>
                                                                 <button class="btn btn-outline-primary button-enrollee-edit" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Редактировать">
                                                                     <i class="fas fa-edit"></i>
+                                                                </button>
+                                                                <button class="btn btn-outline-danger button-enrollee-delete" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Удалить">
+                                                                    <i class="fas fa-eraser"></i>
                                                                 </button>
                                                             </div>
                                                         </li>
