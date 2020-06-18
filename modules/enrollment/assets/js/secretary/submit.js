@@ -296,6 +296,36 @@ document.getElementById("fulltime-form-representative-checkbox-not-working").onc
     }
 }
 
+document.getElementById("extramural-form-checkbox-not-working").onclick = function() {
+    var jobName = document.getElementById("extramural-form-job-name"),
+        jobPosition = document.getElementById("extramural-form-job-position"),
+        jobYears = document.getElementById("extramural-form-job-years");
+    if (this.checked) {
+        jobName.value = "";
+        jobPosition.value = "";
+        jobYears.value = "";
+        jobName.setAttribute("disabled", true);
+        jobPosition.setAttribute("disabled", true);
+        jobYears.setAttribute("disabled", true);
+        jobName.removeAttribute("required");
+        jobPosition.removeAttribute("required");
+        jobYears.removeAttribute("required");
+        jobName.parentNode.children[0].innerHTML = "Место работы:";
+        jobPosition.parentNode.children[0].innerHTML = "Должность:";
+        jobYears.parentNode.children[0].innerHTML = "Стаж работы в отрасли:";
+    } else {
+        jobName.removeAttribute("disabled");
+        jobPosition.removeAttribute("disabled");
+        jobYears.removeAttribute("disabled");
+        jobName.setAttribute("required", true);
+        jobPosition.setAttribute("required", true);
+        jobYears.setAttribute("required", true);
+        jobName.parentNode.children[0].innerHTML = "Место работы<span class=\"text-danger\">*</span>:";
+        jobPosition.parentNode.children[0].innerHTML = "Должность<span class=\"text-danger\">*</span>:";
+        jobYears.parentNode.children[0].innerHTML = "Стаж работы в отрасли<span class=\"text-danger\">*</span>:";
+    }
+}
+
 for (piece of $("input[type=text]"))
     piece.addEventListener("input", function() {
         if (this.value.length != 0)

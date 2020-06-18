@@ -34,7 +34,7 @@
                                     "telephone" => isset($_POST["{$key}-telephone"]) ? $database -> real_escape_string($_POST["{$key}-telephone"]) : $value -> telephone,
                                 ];
                                 if ($key == "representative")
-                                    $concat["who"] = isset($_POST["{$key}-who"]) ? $database -> real_escape_string($_POST["{$key}-who"]) : $value["who"];
+                                    $concat["who"] = isset($_POST["{$key}-who"]) ? $database -> real_escape_string($_POST["{$key}-who"]) : $value -> who;
                             } else {
                                 $concat = [
                                     "firstname" => isset($_POST["{$key}-firstname"]) ? $database -> real_escape_string($_POST["{$key}-firstname"]) : NULL,

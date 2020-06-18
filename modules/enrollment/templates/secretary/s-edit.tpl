@@ -233,13 +233,15 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label>Дополнительные сведения о себе (увлечения):</label>
-                                    <textarea class="form-control" id="form-about" rows="3" placeholder="Опишите свои увлечения, способности и т.д." maxlength="200"><?php echo stripcslashes($this -> crypt -> decrypt($this -> statement["about"])); ?></textarea>
-                                </div>
-                            </div>
                             <?php if (boolval($isFulltime)) { ?>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label>Дополнительные сведения о себе (увлечения):</label>
+                                        <textarea class="form-control" id="form-about" rows="3" placeholder="Опишите свои увлечения, способности и т.д." maxlength="200"><?php echo stripcslashes($this -> crypt -> decrypt($this -> statement["about"])); ?></textarea>
+                                    </div>
+                                </div>
+                            <?php }
+                            if (boolval($isFulltime)) { ?>
                                 <h4>Данные о родителях (законных представителях)</h4>
                                 <div id="div-mother">
                                     <?php $mother = !empty($this -> statement["mother"]) ? json_decode($this -> crypt -> decrypt($this -> statement["mother"])) : NULL; ?>

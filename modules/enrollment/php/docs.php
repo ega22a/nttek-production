@@ -568,27 +568,22 @@
                                 $pdf -> MultiCell(80, 5, $pdf -> cyrilic($category), "B", "C");
                             } else
                                 $pdf -> MultiCell(80, 5, $pdf -> cyrilic("Ни к одной из перечисленных"), "B", "C");
-                            $pdf -> SetFont("PTSerif", "B", 10);
-                            $pdf -> Ln();
-                            $pdf -> Cell(20, 5, $pdf -> cyrilic("О себе:"));
-                            $pdf -> Cell(3, 5, "");
                             $pdf -> SetFont("PTSerif", "", 10);
-                            $pdf -> MultiCell(167, 5, $pdf -> cyrilic($crypt -> decrypt($enrolleeData["about"])), "B", "C");
                             $pdf -> Ln(10);
                             $pdf -> SetFont("PTSerif", "B", 10);
                             $pdf -> Cell(48, 5, $pdf -> cyrilic("Место работы:"));
                             $pdf -> SetFont("PTSerif", "", 10);
-                            $pdf -> Cell(142, 5, $pdf -> cyrilic($crypt -> decrypt($enrolleeData["work"])), "B");
+                            $pdf -> Cell(142, 5, $pdf -> cyrilic(isset($enrolleeData["work"]) ? $crypt -> decrypt($enrolleeData["work"]) : ""), "B");
                             $pdf -> Ln();
                             $pdf -> SetFont("PTSerif", "B", 10);
                             $pdf -> Cell(48, 5, $pdf -> cyrilic("Должность:"));
                             $pdf -> SetFont("PTSerif", "", 10);
-                            $pdf -> Cell(142, 5, $pdf -> cyrilic($crypt -> decrypt($enrolleeData["position"])), "B");
+                            $pdf -> Cell(142, 5, $pdf -> cyrilic(isset($enrolleeData["position"]) ? $crypt -> decrypt($enrolleeData["position"]) : ""), "B");
                             $pdf -> Ln();
                             $pdf -> SetFont("PTSerif", "B", 10);
                             $pdf -> Cell(48, 5, $pdf -> cyrilic("Стаж работы в отрасли:"));
                             $pdf -> SetFont("PTSerif", "", 10);
-                            $pdf -> Cell(142, 5, $pdf -> cyrilic($crypt -> decrypt($enrolleeData["workExpirence"])), "B");
+                            $pdf -> Cell(142, 5, $pdf -> cyrilic(isset($enrolleeData["workExpirence"]) ? $crypt -> decrypt($enrolleeData["workExpirence"]) : ""), "B");
                             $pdf -> Ln();
                             $pdf -> Ln(10);
                             $pdf -> SetFont("PTSerif", "B", 10);
@@ -1430,6 +1425,7 @@
                 require __DIR__ . "/../../../libraries/fpdf/scripts/pdf-mc-tables.php";
                 require_once __DIR__ . "/../../../configurations/main.php";
                 require __DIR__ . "/../../../configurations/cipher-keys.php";
+                $crypt = new CryptService($ciphers["database"]);
                 class analysisOfNamesPDF extends PDF_MC_Table {
                     function header() {
                         $this -> SetFont("PTSerif", "B", 12);
@@ -1459,7 +1455,8 @@
                     $mainCounter = 1;
                     while ($check_enrollee = $enrollees -> fetch_assoc()) {
                         if (intval($check_enrollee["counter"]) > 1) {
-                            $pdf -> Cell(190, 4, $pdf -> cyrilic("{$mainCounter}. {$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? $crypt -> decrypt($enrollee["patronymic"]) : "")));
+                            $pdf -> Cell(190, 4, $pdf -> cyrilic("{$mainCounter}. {$crypt -> decrypt($check_enrollee["lastname"])} {$crypt -> decrypt($check_enrollee["firstname"])} " . (!empty($check_enrollee["patronymic"]) ? $crypt -> decrypt($check_enrollee["patronymic"]) : "")));
+                            $pdf -> Ln();
                             $query = $database -> query("SELECT `email`, `telephone`, `homeTelephone`, `timestamp`, `specialty` FROM `enr_statements` WHERE `lastname` = '{$check_enrollee["lastname"]}' AND `firstname` = '{$check_enrollee["firstname"]}' AND `patronymic` = '{$check_enrollee["patronymic"]}';");
                             $subCounter = 1;
                             while ($enrollee = $query -> fetch_assoc()) {

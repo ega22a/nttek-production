@@ -105,7 +105,7 @@
                     unset($_POST[$key]);
             }
             foreach ($errors_array as $key => $value)
-                if (in_array($value, ["mother-job-telephone", "father-job-telephone", "representative-job-telephone", "morher-patronymic", "father-patronymic", "representative-patronymic"]))
+                if (in_array($value, ["mother-job-telephone", "father-job-telephone", "representative-job-telephone", "mother-patronymic", "father-patronymic", "representative-patronymic"]))
                     unset($errors_array[$key]);
             if (empty($errors_array)) {
                 require_once __DIR__ . "/../../../../../../configurations/main.php";
@@ -131,15 +131,6 @@
                                                         if ($database -> query($database -> query("SELECT `id` FROM `enr_hostel_rooms` WHERE `id` = {$enrollee_data["category-of-citizen"]};") -> num_rows == 0))
                                                             $hostel == false;
                                                     if ($hostel) {
-                                                        $hostel_number = $database -> query("SELECT `hostelNumber` FROM `enr_statements` ORDER BY `hostelNumber` DESC LIMIT 1");
-                                                        if ($hostel_number -> num_rows != 0) {
-                                                            $hostel_number = $hostel_number -> fetch_assoc()["hostelNumber"];
-                                                            if (is_int($hostel_number))
-                                                                $hostel_number = intval($hostel_number) + 1;
-                                                            else
-                                                                $hostel_number = 1;
-                                                        } else
-                                                            $hostel_number = 1;
                                                         foreach ($enrollee_data as $enr_key => $enr_value)
                                                             if (is_string($enr_value))
                                                                 $enrollee_data[$enr_key] = trim($enr_value);
@@ -189,7 +180,7 @@
                                                             "language" => intval($enrollee_data["language"]),
                                                             "hostel" => $enrollee_data["hostel"] == "true" ? 1 : 0,
                                                             "hostelRoom" => $enrollee_data["hostel"] == "true" ? intval($enrollee_data["hostel-type"]) : NULL,
-                                                            "hostelNumber" => $enrollee_data["hostel"] == "true" ? $hostel_number : NULL,
+                                                            "hostelNumber" => NULL,
                                                             "category" => $enrollee_data["category-of-citizen"] != "-1" ? intval($enrollee_data["category-of-citizen"]) : NULL,
                                                             "about" => isset($enrollee_data["about"]) ? $crypt -> encrypt($enrollee_data["about"]) : NULL,
                                                             "mother" => isset($enrollee_data["mother-lastname"]) ? $crypt -> encrypt(json_encode([

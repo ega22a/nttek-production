@@ -6,9 +6,15 @@
                     <li class="list-group-item">
                         <h2>Общая информация</h2>
                         <p>Бюджетных мест для целевого приема не предусмотрено. Для иногородних студентов есть общежитие.</p>
-                        <p><a href="operational-summary">Оперативная сводка на <?php echo Date("m.d.Y"); ?></a>.</p>
+                        <p><a href="operational-summary">Оперативная сводка на <?php echo Date("d.m.Y"); ?></a>.</p>
                         <p><strong>Хотите подать документы онлайн?</strong> Вы можете <a href="https://assistant.nttek.ru/modules/enrollment/submit?type=fulltime">нажать здесь для подачи документов на очную форму обучения</a> или же <a href="https://assistant.nttek.ru/modules/enrollment/submit?type=extramural">здесь, если хотите подать документы на заочную форму обучения</a>.</p>
+                        <h3>Запись на личный прием в Приемную комиссию:</h3>
+                        <p><strong>Обязательно</strong> укажите Ваш адрес электронной почты!</p>
                         <div class="row">
+                            <div class="col-sm-12">
+                                <!-- Bookform widget --><script>(function (w,d,s,o,f,js,fjs){w['BookformObject']=o;w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments)};js=d.createElement(s),fjs=d.getElementsByTagName(s)[0];js.id=o;js.src=f;js.async=1;fjs.parentNode.insertBefore(js,fjs);}(window,document,'script','Bookform','https://widget.bookform.ru/31171/js'));</script><!-- End Bookform widget -->
+                                <div id="bookform-embedded-widget-31171"></div><script>Bookform('embedded',{id:31171});</script>
+                            </div>
                             <div class="col-lg-5">
                                 <ul class="list-group" style="margin-bottom: 15px;">
                                     <li class="list-group-item">

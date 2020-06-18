@@ -67,17 +67,18 @@
                                     </div>
                                     <div class="collapse show item-1" role="tabpanel" data-parent="#accordion-<?php echo $counter; ?>">
                                         <div class="card-body">
-                                            <?php $enrollies = $this -> database -> query("SELECT `id`, `lastname`, `firstname`, `patronymic`, `averageMark`, `isOnline`, `withStatement` FROM `enr_statements` WHERE `specialty` = {$row["id"]} AND `educationalType` = '" . (boolval($row["forExtramural"]) ? "extramural" : "fulltime") . "' AND `paysType` = 1 AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
+                                            <?php $enrollies = $this -> database -> query("SELECT `id`, `lastname`, `firstname`, `patronymic`, `averageMark`, `isOnline`, `withStatement`, `withOriginalDiploma` FROM `enr_statements` WHERE `specialty` = {$row["id"]} AND `educationalType` = '" . (boolval($row["forExtramural"]) ? "extramural" : "fulltime") . "' AND `paysType` = 1 AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
                                             if ($enrollies -> num_rows != 0) {
                                                 $firstElement = true;
                                                 $average = -1;
+                                                $sub_counter = 1;
                                                 while ($enrollee = $enrollies -> fetch_assoc()) {
                                                     if ($firstElement) {
                                                         $firstElement = false; ?>
                                                         <ul class="list-group">
                                                     <?php } ?>
                                                         <li class="list-group-item d-flex justify-content-between align-items-center <?php echo $average == $enrollee["averageMark"] ? "bg-warning" : ""; ?>" data-id="<?php echo $enrollee["id"]; ?>">
-                                                            <span><?php echo "{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? " " . $crypt -> decrypt($enrollee["patronymic"]) : "") . " ({$enrollee["averageMark"]})" . (boolval($enrollee["isOnline"]) ? "<i class=\"fas fa-cloud\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Онлайн-заявление\"></i>" : "") . (boolval($enrollee["isOnline"]) && !boolval($enrollee["withStatement"]) ? "<i class=\"fas fa-user-alt-slash\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Оригинала заявления нет!\"></i>" : (boolval($enrollee["isOnline"]) && boolval($enrollee["withStatement"]) ? "<i class=\"fas fa-user-alt\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Оригинал заявления присутствует!\"></i>" : "")); ?></span>
+                                                        <span><?php echo "{$sub_counter}. {$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? " " . $crypt -> decrypt($enrollee["patronymic"]) : "") . " ({$enrollee["averageMark"]})" . (boolval($enrollee["withOriginalDiploma"]) ? "<i class=\"fas fa-bell\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"С оригиналом документа об образовании!\"></i>" : "<i class=\"fas fa-bell-slash\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Без оригинала документа об образовании!\"></i>") . (boolval($enrollee["isOnline"]) ? "<i class=\"fas fa-cloud\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Онлайн-заявление\"></i>" : "") . (boolval($enrollee["isOnline"]) && !boolval($enrollee["withStatement"]) ? "<i class=\"fas fa-user-alt-slash\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Оригинала заявления нет!\"></i>" : (boolval($enrollee["isOnline"]) && boolval($enrollee["withStatement"]) ? "<i class=\"fas fa-user-alt\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Оригинал заявления присутствует!\"></i>" : "")); ?></span>
                                                             <div class="btn-group btn-group-sm float-right" role="group">
                                                                 <button class="btn btn-outline-primary button-enrollee-archive" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Архив документов">
                                                                     <i class="fas fa-archive"></i>
@@ -91,6 +92,7 @@
                                                             </div>
                                                         </li>
                                                     <?php $average = $enrollee["averageMark"];
+                                                    $sub_counter++;
                                                 } ?>
                                                 </ul>
                                             <?php } else { ?>
@@ -110,13 +112,14 @@
                                             <?php $enrollies = $this -> database -> query("SELECT `id`, `lastname`, `firstname`, `patronymic`, `averageMark`, `isOnline` FROM `enr_statements` WHERE `specialty` = {$row["id"]} AND `educationalType` = '" . (boolval($row["forExtramural"]) ? "extramural" : "fulltime") . "' AND `paysType` = 2 AND `isChecked` = 1;");
                                             if ($enrollies -> num_rows != 0) {
                                                 $firstElement = true;
+                                                $sub_counter = 1;
                                                 while ($enrollee = $enrollies -> fetch_assoc()) {
                                                     if ($firstElement) {
                                                         $firstElement = false; ?>
                                                         <ul class="list-group">
                                                     <?php } ?>
                                                         <li class="list-group-item d-flex justify-content-between align-items-center" data-id="<?php echo $enrollee["id"]; ?>">
-                                                            <span><?php echo "{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? " " . $crypt -> decrypt($enrollee["patronymic"]) : "") . (boolval($enrollee["isOnline"]) ? "<i class=\"fas fa-cloud\" style=\"margin-left: 10px;\"></i>" : ""); ?></span>
+                                                            <span><?php echo "{$sub_counter}. {$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? " " . $crypt -> decrypt($enrollee["patronymic"]) : "") . (boolval($enrollee["isOnline"]) ? "<i class=\"fas fa-cloud\" style=\"margin-left: 10px;\"></i>" : ""); ?></span>
                                                             <div class="btn-group btn-group-sm float-right" role="group">
                                                                 <button class="btn btn-outline-danger button-enrollee-delete" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Удалить">
                                                                     <i class="fas fa-eraser"></i>
@@ -129,7 +132,8 @@
                                                                 </button>
                                                             </div>
                                                         </li>
-                                                    <?php } ?>
+                                                    <?php $sub_counter++;
+                                                } ?>
                                                 </ul>
                                             <?php } else { ?>
                                                 <p class="card-text">Абитуриентов, которые подали заявления на эту специальность нет. Для того, чтобы проверить новые заявления, перезагрузите страницу или нажмите <a href="#" onclick="location.reload();">здесь</a>.</p>
