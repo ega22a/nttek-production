@@ -275,16 +275,58 @@ document.getElementById("button-confirm").onclick = function() {
                 contentType: false,
                 type: 'POST',
                 success: (data) => {
+                    console.log(data);
                     switch (data.status) {
                         case "OK":
-                            setTimeout(() => { $("#modal-spinner").modal("hide"); }, 500);
                             createAlert("Данные успешно сохранены! Вам было отправлено сообщение на указанный адрес электронной почты!", "alert-success");
+                        break;
+                        case "ERRORS_IN_DB":
+                            createAlert(`Произошла ошибка на сервере. Подробнее: <strong>${data.status}</strong>`, "alert-danger");
+                        break;
+                        case "ERRORS_IN_FILES":
+                            createAlert(`Вы загружаете некорректные документы! Ознакомьтесь с условиями к документам!`, "alert-danger");
+                        break;
+                        case "HOSTEL_ROOM_IS_NOT_FOUND":
+                            createAlert(`Выбранный тип комнаты не найден!`, "alert-danger");
+                        break;
+                        case "CATEGORY_OF_CITIZEN_IS_NOT_FOUND":
+                            createAlert(`Категория гражданина не найдена!`, "alert-danger");
+                        break;
+                        case "LANGUAGE_IS_NOT_FOUND":
+                            createAlert(`Иностранный язык не найден!`, "alert-danger");
+                        break;
+                        case "EDUCATIONAL_DOC_IS_NOT_FOUND":
+                            createAlert(`Тип документа об образовании не найден!`, "alert-danger");
+                        break;
+                        case "EDUCATIONAL_LEVEL_IS_NOT_FOUND":
+                            createAlert(`Уровень образования не найден!`, "alert-danger");
+                        break;
+                        case "TYPE_OF_PAY_CAN_ONLY_BY_1_OR_2":
+                            createAlert(`Некорректный тип оплаты за обучение!`, "alert-danger");
+                        break;
+                        case "SPECIALTY_IS_NOT_FOUND":
+                            createAlert(`Специальность не найдена!`, "alert-danger");
+                        break;
+                        case "SEX_CAN_ONLY_BE_1_OR_2":
+                            createAlert(`Пол может быть только Мужским или Женским!`, "alert-danger");
+                        break;
+                        case "REQUIRED_FILES_ARE_EMPTY":
+                            createAlert(`Некоторые обязательные документы не были загружены на сервер! Попробуйте ещё раз или позвоните в Приемную комиссию!`, "alert-danger");
+                        break;
+                        case "FILE_LIST_IS_EMPTY":
+                            createAlert(`Сервер не получил от вас файлы! Если ошибка повторяется, позвоните в Приемную комиссию!`, "alert-danger");
+                        break;
+                        case "EMAIL_IS_HOLD":
+                            createAlert(`На данный адрес электронной почты уже сформировано личное дело (или оно на рассмотрении)!`, "alert-danger");
+                        break;
+                        case "ERRORS_IN_DATA":
+                            createAlert(`Ошибка в данных! ОБЯЗАТЕЛЬНО позвоните в Приемную комиссию и позовите системного администратора!`, "alert-danger");
                         break;
                         default:
                             createAlert(`Произошла ошибка на сервере. Подробнее: <strong>${data.status}</strong>`, "alert-danger");
-                            setTimeout(() => { $("#modal-spinner").modal("hide"); }, 500);
                         break;
                     }
+                    setTimeout(() => { $("#modal-spinner").modal("hide"); }, 500);
                 }
             });
         });

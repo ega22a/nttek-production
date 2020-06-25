@@ -2,12 +2,20 @@
     $specialty = $this -> database -> query("SELECT * FROM `enr_specialties` WHERE `id` = {$statement["specialty"]};") -> fetch_assoc();
     $information = json_decode(file_get_contents(__DIR__ . "/../../../configurations/json/about.json")) -> school -> enrollment;
     $subQuery = $this -> database -> query("SELECT `id`, `averageMark` FROM `enr_statements` WHERE `specialty` = {$statement["specialty"]} AND `averageMark` IS NOT NULL ORDER BY `averageMark` DESC;");
+    $originalQuery = $this -> database -> query("SELECT `id`, `averageMark` FROM `enr_statements` WHERE `specialty` = {$statement["specialty"]} AND `averageMark` IS NOT NULL AND `withOriginalDiploma` = 1 ORDER BY `averageMark` DESC;");
     $place = 1;
+    $originalPlace = 1;
     while ($row = $subQuery -> fetch_assoc())
         if ($row["id"] == $statement["id"])
             break;
         else
-            $place++; ?>
+            $place++;
+    while ($row = $originalQuery -> fetch_assoc())
+        if ($row["id"] == $statement["id"])
+            break;
+        else
+            $originalPlace++;
+    ?>
 <header style="min-height: 100vh;">
     <div style="width: 100%;min-height: 100vh;padding-top: 80px;">
         <div class="container">
@@ -75,7 +83,13 @@
                         <div class="card-body">
                             <h4 class="card-title">Информация о ходе приемной кампании</h4>
                             <?php if ($statement["paysType"] == "1") { ?>
-                                <p class="card-text">На данный момент вы выбрали бюджетную форму обучения. Метод зачисления в образовательное учреждение — <strong><em>конкурс среднего балла документа об образовании</em></strong>. Ваш средний балл составляет: <strong><?php echo "{$statement["averageMark"]}"; ?></strong>. Ваше место в рейтинге: <strong><?php echo "{$place}"; ?></strong> из <strong><?php echo "{$this -> database -> query("SELECT COUNT(`id`) AS `cnt` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]};") -> fetch_assoc()["cnt"]}";?></strong>. Бюджетных мест: <strong><?php echo "{$specialty["budget"]}"; ?></strong>.</p>
+                                <p class="card-text">На данный момент вы выбрали бюджетную форму обучения. Метод зачисления в образовательное учреждение — <strong><em>конкурс среднего балла документа об образовании</em></strong>. Ваш средний балл составляет: <strong><?php echo "{$statement["averageMark"]}"; ?></strong>. Бюджетных мест: <strong><?php echo "{$specialty["budget"]}"; ?></strong>.</p>
+                                <ul>
+                                    <li>Ваше место в общем рейтинге: <strong><?php echo "{$place}"; ?></strong> из <strong><?php echo "{$this -> database -> query("SELECT COUNT(`id`) AS `cnt` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `averageMark` IS NOT NULL;") -> fetch_assoc()["cnt"]}";?></strong>.</li>
+                                    <?php if (boolval($statement["withOriginalDiploma"])) { ?>
+                                        <li>Ваше место в рейтинге с оригиналами документов об образовании: <strong><?php echo "{$originalPlace}"; ?></strong> из <strong><?php echo "{$this -> database -> query("SELECT COUNT(`id`) AS `cnt` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `averageMark` IS NOT NULL AND `withOriginalDiploma` = 1;") -> fetch_assoc()["cnt"]}";?></strong>.</li>
+                                    <?php } ?>
+                                </ul>
                             <?php } elseif ($statement["paysType"] == "2") { ?>
                                 <p class="card-text">На данный момент вы выбрали договорную форму обучения. Вам нужно оплатить сумму, указанную в договоре на оказание платных образовательных услуг.</p>
                             <?php } ?>

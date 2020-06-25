@@ -1,4 +1,5 @@
-var enrolleeData = {};
+var enrolleeData = {},
+    receiptTrigger = false;
 
 document.getElementById("fulltime-form-mother-checkbox-not-working").onclick = function() {
     var jobName = document.getElementById("fulltime-form-mother-job-name"),
@@ -497,12 +498,14 @@ document.getElementById("modal-s-r-button-error").onclick = function() {
                         break;
                         default:
                             createAlert(`Ошибка при обработке заявления. Побробнее: <b>${data.status}</b>.`, "alert-danger");
+                            $("#modal-statement-receipt").modal("hide");
                         break;
                     }
                 }
             );
         else
             $("#modal-statement-receipt").modal("hide");
+        receiptTrigger = false;
     });
 }
 
@@ -514,35 +517,40 @@ document.getElementById("modal-s-r-button-next").onclick = function() {
         document.getElementById("extramural-form").setAttribute("class", "validate");
         $("#modal-statement-receipt").modal("hide");
         enrolleeData = {};
+        receiptTrigger = false;
     });
 }
 
 document.getElementById("modal-s-r-button-receipt").onclick = function() {
-    createConfirm("Вы уверены, что Заявленое корректное? Если да, то продолжайте...", () => {
-        $.post(
-            "../api/secretary/submit/receipt",
-            {
-                token: Cookies.get("token"),
-                id: enrolleeData.id,
-            },
-            (data) => {
-                switch (data.status) {
-                    case "OK":
-                        download(`data:application/pdf;base64,${data.receipt}`, "Расписка.pdf");
-                        if (data.hostel.length != 0)
-                            download(`data:application/pdf;base64,${data.hostel}`, "Общежитие.pdf");
-                        enrolleeData.receipt = data.receipt;
-                        enrolleeData.hostel = data.hostel;
-                        if (enrolleeData.type == "fulltime")
-                            $("#modal-avarage-grade").modal();
-                    break;
-                    default:
-                        createAlert(`Ошибка при обработке заявления. Побробнее: <b>${data.status}</b>.`, "alert-danger");
-                    break;
+    if (!receiptTrigger) {
+        createConfirm("Вы уверены, что Заявленое корректное? Если да, то продолжайте...", () => {
+            receiptTrigger = true;
+            $.post(
+                "../api/secretary/submit/receipt",
+                {
+                    token: Cookies.get("token"),
+                    id: enrolleeData.id,
+                },
+                (data) => {
+                    switch (data.status) {
+                        case "OK":
+                            download(`data:application/pdf;base64,${data.receipt}`, "Расписка.pdf");
+                            if (data.hostel.length != 0)
+                                download(`data:application/pdf;base64,${data.hostel}`, "Общежитие.pdf");
+                            enrolleeData.receipt = data.receipt;
+                            enrolleeData.hostel = data.hostel;
+                            if (enrolleeData.type == "fulltime")
+                                $("#modal-avarage-grade").modal();
+                        break;
+                        default:
+                            createAlert(`Ошибка при обработке заявления. Побробнее: <b>${data.status}</b>.`, "alert-danger");
+                        break;
+                    }
                 }
-            }
-        );
-    });
+            );
+        });
+    } else
+        createAlert("Система обрабатывает расписку. Пожалуйста, подождите...<br><i>Пламенный привет от Егора Денисовича!</i>");
 }
 
 document.getElementById("modal-text-input-average-grade").onkeypress = function(event) {

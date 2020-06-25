@@ -1,4 +1,4 @@
-function createAlert(_message = "None", _type = "alert-warning") {
+function createAlert(_message = "None", _type = "alert-warning", _always = false) {
     var mainDiv = document.createElement("div"),
         buttonDismiss = document.createElement("button"),
         spanDismiss = document.createElement("span"),
@@ -20,10 +20,11 @@ function createAlert(_message = "None", _type = "alert-warning") {
     mainDiv.appendChild(spanMessage);
 
     document.getElementById("alerts-area").appendChild(mainDiv);
-    setTimeout(() => {
-        if (document.getElementById(id) !== null)
-            document.getElementById(id).remove();
-    }, 3000);
+    if (!_always)
+        setTimeout(() => {
+            if (document.getElementById(id) !== null)
+                document.getElementById(id).remove();
+        }, 3000);
 }
 
 function createConfirm(_message = "None", _lambda) {

@@ -8,13 +8,20 @@
                         <p>Бюджетных мест для целевого приема не предусмотрено. Для иногородних студентов есть общежитие.</p>
                         <p><a href="operational-summary">Оперативная сводка на <?php echo Date("d.m.Y"); ?></a>.</p>
                         <p><strong>Хотите подать документы онлайн?</strong> Вы можете <a href="https://assistant.nttek.ru/modules/enrollment/submit?type=fulltime">нажать здесь для подачи документов на очную форму обучения</a> или же <a href="https://assistant.nttek.ru/modules/enrollment/submit?type=extramural">здесь, если хотите подать документы на заочную форму обучения</a>.</p>
-                        <h3>Запись на личный прием в Приемную комиссию:</h3>
+                    </li>
+                    <li class="list-group-item">
+                        <h3>Запись на личный прием в Приемную комиссию</h3>
                         <p><strong>Обязательно</strong> укажите Ваш адрес электронной почты!</p>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-md-12">
                                 <!-- Bookform widget --><script>(function (w,d,s,o,f,js,fjs){w['BookformObject']=o;w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments)};js=d.createElement(s),fjs=d.getElementsByTagName(s)[0];js.id=o;js.src=f;js.async=1;fjs.parentNode.insertBefore(js,fjs);}(window,document,'script','Bookform','https://widget.bookform.ru/31171/js'));</script><!-- End Bookform widget -->
                                 <div id="bookform-embedded-widget-31171"></div><script>Bookform('embedded',{id:31171});</script>
                             </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <h3>Адрес и время работы</h3>
+                        <div class="row">
                             <div class="col-lg-5">
                                 <ul class="list-group" style="margin-bottom: 15px;">
                                     <li class="list-group-item">
@@ -100,37 +107,39 @@
                     <li class="list-group-item">
                         <h2>Контакты</h2>
                         <p>Остались вопросы? Если хотите лично поговорить, то можете позвонить на нижеприведенные телефоны ил написать на электронные адреса. Мы рады вам ответить.</p>
-                        <div class="card-columns">
+                        <ul class="list-group">
                             <?php foreach ($data -> indexPage -> contacts as $value) { ?>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <i class="<?php echo $value -> faIcon; ?> d-flex justify-content-center" style="font-size: 100px;margin-bottom: 5px;"></i>
-                                        <h4 class="text-center card-title"><?php echo $value -> name; ?></h4>
-                                        <?php echo !empty($value -> subName) ? "<p class=\"text-center\">{$value -> subName}</p>" : ""; ?>
-                                        <?php foreach ($value -> telephones as $telephone) { ?>
-                                            <div class="row" style="margin: 5px 0;">
-                                                <div class="col-2"><i class="fas fa-phone" style="font-size: 20px;"></i></div>
-                                                <div class="col-10"><a href="#<?php echo $telephone; ?>"><?php echo $telephone; ?></a></div>
-                                            </div>
-                                        <?php } ?>
-                                        <?php foreach ($value -> emails as $email) { ?>
-                                            <div class="row" style="margin: 5px 0;">
-                                                <div class="col-2"><i class="fas fa-envelope" style="font-size: 20px;"></i></div>
-                                                <div class="col-10"><a href="#<?php echo $email; ?>"><?php echo $email; ?></a></div>
-                                            </div>
-                                        <?php }
-                                        if (!empty($value -> social)) {
-                                            if (!empty($value -> social -> vk)) { ?>
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <i class="<?php echo $value -> faIcon; ?> mr-3" style="font-size: 62px; width: 80px;"></i>
+                                        <div class="media-body">
+                                            <?php echo !empty($value -> name) ? "<h5 class=\"mt-0\">{$value -> name}</h5>" : ""; ?>
+                                            <?php echo !empty($value -> subName) ? "<p>{$value -> subName}</p>" : ""; ?>
+                                            <?php foreach ($value -> telephones as $telephone) { ?>
                                                 <div class="row" style="margin: 5px 0;">
-                                                    <div class="col-2"><i class="fab fa-vk" style="font-size: 20px;"></i></div>
-                                                    <div class="col-10"><a href="https://vk.com/<?php echo $value -> social -> vk; ?>"><?php echo $value -> social -> vk; ?></a></div>
+                                                    <div class="col-1"><i class="fas fa-phone" style="font-size: 20px;"></i></div>
+                                                    <div class="col-11"><a href="tel:<?php echo $telephone; ?>"><?php echo $telephone; ?></a></div>
+                                                </div>
+                                            <?php } ?>
+                                            <?php foreach ($value -> emails as $email) { ?>
+                                                <div class="row" style="margin: 5px 0;">
+                                                    <div class="col-1"><i class="fas fa-envelope" style="font-size: 20px;"></i></div>
+                                                    <div class="col-11"><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></div>
                                                 </div>
                                             <?php }
-                                        } ?>
+                                            if (!empty($value -> social)) {
+                                                if (!empty($value -> social -> vk)) { ?>
+                                                    <div class="row" style="margin: 5px 0;">
+                                                        <div class="col-1"><i class="fab fa-vk" style="font-size: 20px;"></i></div>
+                                                        <div class="col-11"><a href="https://vk.com/<?php echo $value -> social -> vk; ?>"><?php echo $value -> social -> vk; ?></a></div>
+                                                    </div>
+                                                <?php }
+                                            } ?>
+                                        </div>
                                     </div>
-                                </div>
+                                </li>
                             <?php } ?>
-                        </div>
+                        </ul>
                     </li>
                 </ul>
             </div>

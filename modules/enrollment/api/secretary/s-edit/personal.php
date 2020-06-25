@@ -130,7 +130,7 @@
                                 "city" => !empty($_POST["birth-city"]) ? $database -> real_escape_string($_POST["birth-city"]) : $birthplace -> city,
                             ])) . "', ";
                     }
-                    if (isset($_POST["passport-series"]) || isset($_POST["passport-series"]) || isset($_POST["passport-series"]) || isset($_POST["passport-series"]) || isset($_POST["passport-series"])) {
+                    if (isset($_POST["passport-series"]) || isset($_POST["passport-number"]) || isset($_POST["passport-date"]) || isset($_POST["passport-place"]) || isset($_POST["passport-code"])) {
                         $passport = json_decode($crypt -> decrypt($statement["passport"]));
                         $sql .= "`passport` = '" . $crypt -> encrypt(json_encode([
                                 "series" => !empty($_POST["passport-series"]) ? $database -> real_escape_string($_POST["passport-series"]) : $passport -> series,

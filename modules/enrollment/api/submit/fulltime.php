@@ -123,7 +123,7 @@
                 while ($check_file = $check_files -> fetch_assoc()) {
                     $counter = 0;
                     foreach ($_FILES as $key => $value)
-                        if (mb_strpos($key, $check_file["latinName"])) {
+                        if (mb_strpos($key, $check_file["latinName"]) !== FALSE) {
                             $folders[$check_file["latinName"]][] = [
                                 "_FILE" => $value,
                                 "folder" => "{$check_file["latinName"]}",
@@ -133,7 +133,7 @@
                                 $attachedDocs[] = $check_file["id"];
                             $counter++;
                         }
-                    if ($check_file["isNessesary"] == 1 && $counter == 0)
+                    if ($check_file["isNessesary"] == "1" && $counter == 0)
                         $granted = false;
                 }
                 if ($granted) {

@@ -34,6 +34,7 @@
                             <?php }
                         } ?>
                     </div>
+                    <p style="margin: 15px;"><strong>Вам нужно распечатать Согласие на обработку и хранение персональных данных, пописать его и отсканировать!</strong></p>
                     <button class="btn btn-primary btn-block" type="button" style="margin-top: 10px;" id="submit-docs">Принять условия и продолжить</button>
                 </div>
                 <div id="div-second-step" style="display: none;">

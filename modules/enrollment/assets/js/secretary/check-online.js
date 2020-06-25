@@ -56,6 +56,7 @@ document.getElementById("modal-check-enrollee-correct").onclick = function() {
                     switch (data.status) {
                         case "OK":
                             createAlert("Абитуриент успешно зарегистрирован в системе! Ему придет уведомление о заполнении Заявления.", "alert-success");
+                            createAlert(`Номер личного дела: <b>${data.key}</b>.`, "alert-success", true);
                             $("#modal-check-enrollee").modal("hide");
                             setTimeout(() => { $("#modal-spinner").modal("hide"); }, 250);
                             $(`.item-enrollee-action[data-json='${JSON.stringify(enrollee)}']`).remove();
@@ -127,6 +128,7 @@ document.getElementById("modal-avarage-grade-button").onclick = function() {
                 switch (data.status) {
                     case "OK":
                         createAlert("Абитуриент успешно зарегистрирован в системе! Ему придет уведомление о заполнении Заявления.", "alert-success");
+                        createAlert(`Номер личного дела: <b>${data.key}</b>.`, "alert-success", true);
                         $("#modal-check-enrollee").modal("hide");
                         $("#modal-avarage-grade").modal("hide");
                         setTimeout(() => { $("#modal-spinner").modal("hide"); }, 250);

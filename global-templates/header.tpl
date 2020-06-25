@@ -15,7 +15,7 @@
             font-family: 'Ubuntu', sans-serif;
         }
     </style>
-    <script type="text/javascript" src="/global-assets/js/alerts-confirms.js?20("></script>
+    <script type="text/javascript" src="/global-assets/js/alerts-confirms.js?122"></script>
     <script type="text/javascript" src="/global-assets/js/global.js?2"></script>
     <script type="text/javascript" src="/global-assets/js/download.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>

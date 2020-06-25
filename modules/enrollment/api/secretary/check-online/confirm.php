@@ -98,6 +98,7 @@
                                                 if (!$isExeption)
                                                     echo json_encode([
                                                         "status" => "OK",
+                                                        "key" => "{$key["count"]}-{$key["level"]}-{$key["specialty"]}/{$key["year"]} ({$enrollee["id"]})",
                                                     ]);
                                             }
                                         } else
@@ -131,6 +132,7 @@
                                 "count" => $database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$enrollee["id"]}") -> fetch_assoc()["compositeKey"],
                                 "year" => Date("Y", $enrollee["timestamp"]),
                             ];
+                            $database -> query("UPDATE `enr_statements` SET `isChecked` = 1 WHERE `id` = {$id};");
                             $mail -> addAddress($crypt -> decrypt($enrollee["email"]));
                             $college = json_decode(file_get_contents(__DIR__ . "/../../../../../configurations/json/about.json"));
                             $mail -> Subject = "Подача документов в {$college -> school -> name -> short} онлайн";
@@ -172,10 +174,21 @@
                             ";
                             $mail -> Body = $body;
                             $mail -> addStringAttachment(statement($_user, $id), "statement.pdf");
-                            $mail -> send();
-                            echo json_encode([
-                                "status" => "OK",
-                            ]);
+                            $isExeption = false;
+                            try {
+                                $mail -> send();
+                            } catch (Exception $e) {
+                                echo json_decode([
+                                    "status" => $e,
+                                ]);
+                                $isExeption = true;
+                            } finally {
+                                if (!$isExeption)
+                                    echo json_encode([
+                                        "status" => "OK",
+                                        "key" => "{$key["count"]}-{$key["level"]}-{$key["specialty"]}/{$key["year"]} ({$enrollee["id"]})",
+                                    ]);
+                            }
                         break;
                         default:
                             echo json_encode([

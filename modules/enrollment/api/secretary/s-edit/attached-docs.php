@@ -24,7 +24,7 @@
                         $check_files_ids = [];
                         while ($check_file = $check_files -> fetch_assoc()) {
                             foreach ($_FILES as $key => $value)
-                                if (mb_strpos($key, $check_file["latinName"]) && $_POST["checkbox-{$check_file["latinName"]}"] == "true")
+                                if (mb_strpos($key, $check_file["latinName"]) !== FALSE && $_POST["checkbox-{$check_file["latinName"]}"] == "true")
                                     $folders[$check_file["latinName"]][] = [
                                         "_FILE" => $value,
                                         "folder" => "{$check_file["latinName"]}",
@@ -177,13 +177,14 @@
                                             $erased_files[] = $_sub_value;
                                         }
                                     }
-                                    $non_erased_files = [];
-                                    foreach ($attachedDocsIds as $value)
-                                        if (!in_array($value, $erased_files))
-                                            $non_erased_files[] = $value;
                                 }
                             }
-                            $sql .= "`attachedDocs` = '{$crypt -> encrypt(json_encode($newAttachedDocs))}', `attachedDocsIds` = '{$non_erased_files}', `withOriginalDiploma` = " . ($_POST["checkbox-original-diploma"] == "true" ? "1" : "0");
+                            $non_erased_files = [];
+                                foreach ($attachedDocsIds as $value)
+                                    if (!in_array($value, $erased_files))
+                                        $non_erased_files[] = $value;
+                            $sql .= "`attachedDocs` = '{$crypt -> encrypt(json_encode($newAttachedDocs))}', `withOriginalDiploma` = " . ($_POST["checkbox-original-diploma"] == "true" ? "1" : "0");
+                            $sql .= !empty($non_erased_files) ? ", `attachedDocsIds` = '{$crypt -> encrypt(json_encode($non_erased_files))}'" : "";
                             $database -> query("UPDATE `enr_statements` SET {$sql} WHERE `id` = {$_statement_id};");
                             if (boolval($_statement["isOnline"])) {
                                 require __DIR__ . "/../../../../../configurations/email/class.php";

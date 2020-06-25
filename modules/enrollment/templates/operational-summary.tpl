@@ -14,6 +14,7 @@
                                     $counter++; ?>
                                     <th colspan="2"><?php echo $level["name"]; ?></th>
                                 <?php } ?>
+                                <th rowspan="2">Средний балл у 25-го места</th>
                             </tr>
                             <tr>
                                 <?php for ($i = 0; $i < $counter; $i++) { ?>
@@ -33,7 +34,19 @@
                                         <td style=\"text-align: center;\">{$this -> database -> query("SELECT COUNT(`id`) AS `cnt` FROM `enr_statements` WHERE `degree` = {$level["id"]} AND `specialty` = {$specialty["id"]} AND `isChecked` = 1 AND `withOriginalDiploma` = 1;") -> fetch_assoc()["cnt"]}</td>
                                         <td style=\"text-align: center;\">{$this -> database -> query("SELECT COUNT(`id`) AS `cnt` FROM `enr_statements` WHERE `degree` = {$level["id"]} AND `specialty` = {$specialty["id"]} AND `isChecked` = 1 AND `withOriginalDiploma` = 0;") -> fetch_assoc()["cnt"]}</td>
                                         ";
-                                    } ?>
+                                    }
+                                    $averageMark = 0.0;
+                                    $allMarks = $this -> database -> query("SELECT `averageMark` FROM `enr_statements` WHERE `averageMark` IS NOT NULL AND `specialty` = {$specialty["id"]} ORDER BY `averageMark` DESC;");
+                                    $cnt_pointer = 1;
+                                    if ($allMarks -> num_rows != 0)
+                                        while ($pointer = $allMarks -> fetch_assoc()) {
+                                            if ($specialty["budget"] == strval($cnt_pointer))
+                                                $averageMark = $pointer["averageMark"];
+                                            $cnt_pointer++;
+                                        }
+                                    if ($cnt_pointer < intval($specialty["budget"]))
+                                        $averageMark = $this -> database -> query("SELECT `averageMark` FROM `enr_statements` WHERE `averageMark` IS NOT NULL AND `specialty` = {$specialty["id"]} ORDER BY `averageMark` ASC LIMIT 1;") -> fetch_assoc()["averageMark"]; ?>
+                                    <td style="text-align: center;"><?php echo $averageMark; ?></td>
                                 </tr>
                             <?php } ?>
                         </tbody>
