@@ -161,7 +161,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Место выдачи<span class="text-danger">*</span>:</label>
-                                        <input class="form-control" type="text" id="fulltime-form-passport-place" required="" placeholder="Например, ГУ МВД РОССИИ ПО СВЕРДЛОВСКОЙ ОБЛАСТИ">
+                                        <input class="form-control" type="text" id="fulltime-form-passport-place" required="" placeholder="Например, ГУ МВД РОССИИ ПО СВЕРДЛОВСКОЙ ОБЛАСТИ" value="ГУ МВД РОССИИ ПО СВЕРДЛОВСКОЙ ОБЛАСТИ">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Код подразделения<span class="text-danger">*</span>:</label>
@@ -547,7 +547,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Место выдачи<span class="text-danger">*</span>:</label>
-                                    <input class="form-control" type="text" id="extramural-form-passport-place" required="" placeholder="Например, ГУ МВД РОССИИ ПО СВЕРДЛОВСКОЙ ОБЛАСТИ">
+                                    <input class="form-control" type="text" id="extramural-form-passport-place" required="" placeholder="Например, ГУ МВД РОССИИ ПО СВЕРДЛОВСКОЙ ОБЛАСТИ" value="ГУ МВД РОССИИ ПО СВЕРДЛОВСКОЙ ОБЛАСТИ">
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label>Код подразделения<span class="text-danger">*</span>:</label>

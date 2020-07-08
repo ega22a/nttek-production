@@ -32,7 +32,7 @@ $(".button-enrollee-delete").click(function() {
 });
 
 $(".button-enrollee-archive").click(function() {
-    var id = $(this.parentElement.parentElement).data("id");
+    var id = $(this).data("id");
     createConfirm("Подтвердите скачивание архива документов абитуриента.", () => {
 		$("#modal-spinner").modal();
 		$.post(
@@ -42,11 +42,10 @@ $(".button-enrollee-archive").click(function() {
                 id: id
             },
             (data) => {
-				setTimeout(() => { $("#modal-spinner").modal("hide"); }, 350);
+                setTimeout(() => { $("#modal-spinner").modal("hide"); }, 350);
                 switch (data.status) {
                     case "OK":
-						download(`data:application/zip;base64,${data.archive}`, `${data.name}.zip`, "appication/zip");
-
+                        download(`data:application/zip;base64,${data.archive}`, `${data.name}.zip`, "appication/zip");
                     break;
                     default:
                         createAlert(`Произошла ошибка на сервере. Подробнее: <b>${data.status}</b>`);
@@ -55,6 +54,50 @@ $(".button-enrollee-archive").click(function() {
             }
         );
     });
+});
+
+$(".button-enrollee-receipt").click(function() {
+    var id = $(this).data("id");
+    $.post(
+        "../api/secretary/statements/get-docs",
+        {
+            token: Cookies.get("token"),
+            id: id,
+            type: "receipt"
+        },
+        (data) => {
+            switch (data.status) {
+                case "OK":
+                    download(`data:application/pdf;base64,${data.doc}`, `Расписка.pdf`, "appication/pdf");
+                break;
+                default:
+                    createAlert(`Произошла ошибка на сервере. Подробнее: <b>${data.status}</b>`);
+                break;
+            }
+        }
+    );
+});
+
+$(".button-enrollee-statement").click(function() {
+    var id = $(this).data("id");
+    $.post(
+        "../api/secretary/statements/get-docs",
+        {
+            token: Cookies.get("token"),
+            id: id,
+            type: "statement"
+        },
+        (data) => {
+            switch (data.status) {
+                case "OK":
+                    download(`data:application/pdf;base64,${data.doc}`, `Заявление.pdf`, "appication/pdf");
+                break;
+                default:
+                    createAlert(`Произошла ошибка на сервере. Подробнее: <b>${data.status}</b>`);
+                break;
+            }
+        }
+    );
 });
 
 $(".button-enrollee-edit").click(function() {

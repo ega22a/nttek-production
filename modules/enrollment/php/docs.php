@@ -158,7 +158,7 @@
                         $pdf -> Cell(4, 5, "");
                         $pdf -> Cell(6, 5, $pdf -> cyrilic("от"));
                         $petrovich -> setSex(intval($enrolleeData["sex"]));
-                        $patronymic = !empty($crypt -> decrypt($enrolleeData["patronymic"])) ? $petrovich -> middlename($crypt -> decrypt($enrolleeData["patronymic"]), Petrovich::CASE_GENITIVE) : "";
+                        $patronymic = !empty($enrolleeData["patronymic"]) ? $petrovich -> middlename($crypt -> decrypt($enrolleeData["patronymic"]), Petrovich::CASE_GENITIVE) : "";
                         $pdf -> Cell(87, 5, $pdf -> cyrilic("{$petrovich -> lastname($crypt -> decrypt($enrolleeData["lastname"]), Petrovich::CASE_GENITIVE)} {$petrovich -> firstname($crypt -> decrypt($enrolleeData["firstname"]), Petrovich::CASE_GENITIVE)} {$patronymic}"), "B");
                         $pdf -> Ln();
                         $pdf -> Cell(30, 5, $pdf -> cyrilic("Зачислить на"));

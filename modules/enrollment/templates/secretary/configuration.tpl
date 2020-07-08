@@ -1,4 +1,4 @@
-<div class="modal fade" role="dialog" tabindex="-1" id="modal-edit-new" data-backdrop="static">
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-edit-new" data-backdrop="static">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -124,6 +124,47 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-edit-news" data-backdrop="static">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Редактирование новости</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="field-edit-news-heading">Заголовок:</label>
+                                <input class="form-control" id="field-edit-news-heading" type="text" required="" placeholder="Например, &quot;Это новость!&quot;">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="filed-edit-news-synopsis">Синопсис:</label>
+                                <textarea class="form-control" id="filed-edit-news-synopsis" placeholder="Например, &quot;Как хорошо, что у нас есть новости!&quot;" rows="3" required=""></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>Основной текст:</label>
+                                <div class="wysiwyg-summernote" id="field-edit-news-text" data-type="edit"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <div class="custom-control custom-control-inline custom-switch">
+                                    <input class="custom-control-input" type="checkbox" id="filed-edit-news-important">
+                                    <label class="custom-control-label" for="filed-edit-news-important">Важная новость</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer"><button class="btn btn-danger" type="button" data-dismiss="modal">Удалить</button><button class="btn btn-primary" type="button">Сохранить</button></div>
+            </div>
+        </div>
+    </div>
     <header style="min-height: 100vh;">
         <div style="width: 100%;min-height: 100vh;padding-top: 80px;">
             <div class="container">
@@ -178,6 +219,13 @@
                                         <ul class="nav nav-pills flex-column" data-count="2" role="tablist" area-orientation="vertical">
                                             <li class="nav-item">
                                                 <a class="nav-link" id="v-pills-configurations-docs-pill" href="#v-pills-configurations-docs" data-toggle="pill" role="tab" aria-controls="v-pills-configurations-docs" aria-selected="true">Работа с автоматическими документами</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <hr>
+                                                <a class="nav-link" id="v-pills-configurations-news-pill" href="#v-pills-configurations-news" data-toggle="pill" role="tab" aria-controls="v-pills-configurations-news" aria-selected="true">Добавить новость</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="v-pills-configurations-news-archive-pill" href="#v-pills-configurations-news-archive" data-toggle="pill" role="tab" aria-controls="v-pills-configurations-news-archive" aria-selected="true">Архив новостей</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -456,6 +504,52 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="v-pills-configurations-news" class="tab-pane fade show" role="tabpanel" aria-labelledby="v-pills-configurations-news-pill">
+                            <form>
+                                <h3>Добавить новость</h3>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label>Заголовок:</label>
+                                        <input class="form-control" id="field-new-news-heading" type="text" required="" placeholder="Например, &quot;Это новость!&quot;">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label>Синопсис:</label>
+                                        <textarea class="form-control" id="field-new-news-synopsis" placeholder="Например, &quot;Как хорошо, что у нас есть новости!&quot;" rows="3" required=""></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label>Основной текст:</label>
+                                        <div class="wysiwyg-summernote" id="field-new-news-text" data-type="new"></div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <div class="custom-control custom-control-inline custom-switch">
+                                            <input class="custom-control-input" type="checkbox" id="field-new-news-important">
+                                            <label class="custom-control-label" for="field-new-news-important">Важная новость</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <button class="btn btn-primary btn-block" id="button-new-news" type="button">Выложить новость</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="v-pills-configurations-news-archive" class="tab-pane fade show" role="tabpanel" aria-labelledby="v-pills-configurations-news-archive-pill">
+                            <div class="list-group" id="news-archive-list-group">
+                                <?php $newsArchive = $this -> database -> query("SELECT `id`, `heading` FROM `enr_news` ORDER BY `timestamp` DESC;"); 
+                                if ($newsArchive -> num_rows != 0) {
+                                    while ($news = $newsArchive -> fetch_assoc()) { ?>
+                                        <a class="list-group-item list-group-item-action news-archive-edit-news" onclick="editArcivedNews(<?php echo $news["id"]; ?>)"><span><?php echo $news["heading"]; ?></span></a>
+                                    <?php }
+                                } ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -473,6 +567,9 @@
     <script src="/global-assets/js/jquery.mask.js"></script>
     <script src="/global-assets/js/dropdown-bootstrap.js"></script>
     <script src="/global-assets/js/global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script src="/global-assets/js/summernote-ru-RU.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css">
 </body>
 
 </html>

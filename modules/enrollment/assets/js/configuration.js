@@ -364,3 +364,59 @@ function getHostelList(_type = "enrollees") {
         break;
     }
 }
+
+$(document).ready(function() {
+    $('.wysiwyg-summernote').summernote({
+        height: 350,
+        lang: "ru-RU",
+        toolbar: [
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ["insert", ["picture", "table", "link"]],
+          ['height', ['height']]
+        ]
+    });
+  });
+
+document.getElementById("button-new-news").onclick = function() {
+    if ($("#v-pills-configurations-news form")[0].checkValidity() && !$("#field-new-news-text").summernote("isEmpty")) {
+        createConfirm(`Вы уверены, что вы хотите выложить новость с заголовком "${document.getElementById("field-new-news-heading").value}"?`, () => {
+            $.post(
+                "../api/secretary/configurations/news/new",
+                {
+                    token: Cookies.get("token"),
+                    heading: document.getElementById("field-new-news-heading").value,
+                    synopsis: document.getElementById("field-new-news-synopsis").value,
+                    text: $("#field-new-news-text").summernote("code"),
+                    important: document.getElementById("field-new-news-important").checked,
+                },
+                (data) => {
+                    switch (data.status) {
+                        case "OK":
+                            var newList = document.createElement("a");
+                            newList.setAttribute("class", "list-group-item list-group-item-action news-archive-edit-news");
+                            newList.setAttribute("onclick", `editArchivedNews(${data.id})`);
+                            newList.innerHTML = `<span>${data.heading}</span>`;
+                            document.getElementById("news-archive-list-group").appendChild(newList);
+                            createAlert("Новость создана.");
+                        break;
+                        default:
+                            createAlert(`На сервере произошла ошибка. Побробнее: <b>${data.status}</b>.`, "alert-danger");
+                        break;
+                    }
+                }
+            );
+        });
+    } else
+        createAlert("Для того, чтобы создать статью, нужно ее написать.");
+};
+
+function editArchivedNews(_id = undefined) {
+    if (!(typeof(_id) == "undefined")) {
+
+    } else
+        createAlert("Вы не передали уникальный идентификатор новости!", "alert-danger");
+}

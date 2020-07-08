@@ -111,7 +111,6 @@
                             <?php foreach ($data -> indexPage -> contacts as $value) { ?>
                                 <li class="list-group-item">
                                     <div class="media">
-                                        <i class="<?php echo $value -> faIcon; ?> mr-3" style="font-size: 62px; width: 80px;"></i>
                                         <div class="media-body">
                                             <?php echo !empty($value -> name) ? "<h5 class=\"mt-0\">{$value -> name}</h5>" : ""; ?>
                                             <?php echo !empty($value -> subName) ? "<p>{$value -> subName}</p>" : ""; ?>

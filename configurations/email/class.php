@@ -8,7 +8,7 @@
         include __DIR__ . "/../../libraries/PHPMailer/src/SMTP.php";
         try {
             $mail = new PHPMailer(true);
-            $mail -> setLanguage("ru");
+            //$mail -> setLanguage("ru");
             $mail -> CharSet = "UTF-8";
             $mail -> IsSMTP();
             $mail -> SMTPAuth = true;

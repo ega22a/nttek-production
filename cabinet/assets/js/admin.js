@@ -110,7 +110,7 @@ document.getElementById("form-users-edit-save").onclick = () => {
         payload.password = document.getElementById("form-users-edit-password").value;
     for (elem of document.getElementById("form-users-edit-levels").children)
         if (elem.selected)
-            thumbLevels.push($(elem).data["vanilla"]);
+            thumbLevels.push($(elem).data("vanilla"));
     if (user.levels.filter(i => !thumbLevels.includes(i)).concat(thumbLevels.filter(i => !user.levels.includes(i))).length != 0 && user.id != 1)
         payload.levels = thumbLevels;
     $.post(
