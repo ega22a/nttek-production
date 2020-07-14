@@ -46,7 +46,6 @@ document.getElementById("button-save").onclick = function() {
                 contentType: false,
                 type: 'POST',
                 success: (data) => {
-                    console.log(data);
                     switch (data.status) {
                         case "OK":
                             setTimeout(() => { $("#modal-spinner").modal("hide"); }, 500);
@@ -64,3 +63,27 @@ document.getElementById("button-save").onclick = function() {
     } else
         createAlert("Вам нужно загрузить документы, чтобы сохранить их!");
 }
+
+function showNews(_id) {
+    $.post(
+        "api/addmission/news/get",
+        {
+            token: Cookies.get("token"),
+            id: _id
+        },
+        (data) => {
+            switch (data.status) {
+                case "OK":
+                    $("#modal-news-archive").modal("hide");
+                    document.getElementById("news-heading").innerHTML = data.heading;
+                    document.getElementById("news-body").innerHTML = data.text;
+                    document.getElementById("news-date").innerHTML = data.date;
+                    $("#modal-show-news").modal();
+                break;
+                default:
+                    createAlert(`Произошла ошибка на сервере. Подробнее: <strong>${data.status}</strong>`, "alert-danger");
+                break;
+            }
+        }
+    );
+};

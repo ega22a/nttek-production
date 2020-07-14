@@ -1,3 +1,8 @@
+<?php
+    // echo "<script type=\"text/javascript\">alert(\"Уважаемые абитуриенты! Личный кабинет находится в стадии технического обслуживания. Просим вас подождать окончания технических работ. Приносим извинения за неудобства.\");</script>";
+    // heading("Location: https://assistant.nttek.ru");
+    // exit;
+?>
 <?php $statement = $this -> database -> query("SELECT `enr_statements`.* FROM `enr_statements` INNER JOIN `main_users` ON `main_users`.`id` = `enr_statements`.`usersId` INNER JOIN `main_user_auth` ON `main_users`.`id` = `main_user_auth`.`usersId` WHERE `main_user_auth`.`id` = {$this -> user -> _authId};") -> fetch_assoc();
     $specialty = $this -> database -> query("SELECT * FROM `enr_specialties` WHERE `id` = {$statement["specialty"]};") -> fetch_assoc();
     $information = json_decode(file_get_contents(__DIR__ . "/../../../configurations/json/about.json")) -> school -> enrollment;
@@ -16,6 +21,53 @@
         else
             $originalPlace++;
     ?>
+<div role="dialog" tabindex="-1" class="modal fade" id="modal-news-archive" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Архив новостей Приемной комиссии</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="list-group">
+                    <?php $newsArchive = $this -> database -> query("SELECT `id`, `isImportant`, `timestamp`, `heading` FROM `enr_news`;");
+                    while ($piece = $newsArchive -> fetch_assoc()) { ?>
+                    <a class="list-group-item list-group-item-action" onclick="showNews(<?php echo $piece["id"]; ?>)">
+                        <div class="d-flex justify-content-between align-content-center">
+                            <h5 class="mb-1"><?php echo stripslashes($piece["heading"]); ?></h5>
+                            <?php boolval($piece["isImportant"]) ? "<span class=\"badge badge-pill badge-danger align-self-center\">!</span>" : ""; ?>
+                        </div>
+                        <small><em><?php echo Date("d.m.Y", $piece["timestamp"]); ?></em></small>
+                    </a>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div role="dialog" tabindex="-1" class="modal fade" id="modal-show-news" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="news-heading"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body" id="news-body">
+                
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-1">
+                        <i class="far fa-calendar"></i>
+                    </div>
+                    <div class="col">
+                        <small><em id="news-date"></em></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <header style="min-height: 100vh;">
     <div style="width: 100%;min-height: 100vh;padding-top: 80px;">
         <div class="container">
@@ -50,8 +102,43 @@
                             </div>
                         </div>
                     </div>
-                <?php }
-                if (boolval($statement["isOnline"])) { ?>
+                <?php } ?>
+                <div class="col-md-12" style="margin: 15px;">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Новости Приемной комиссии</h4>
+                            <div class="card-columns">
+                                <?php $cards = $this -> database -> query("SELECT * FROM `enr_news` ORDER BY `timestamp` DESC LIMIT 3;");
+                                while($card = $cards -> fetch_assoc()) { ?>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="d-flex justify-content-between align-content-center">
+                                                <h5 class="mb-1"><?php echo stripslashes($card["heading"]); ?></h5>
+                                                <?php boolval($card["isImportant"]) ? "<span class=\"badge badge-pill badge-danger align-self-center\">!</span>" : ""; ?>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <p><?php echo stripslashes($card["synopsis"]); ?></p>
+                                            <button class="btn btn-outline-primary btn-sm" type="button" onclick="showNews(<?php echo $card["id"]; ?>)">Полная новость</button>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="row">
+                                                <div class="col-1">
+                                                    <i class="far fa-calendar"></i>
+                                                </div>
+                                                <div class="col">
+                                                    <small><em><?php echo Date("d.m.Y", $card["timestamp"]); ?></em></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            <a class="btn btn-primary btn-block" role="button" href="#" data-toggle="modal" data-target="#modal-news-archive">Загрузить архив новостей</a></div>
+                            <p>В случае, если новость отображается некорректно, позвоните нам или напишите на адрес электронной почты!</p>
+                    </div>
+                </div>
+                <?php if (boolval($statement["isOnline"])) { ?>
                     <div class="col-md-12" style="margin: 15px;">
                         <div class="card">
                             <div class="card-body">
@@ -86,6 +173,8 @@
                             <h4 class="card-title">Список документов, приложеных Вами:</h4>
                             <ol>
                                 <?php $attachedDocs = json_decode($this -> crypt -> decrypt($statement["attachedDocs"]));
+                                if (boolval($statement["withOriginalDiploma"]))
+                                    echo "<li>Оригинал документа об образовании</li>";
                                 foreach ($attachedDocs as $key => $value) { ?>
                                     <li><?php echo $this -> database -> query("SELECT `name` FROM `enr_attached_docs` WHERE `id` = {$value}; ") -> fetch_assoc()["name"]; ?></li>
                                 <?php } ?>

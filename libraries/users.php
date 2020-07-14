@@ -2,6 +2,7 @@
     class user {
         private $_db;
         public $_authId;
+        public $_mainId;
         private $_encrypt;
         private $_cipher_key;
         public $_isFound = true;
@@ -14,10 +15,12 @@
             $this -> _db = $database;
             if (!empty($_token)) {
                 $_tkn = $this -> _encrypt -> decrypt($_token);
-                $user = $this -> _db -> query("SELECT `id` FROM `main_user_auth` WHERE `token` = '$_tkn';");
-                if ($user -> num_rows != 0)
-                    $this -> _authId = $user -> fetch_assoc()["id"];
-                else
+                $user = $this -> _db -> query("SELECT `id`, `usersId` FROM `main_user_auth` WHERE `token` = '$_tkn';");
+                if ($user -> num_rows != 0) {
+                    $user = $user -> fetch_assoc();
+                    $this -> _authId = $user["id"];
+                    $this -> _mainId = $user["usersId"];
+                } else
                     $this -> _isFound = !$this -> _isFound;
             }
         }
@@ -84,7 +87,7 @@
                         $data["password"] = password_hash($data["password"], PASSWORD_DEFAULT);
                         $sql["auth"] .= "`password` = '{$data["password"]}', ";
                     }
-                    if (!empty($data["levels"]) && $this -> _authId != 1) {
+                    if (!empty($data["levels"]) && $userId != 1) {
                         if (!is_array($data["levels"])) {
                             return "LEVELS_MUST_BE_ARRAY";
                             exit;

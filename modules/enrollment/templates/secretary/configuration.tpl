@@ -133,6 +133,7 @@
                 </div>
                 <div class="modal-body">
                     <form>
+                        <span style="display: none;" id="field-edit-news-id"></span>
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="field-edit-news-heading">Заголовок:</label>
@@ -161,7 +162,10 @@
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer"><button class="btn btn-danger" type="button" data-dismiss="modal">Удалить</button><button class="btn btn-primary" type="button">Сохранить</button></div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" id="modal-edit-news-delete" type="button">Удалить</button>
+                    <button class="btn btn-primary" id="modal-edit-news-save" type="button">Сохранить</button>
+                </div>
             </div>
         </div>
     </div>
@@ -545,7 +549,7 @@
                                 <?php $newsArchive = $this -> database -> query("SELECT `id`, `heading` FROM `enr_news` ORDER BY `timestamp` DESC;"); 
                                 if ($newsArchive -> num_rows != 0) {
                                     while ($news = $newsArchive -> fetch_assoc()) { ?>
-                                        <a class="list-group-item list-group-item-action news-archive-edit-news" onclick="editArcivedNews(<?php echo $news["id"]; ?>)"><span><?php echo $news["heading"]; ?></span></a>
+                                        <a class="list-group-item list-group-item-action news-archive-edit-news" onclick="editArchivedNews(<?php echo $news["id"]; ?>)"><span><?php echo $news["heading"]; ?></span></a>
                                     <?php }
                                 } ?>
                             </div>

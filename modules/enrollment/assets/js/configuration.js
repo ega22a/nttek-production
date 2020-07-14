@@ -384,8 +384,9 @@ $(document).ready(function() {
 document.getElementById("button-new-news").onclick = function() {
     if ($("#v-pills-configurations-news form")[0].checkValidity() && !$("#field-new-news-text").summernote("isEmpty")) {
         createConfirm(`Вы уверены, что вы хотите выложить новость с заголовком "${document.getElementById("field-new-news-heading").value}"?`, () => {
+            $("#modal-spinner").modal();
             $.post(
-                "../api/secretary/configurations/news/new",
+                "../api/secretary/configuration/news/new",
                 {
                     token: Cookies.get("token"),
                     heading: document.getElementById("field-new-news-heading").value,
@@ -401,12 +402,13 @@ document.getElementById("button-new-news").onclick = function() {
                             newList.setAttribute("onclick", `editArchivedNews(${data.id})`);
                             newList.innerHTML = `<span>${data.heading}</span>`;
                             document.getElementById("news-archive-list-group").appendChild(newList);
-                            createAlert("Новость создана.");
+                            createAlert("Новость создана.", "alert-success");
                         break;
                         default:
-                            createAlert(`На сервере произошла ошибка. Побробнее: <b>${data.status}</b>.`, "alert-danger");
+                            createAlert(`На сервере произошла ошибка. Подробнее: <b>${data.status}</b>.`, "alert-danger");
                         break;
                     }
+                    setTimeout(() => { $("#modal-spinner").modal("hide"); }, 350);
                 }
             );
         });
@@ -416,7 +418,84 @@ document.getElementById("button-new-news").onclick = function() {
 
 function editArchivedNews(_id = undefined) {
     if (!(typeof(_id) == "undefined")) {
-
+        $.post(
+            "../api/secretary/configuration/news/get",
+            {
+                token: Cookies.get("token"),
+                id: _id
+            },
+            (data) => {
+                switch (data.status) {
+                    case "OK":
+                        $("#modal-edit-news").modal();
+                        document.getElementById("field-edit-news-heading").value = data.heading;
+                        document.getElementById("filed-edit-news-synopsis").value = data.synopsis;
+                        $("#field-edit-news-text").summernote("code", data.text);
+                        document.getElementById("filed-edit-news-important").checked = data.important;
+                        document.getElementById("field-edit-news-id").innerHTML = _id;
+                    break;
+                    default:
+                        createAlert(`На сервере произошла ошибка. Подробнее: <b>${data.status}</b>.`, "alert-danger");
+                    break;
+                }
+            }
+        )
     } else
         createAlert("Вы не передали уникальный идентификатор новости!", "alert-danger");
+}
+
+document.getElementById("modal-edit-news-delete").onclick = function() {
+    createConfirm("Вы уверены, что хотите удалить новость?", () => {
+        var id = document.getElementById("field-edit-news-id").innerHTML;
+        $.post(
+            "../api/secretary/configuration/news/delete",
+            {
+                token: Cookies.get("token"),
+                id: id
+            },
+            (data) => {
+                switch (data.status) {
+                    case "OK":
+                        $(`.news-archive-edit-news[onclick="editArchivedNews(${id})"]`).remove();
+                        $("#modal-edit-news").modal("hide");
+                        createAlert("Новость удалена с сервера.", "alert-success");
+                    break;
+                    default:
+                        createAlert(`На сервере произошла ошибка. Подробнее: <b>${data.status}</b>.`, "alert-danger");
+                    break;
+                }
+            }
+        )
+    });
+}
+
+document.getElementById("modal-edit-news-save").onclick = function() {
+    createConfirm("Вы уверены, что хотите изменить новость?", () => {
+        var id = document.getElementById("field-edit-news-id").innerHTML;
+        $("#modal-spinner").modal(); 
+        $.post(
+            "../api/secretary/configuration/news/edit",
+            {
+                token: Cookies.get("token"),
+                id: id,
+                heading: document.getElementById("field-edit-news-heading").value,
+                synopsis: document.getElementById("filed-edit-news-synopsis").value,
+                text: $("#field-edit-news-text").summernote("code"),
+                important: document.getElementById("filed-edit-news-important").checked,
+            },
+            (data) => {
+                switch (data.status) {
+                    case "OK":
+                        $(`.news-archive-edit-news[onclick="editArchivedNews(${id})"]`)[0].children[0].innerHTML = data.heading;
+                        $("#modal-edit-news").modal("hide");
+                        createAlert("Новость изменена.", "alert-success");
+                    break;
+                    default:
+                        createAlert(`На сервере произошла ошибка. Подробнее: <b>${data.status}</b>.`, "alert-danger");
+                    break;
+                }
+                setTimeout(() => { $("#modal-spinner").modal("hide"); }, 350);
+            }
+        )
+    });
 }

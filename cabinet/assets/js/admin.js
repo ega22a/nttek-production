@@ -111,8 +111,9 @@ document.getElementById("form-users-edit-save").onclick = () => {
     for (elem of document.getElementById("form-users-edit-levels").children)
         if (elem.selected)
             thumbLevels.push($(elem).data("vanilla"));
-    if (user.levels.filter(i => !thumbLevels.includes(i)).concat(thumbLevels.filter(i => !user.levels.includes(i))).length != 0 && user.id != 1)
+    if (thumbLevels.length != 0)
         payload.levels = thumbLevels;
+    console.log(payload);
     $.post(
         "api/user/admin/edit",
         {

@@ -124,17 +124,22 @@
                                     </div>
                                     <div class="collapse item-2" role="tabpanel" data-parent="#accordion-<?php echo $counter; ?>">
                                         <div class="card-body">
-                                            <?php $enrollies = $this -> database -> query("SELECT `id`, `lastname`, `firstname`, `patronymic`, `averageMark`, `isOnline` FROM `enr_statements` WHERE `specialty` = {$row["id"]} AND `educationalType` = '" . (boolval($row["forExtramural"]) ? "extramural" : "fulltime") . "' AND `paysType` = 2 AND `isChecked` = 1;");
+                                            <?php $enrollies = $this -> database -> query("SELECT `id`, `lastname`, `firstname`, `patronymic`, `averageMark`, `degree`, `compositeKey`, `isOnline`, `withOriginalDiploma`, `withStatement` FROM `enr_statements` WHERE `specialty` = {$row["id"]} AND `educationalType` = '" . (boolval($row["forExtramural"]) ? "extramural" : "fulltime") . "' AND `paysType` = 2 AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
                                             if ($enrollies -> num_rows != 0) {
                                                 $firstElement = true;
                                                 $sub_counter = 1;
                                                 while ($enrollee = $enrollies -> fetch_assoc()) {
+                                                    $key = [
+                                                        "specialty" => $row["compositeKey"],
+                                                        "level" => $this -> database -> query("SELECT `compositeKey` FROM `enr_education_levels` WHERE `id` = {$enrollee["degree"]}") -> fetch_assoc()["compositeKey"],
+                                                        "count" => $enrollee["compositeKey"],
+                                                    ];
                                                     if ($firstElement) {
                                                         $firstElement = false; ?>
                                                         <ul class="list-group">
                                                     <?php } ?>
                                                         <li class="list-group-item d-flex justify-content-between align-items-center" data-id="<?php echo $enrollee["id"]; ?>">
-                                                            <span><?php echo "{$sub_counter}. {$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? " " . $crypt -> decrypt($enrollee["patronymic"]) : "") . (boolval($enrollee["isOnline"]) ? "<i class=\"fas fa-cloud\" style=\"margin-left: 10px;\"></i>" : ""); ?></span>
+                                                        <span><?php echo "{$sub_counter}. {$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? " " . $crypt -> decrypt($enrollee["patronymic"]) : "") . " ({$enrollee["averageMark"]}) ({$key["count"]}-{$key["level"]}-{$key["specialty"]})" . (boolval($enrollee["withOriginalDiploma"]) ? "<i class=\"fas fa-bell\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"С оригиналом документа об образовании!\"></i>" : "<i class=\"fas fa-bell-slash\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Без оригинала документа об образовании!\"></i>") . (boolval($enrollee["isOnline"]) ? "<i class=\"fas fa-cloud\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Онлайн-заявление\"></i>" : "") . (boolval($enrollee["isOnline"]) && !boolval($enrollee["withStatement"]) ? "<i class=\"fas fa-user-alt-slash\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Оригинала заявления нет!\"></i>" : (boolval($enrollee["isOnline"]) && boolval($enrollee["withStatement"]) ? "<i class=\"fas fa-user-alt\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Оригинал заявления присутствует!\"></i>" : "")); ?></span>
                                                             <div class="btn-group btn-group-sm float-right" role="group">
                                                                 <div class="dropleft btn-group" role="group">
                                                                     <button class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">
