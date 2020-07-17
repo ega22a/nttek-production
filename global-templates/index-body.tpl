@@ -4,7 +4,7 @@
                 <div class="container text-light">
                     <div>
                         <h1 class="text-center display-3">Ассистент</h1>
-                        <p class="text-center" style="max-width: 350px;margin: 0 auto; font-size: 20px;">Единная информационная система для студентов, сотрудников и абитуриентов образовательного учреждения.&nbsp;</p>
+                        <p class="text-center" style="max-width: 350px;margin: 0 auto; font-size: 20px;">Единая информационная система для студентов, сотрудников и абитуриентов образовательного учреждения.&nbsp;</p>
                         <?php if (!is_object($this -> user)) { ?>
                         <div style="max-width: 250px;margin: 0 auto; font-size: 20px; padding-top: 25px;">
                             <a class="btn btn-primary" style="width: 100%;" href="/login" type="button">Войти</a>

@@ -485,7 +485,25 @@
                                     <div class="collapse item-3" role="tabpanel" data-parent="#accordion-2">
                                         <div class="card-body">
                                             <ul>
-                                                <li><a href="#" onclick="getListOfEnrollees('fulltime');">Список абитуриентов по специальностям очной формы (PDF)</a></li>
+                                                <li>
+                                                    <span>Список абитуриентов по специальностям очной формы:</span>
+                                                    <ul>
+                                                        <li>
+                                                            <span>Среди оригиналов документов об образовании:</span>
+                                                            <ul>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', false, true);">С номерами личных дел (PDF)</a></li>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', true, true);">С данными об общежитии (PDF)</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            <span>Среди всех:</span>
+                                                            <ul>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', false, false);">С номерами личных дел (PDF)</a></li>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', true, false);">С данными об общежитии (PDF)</a></li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
                                                 <li><a href="#" onclick="getListOfEnrollees('extramural');">Список абитуриентов по специальностям заочной формы (PDF)</a></li>
                                             </ul>
                                         </div>

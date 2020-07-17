@@ -163,14 +163,14 @@
                                 "count" => $this -> database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$statement["id"]}") -> fetch_assoc()["compositeKey"],
                                 "year" => Date("Y", $statement["timestamp"]),
                             ]; ?>
-                            <p class="card-text"><?php echo ($statement["sex"] == 1 ? "Уважаемый, " : "Уважаемая, ") . "{$this -> crypt -> decrypt($statement["firstname"])} {$this -> crypt -> decrypt($statement["lastname"])}. Вы подали документы <strong>" . (boolval($statement["isOnline"]) ? "дистанционной" : "очной") . "</strong> формой. Вы выбрали метод оплаты за обучение <strong>" . ($statement["paysType"] == "1" ? "за счёт бюджета Свердловской области (бюджетная форма обучения)" : "с полным возмещением затрат на обучение (договорная форма обучения)") . "</strong>. Выбранная вами специальность: <strong>" . explode("@", $specialty["fullname"])[0] . "</strong>." . (boolval($statement["isExtramural"]) ? " Вы подали документы на заочную форму обучения." : " "); echo " Номер личного дела: <strong>{$key["count"]}-{$key["level"]}-{$key["specialty"]}/{$key["year"]} ({$statement["id"]})</strong>."; echo " Данные актуальны на <strong>" . Date("d.m.Y H:m:s") . " UTC+5</strong>"; ?></p>
+                            <p class="card-text"><?php echo ($statement["sex"] == 1 ? "Уважаемый, " : "Уважаемая, ") . "{$this -> crypt -> decrypt($statement["firstname"])} {$this -> crypt -> decrypt($statement["lastname"])}. Вы подали документы <strong>" . (boolval($statement["isOnline"]) ? "дистанционной формой" : "лично") . "</strong>. Вы выбрали метод оплаты за обучение <strong>" . ($statement["paysType"] == "1" ? "за счёт бюджета Свердловской области (бюджетная форма обучения)" : "с полным возмещением затрат на обучение (договорная форма обучения)") . "</strong>. Выбранная вами специальность: <strong>" . explode("@", $specialty["fullname"])[0] . "</strong>." . (boolval($statement["isExtramural"]) ? " Вы подали документы на заочную форму обучения." : " "); echo " Номер личного дела: <strong>{$key["count"]}-{$key["level"]}-{$key["specialty"]}/{$key["year"]} ({$statement["id"]})</strong>."; echo " Данные актуальны на <strong>" . Date("d.m.Y H:m:s") . " UTC+5</strong>"; ?></p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12" style="margin: 15px;">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Список документов, приложеных Вами:</h4>
+                            <h4 class="card-title">Перечень документов, предоставленных в Приемную комиссию:</h4>
                             <ol>
                                 <?php $attachedDocs = json_decode($this -> crypt -> decrypt($statement["attachedDocs"]));
                                 if (boolval($statement["withOriginalDiploma"]))
@@ -191,14 +191,14 @@
                                 <ul>
                                     <li>Ваше место в общем рейтинге: <strong><?php echo "{$place}"; ?></strong> из <strong><?php echo "{$this -> database -> query("SELECT COUNT(`id`) AS `cnt` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `averageMark` IS NOT NULL;") -> fetch_assoc()["cnt"]}";?></strong>.</li>
                                     <?php if (boolval($statement["withOriginalDiploma"])) { ?>
-                                        <li>Ваше место в рейтинге с оригиналами документов об образовании: <strong><?php echo "{$originalPlace}"; ?></strong> из <strong><?php echo "{$this -> database -> query("SELECT COUNT(`id`) AS `cnt` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `averageMark` IS NOT NULL AND `withOriginalDiploma` = 1;") -> fetch_assoc()["cnt"]}";?></strong>.</li>
+                                        <li>Ваше место в рейтинге среди оригиналов документов об образовании: <strong><?php echo "{$originalPlace}"; ?></strong> из <strong><?php echo "{$this -> database -> query("SELECT COUNT(`id`) AS `cnt` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `averageMark` IS NOT NULL AND `withOriginalDiploma` = 1;") -> fetch_assoc()["cnt"]}";?></strong>.</li>
                                     <?php } ?>
                                 </ul>
                             <?php } elseif ($statement["paysType"] == "2") { ?>
                                 <p class="card-text">На данный момент вы выбрали договорную форму обучения. Вам нужно оплатить сумму, указанную в договоре на оказание платных образовательных услуг.</p>
                             <?php } ?>
                             <?php if (!boolval($statement["withOriginalDiploma"])) { ?>
-                                <p class="card-text">Обращаем ваше внимание на то, что <strong>Вы не предоставили оригинал документа об образовании</strong>! Без оригинала документа об образовании Вы не сможете поступить в образовательное учреждение. Оригинал документа об образовании нужно предоставить до <strong><?php echo $information -> date; ?></strong>!</p>
+                                <p class="card-text">Обращаем ваше внимание на то, что <strong>Вы не предоставили оригинал документа об образовании</strong>! Без оригинала документа об образовании Приемная комиссия не может Вас рекомендовать к зачислению в контингент студентов. Оригинал документа об образовании нужно предоставить до <strong><?php echo $information -> date; ?></strong>!</p>
                             <?php } ?>
                             <p class="card-text">Номер телефона Приемной комиссии: <a href="tel:<?php echo "{$information -> telephone}"; ?>"><?php echo "{$information -> telephone}"; ?></a>.</p>
                             <p class="card-text">Адрес электронной почты Приемной комиссии: <a href="mailto:<?php echo "{$information -> email}"; ?>"><?php echo "{$information -> email}"; ?></a>.</p>

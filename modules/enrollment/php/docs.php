@@ -1214,7 +1214,7 @@
             return false;
     }
 
-    function listOfEnrollees($user = [], string $type = "fulltime") {
+    function listOfEnrollees($user = [], string $type = "fulltime", $withKey = true, $onlyOriginal = false) {
         if (!empty($user)) {
             if ($user -> check_level(1001) || $user -> check_level(1002)) {
                 require __DIR__ . "/../../../configurations/database/class.php";
@@ -1276,7 +1276,10 @@
                         $pdf -> SetWidths([14.38, 95, 23.03, 25.92, 31.67]);
                         $pdf -> MultiCell(190, 5, $pdf -> cyrilic(explode("@", $specialty["fullname"])[0]), 0, "C");
                         $pdf -> SetAligns(["C", "C", "C", "C", "C"]);
-                        $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Средний балл"), $pdf -> cyrilic("Оригинал"), $pdf -> cyrilic("№ личного дела")]);
+                        if ($withKey)
+                            $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Средний балл"), $pdf -> cyrilic("Оригинал"), $pdf -> cyrilic("№ личного дела")]);
+                        else
+                            $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Средний балл"), $pdf -> cyrilic("Оригинал"), $pdf -> cyrilic("Общежитие")]);
                         $pdf -> SetAligns(["L", "L", "C", "C", "C"]);
                         $pdf -> SetFont("PTSerif", "", 12);
                         $counters = [
@@ -1284,7 +1287,10 @@
                             "previousGrade" => 0,
                         ];
                         $pdf -> SetFillColor(255, 255, 255);
-                        $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
+                        if ($onlyOriginal)
+                            $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 AND `withOriginalDiploma` = 1 ORDER BY `averageMark` DESC;");
+                        else
+                            $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
                         if ($enrollees -> num_rows != 0)
                             while ($enrollee = $enrollees -> fetch_assoc()) {
                                 $fill = [];
@@ -1302,13 +1308,16 @@
                                     $pdf -> SetFont("PTMono", "", 12);
                                 if ($counters["item"] % 40 == 0)
                                     $pdf -> AddPage();
-                                $key = [
-                                    "specialty" => $database -> query("SELECT `compositeKey` FROM `enr_specialties` WHERE `id` = {$enrollee["specialty"]}") -> fetch_assoc()["compositeKey"],
-                                    "level" => $database -> query("SELECT `compositeKey` FROM `enr_education_levels` WHERE `id` = {$enrollee["degree"]}") -> fetch_assoc()["compositeKey"],
-                                    "count" => $database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$enrollee["id"]}") -> fetch_assoc()["compositeKey"],
-                                    "year" => Date("Y", $enrollee["timestamp"]),
-                                ];
-                                $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $enrollee["averageMark"], (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), $pdf -> cyrilic("{$key["count"]}-{$key["level"]}-{$key["specialty"]}")], $fill);
+                                if ($withKey) {
+                                    $key = [
+                                        "specialty" => $database -> query("SELECT `compositeKey` FROM `enr_specialties` WHERE `id` = {$enrollee["specialty"]}") -> fetch_assoc()["compositeKey"],
+                                        "level" => $database -> query("SELECT `compositeKey` FROM `enr_education_levels` WHERE `id` = {$enrollee["degree"]}") -> fetch_assoc()["compositeKey"],
+                                        "count" => $database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$enrollee["id"]}") -> fetch_assoc()["compositeKey"],
+                                        "year" => Date("Y", $enrollee["timestamp"]),
+                                    ];
+                                    $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $enrollee["averageMark"], (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), $pdf -> cyrilic("{$key["count"]}-{$key["level"]}-{$key["specialty"]}")], $fill);
+                                } else
+                                    $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $enrollee["averageMark"], (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), (boolval($enrollee["hostel"]) ? "+" : "-")], $fill);
                                 $counters["item"]++;
                                 $counters["previousGrade"] = floatval($enrollee["averageMark"]);
                                 $pdf -> SetFont("PTSerif", "", 12);
