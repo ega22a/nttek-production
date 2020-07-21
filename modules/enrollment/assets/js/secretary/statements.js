@@ -103,3 +103,24 @@ $(".button-enrollee-statement").click(function() {
 $(".button-enrollee-edit").click(function() {
     location.href = `s-edit?id=${$(this.parentNode.parentNode).data("id")}`;
 });
+
+$(".possible-contract-button").click(function() {
+    $.post(
+        "../api/secretary/statements/possible-contract",
+        {
+            token: Cookies.get("token"),
+            id: $(this).data("id"),
+            possible: !$(this).hasClass("text-info")
+        },
+        (data) => {
+            switch (data.status) {
+                case "OK":
+                    $(this).toggleClass("text-info");
+                break;
+                default:
+                    createAlert(`Произошла ошибка на сервере. Подробнее: <b>${data.status}</b>`);
+                break;
+            }
+        }
+    )
+});

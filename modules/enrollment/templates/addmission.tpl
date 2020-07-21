@@ -30,12 +30,12 @@
             </div>
             <div class="modal-body">
                 <div class="list-group">
-                    <?php $newsArchive = $this -> database -> query("SELECT `id`, `isImportant`, `timestamp`, `heading` FROM `enr_news`;");
+                    <?php $newsArchive = $this -> database -> query("SELECT `id`, `isImportant`, `timestamp`, `heading` FROM `enr_news` WHERE `specialty` IS NULL OR `specialty` = {$statement["specialty"]};");
                     while ($piece = $newsArchive -> fetch_assoc()) { ?>
                     <a class="list-group-item list-group-item-action" onclick="showNews(<?php echo $piece["id"]; ?>)">
                         <div class="d-flex justify-content-between align-content-center">
                             <h5 class="mb-1"><?php echo stripslashes($piece["heading"]); ?></h5>
-                            <?php boolval($piece["isImportant"]) ? "<span class=\"badge badge-pill badge-danger align-self-center\">!</span>" : ""; ?>
+                            <?php echo boolval($piece["isImportant"]) ? "<span class=\"badge badge-pill badge-danger align-self-center\">!</span>" : ""; ?>
                         </div>
                         <small><em><?php echo Date("d.m.Y", $piece["timestamp"]); ?></em></small>
                     </a>
@@ -108,13 +108,13 @@
                         <div class="card-body">
                             <h4 class="card-title">Новости Приемной комиссии</h4>
                             <div class="card-columns">
-                                <?php $cards = $this -> database -> query("SELECT * FROM `enr_news` ORDER BY `timestamp` DESC LIMIT 3;");
+                                <?php $cards = $this -> database -> query("SELECT * FROM `enr_news` WHERE `specialty` IS NULL OR `specialty` = {$statement["specialty"]} ORDER BY `timestamp` DESC LIMIT 3;");
                                 while($card = $cards -> fetch_assoc()) { ?>
                                     <div class="card">
                                         <div class="card-header">
                                             <div class="d-flex justify-content-between align-content-center">
                                                 <h5 class="mb-1"><?php echo stripslashes($card["heading"]); ?></h5>
-                                                <?php boolval($card["isImportant"]) ? "<span class=\"badge badge-pill badge-danger align-self-center\">!</span>" : ""; ?>
+                                                <?php echo boolval($card["isImportant"]) ? "<span class=\"badge badge-pill badge-danger align-self-center\">!</span>" : ""; ?>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -135,7 +135,6 @@
                                 <?php } ?>
                             </div>
                             <a class="btn btn-primary btn-block" role="button" href="#" data-toggle="modal" data-target="#modal-news-archive">Загрузить архив новостей</a></div>
-                            <p>В случае, если новость отображается некорректно, позвоните нам или напишите на адрес электронной почты!</p>
                     </div>
                 </div>
                 <?php if (boolval($statement["isOnline"])) { ?>

@@ -148,6 +148,30 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
+                                <label>Для группы:</label>
+                                <select class="form-control" id="field-edit-news-group"required="">
+                                    <option value="0" selected>Всем группам</option>
+                                    <?php $groups = $this -> database -> query("SELECT `id`, `fullname` FROM `enr_specialties` WHERE `forExtramural` = 0;");
+                                    if ($groups -> num_rows != 0) { ?>
+                                        <optgroup label="Очное отделение">
+                                            <?php while ($group = $groups -> fetch_assoc()) { ?>
+                                                <option value="<?php echo $group["id"]; ?>"><?php echo $group["fullname"]; ?></option>
+                                            <?php } ?>
+                                        </optgroup>
+                                    <?php } ?>
+                                    <?php $groups = $this -> database -> query("SELECT `id`, `fullname` FROM `enr_specialties` WHERE `forExtramural` = 1;");
+                                    if ($groups -> num_rows != 0) { ?>
+                                        <optgroup label="Заочное отделение">
+                                            <?php while ($group = $groups -> fetch_assoc()) { ?>
+                                                <option value="<?php echo $group["id"]; ?>"><?php echo $group["fullname"]; ?></option>
+                                            <?php } ?>
+                                        </optgroup>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
                                 <label>Основной текст:</label>
                                 <div class="wysiwyg-summernote" id="field-edit-news-text" data-type="edit"></div>
                             </div>
@@ -539,6 +563,30 @@
                                     <div class="form-group col-md-12">
                                         <label>Синопсис:</label>
                                         <textarea class="form-control" id="field-new-news-synopsis" placeholder="Например, &quot;Как хорошо, что у нас есть новости!&quot;" rows="3" required=""></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label>Для группы:</label>
+                                        <select class="form-control" id="field-new-news-group"required="">
+                                            <option value="0" selected>Всем группам</option>
+                                            <?php $groups = $this -> database -> query("SELECT `id`, `fullname` FROM `enr_specialties` WHERE `forExtramural` = 0;");
+                                            if ($groups -> num_rows != 0) { ?>
+                                                <optgroup label="Очное отделение">
+                                                    <?php while ($group = $groups -> fetch_assoc()) { ?>
+                                                        <option value="<?php echo $group["id"]; ?>"><?php echo $group["fullname"]; ?></option>
+                                                    <?php } ?>
+                                                </optgroup>
+                                            <?php } ?>
+                                            <?php $groups = $this -> database -> query("SELECT `id`, `fullname` FROM `enr_specialties` WHERE `forExtramural` = 1;");
+                                            if ($groups -> num_rows != 0) { ?>
+                                                <optgroup label="Заочное отделение">
+                                                    <?php while ($group = $groups -> fetch_assoc()) { ?>
+                                                        <option value="<?php echo $group["id"]; ?>"><?php echo $group["fullname"]; ?></option>
+                                                    <?php } ?>
+                                                </optgroup>
+                                            <?php } ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-row">

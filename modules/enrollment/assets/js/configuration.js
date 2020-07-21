@@ -395,6 +395,7 @@ document.getElementById("button-new-news").onclick = function() {
                     synopsis: document.getElementById("field-new-news-synopsis").value,
                     text: $("#field-new-news-text").summernote("code"),
                     important: document.getElementById("field-new-news-important").checked,
+                    group: document.getElementById("field-new-news-group").value
                 },
                 (data) => {
                     switch (data.status) {
@@ -427,6 +428,7 @@ function editArchivedNews(_id = undefined) {
                 id: _id
             },
             (data) => {
+                console.log(data);
                 switch (data.status) {
                     case "OK":
                         $("#modal-edit-news").modal();
@@ -435,6 +437,7 @@ function editArchivedNews(_id = undefined) {
                         $("#field-edit-news-text").summernote("code", data.text);
                         document.getElementById("filed-edit-news-important").checked = data.important;
                         document.getElementById("field-edit-news-id").innerHTML = _id;
+                        document.getElementById("field-edit-news-group").value = data.group == null ? "0" : data.group;
                     break;
                     default:
                         createAlert(`На сервере произошла ошибка. Подробнее: <b>${data.status}</b>.`, "alert-danger");
@@ -484,6 +487,7 @@ document.getElementById("modal-edit-news-save").onclick = function() {
                 synopsis: document.getElementById("filed-edit-news-synopsis").value,
                 text: $("#field-edit-news-text").summernote("code"),
                 important: document.getElementById("filed-edit-news-important").checked,
+                group: document.getElementById("field-edit-news-group").value
             },
             (data) => {
                 switch (data.status) {

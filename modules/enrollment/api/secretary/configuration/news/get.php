@@ -14,6 +14,7 @@
                     "synopsis" => stripcslashes($q["synopsis"]),
                     "text" => htmlspecialchars_decode($q["mainText"]),
                     "important" => $q["isImportant"] == "1" ? true : false,
+                    "group" => $q["specialty"],
                 ]);
             } else
                 echo json_encode([

@@ -265,7 +265,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label>Стаж работы в отрасли (полных лет)<span class="text-danger">*</span>:</label>
-                        <input class="form-control" type="number" required="" id="form-job-years">
+                        <input class="form-control" type="number" required="" id="form-job-years" step="any">
                     </div>
                     <div class="d-flex flex-column justify-content-end align-items-start form-group col-md-4">
                         <div class="custom-control custom-switch">
