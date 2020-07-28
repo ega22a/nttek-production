@@ -584,7 +584,7 @@ document.getElementById("modal-avarage-grade-button").onclick = function() {
                         $("#modal-avarage-grade").modal("hide");
                     break;
                     default:
-                        createAlert(`Ошибка при обработке заявления. Побробнее: <b>${data.status}</b>.`, "alert-danger");
+                        createAlert(`Ошибка при обработке заявления. Подробнее: <b>${data.status}</b>.`, "alert-danger");
                     break;
                 }
             }
@@ -592,3 +592,31 @@ document.getElementById("modal-avarage-grade-button").onclick = function() {
     } else
         createAlert("Для того, чтобы посчитать оценку, нужно ввести оценки!");
 }
+
+var _onlineTrigger = true,
+    _onlineFirst = true;
+setInterval(() => {
+    var _isOnline = navigator.onLine;
+    if (!_isOnline) {
+        if (_onlineTrigger) {
+            createAlert("Пожалуйста, приостановите свою работу! У вас отсутствует подключение к сети Интернет!", "alert-danger", true);
+            document.getElementById("button-confirm-fulltime").setAttribute("disabled", true);
+            document.getElementById("button-confirm-extramural").setAttribute("disabled", true);
+            document.getElementById("modal-s-r-button-error").setAttribute("disabled", true);
+            document.getElementById("modal-s-r-button-receipt").setAttribute("disabled", true);
+            document.getElementById("modal-s-r-button-next").setAttribute("disabled", true);
+            _onlineTrigger = false;
+            _onlineFirst = false;
+        }
+    } else {
+        if (!_onlineFirst && !_onlineTrigger) {
+            createAlert("У вас появилось подключение к сети Интернет!", "alert-success", true);
+            _onlineTrigger = true;
+            document.getElementById("button-confirm-fulltime").removeAttribute("disabled");
+            document.getElementById("button-confirm-extramural").removeAttribute("disabled");
+            document.getElementById("modal-s-r-button-error").removeAttribute("disabled");
+            document.getElementById("modal-s-r-button-receipt").removeAttribute("disabled");
+            document.getElementById("modal-s-r-button-next").removeAttribute("disabled");
+        }
+    }
+}, 50);
