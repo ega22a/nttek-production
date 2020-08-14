@@ -213,6 +213,7 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover();
+        $('[data-toggle="popover"]').mouseover(function() { $(this).popover("show"); }).mouseout(function() { $(this).popover("hide"); });
     });
     (function() {
         // hold onto the drop down menu

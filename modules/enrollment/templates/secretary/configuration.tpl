@@ -256,6 +256,10 @@
                                             <li class="nav-item">
                                                 <a class="nav-link" id="v-pills-configurations-news-archive-pill" href="#v-pills-configurations-news-archive" data-toggle="pill" role="tab" aria-controls="v-pills-configurations-news-archive" aria-selected="true">Архив новостей</a>
                                             </li>
+                                            <li class="nav-item">
+                                                <hr>
+                                                <a class="nav-link" id="v-pills-configurations-fix-pill" href="#v-pills-configurations-fix" data-toggle="pill" role="tab" aria-controls="v-pills-configurations-fix" aria-selected="true">Автоматические исправления</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -621,6 +625,12 @@
                                         <a class="list-group-item list-group-item-action news-archive-edit-news" onclick="editArchivedNews(<?php echo $news["id"]; ?>)"><span><?php echo $news["heading"]; ?></span></a>
                                     <?php }
                                 } ?>
+                            </div>
+                        </div>
+                        <div id="v-pills-configurations-fix" class="tab-pane fade show" role="tabpanel" aria-labelledby="v-pills-configurations-fix-pill">
+                            <div class="list-group">
+                                <a class="list-group-item list-group-item-action" href="#" onclick="autofix(1);">Восстановить заявления, которые принимались лично, но не была выдана расписка</a>
+                                <a class="list-group-item list-group-item-action" href="#" onclick="autofix(2);">Восстановить статус заявления поданного заявления у тех абитуриентов, кто подал документы онлайн</a>
                             </div>
                         </div>
                     </div>
