@@ -1,4 +1,4 @@
-
+<script type="text/javascript"> document.title = "Онлайн-подача документов (Заочное отделение)"; </script>
 <body>
     <nav class="navbar navbar-light navbar-expand-md" style="background-color: rgba(255, 255, 255, 0.9);position: absolute;width: 100%;">
         <div class="container-fluid"><a class="navbar-brand" href="#">${systemName}</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -34,7 +34,7 @@
                             <?php }
                         } ?>
                     </div>
-                    <p style="margin: 15px;"><strong>Вам нужно распечатать Согласие на обработку и хранение персональных данных, пописать его и отсканировать!</strong></p>
+                    <p style="margin: 15px;"><strong>Вам нужно распечатать Согласие на обработку и хранение персональных данных, подписать его и отсканировать!</strong></p>
                     <button class="btn btn-primary btn-block" type="button" style="margin-top: 10px;" id="submit-docs">Принять условия и продолжить</button>
                 </div>
                 <div id="div-second-step" style="display: none;">

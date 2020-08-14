@@ -22,7 +22,7 @@
                         if (isset($_POST["enrollee"])) {
                             echo json_encode([
                                 "status" => "OK",
-                                "doc" => base64_encode(listOfEnrollees($_user, $_POST["enrollee"], !boolval($_POST["hostel"]), boolval($_POST["original"]))),
+                                "doc" => base64_encode(listOfEnrollees($_user, $_POST["enrollee"], $_POST["additional"], boolval($_POST["original"]))),
                             ]);
                         } else
                             echo json_encode([

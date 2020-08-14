@@ -5,6 +5,7 @@
     "count" => $this -> database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$this -> statement["id"]}") -> fetch_assoc()["compositeKey"],
     "year" => Date("Y", $this -> statement["timestamp"]),
 ]; ?>
+<script type="text/javascript"> document.title = "Редактирование абитуриента"; </script>
 <header style="min-height: 100vh;">
     <div style="width: 100%;min-height: 100vh;padding-top: 80px;">
         <div class="container">

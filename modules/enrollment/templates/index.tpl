@@ -1,4 +1,5 @@
 <?php $data = json_decode(file_get_contents(__DIR__ . "/../../../configurations/json/about.json")) -> school -> enrollment; ?>
+<script type="text/javascript"> document.title = "Приемная комиссия | Главная страница"; </script>
 <header style="min-height: 100vh;">
         <div style="width: 100%;min-height: 100vh;padding-top: 80px;">
             <div class="container" style="margin-bottom: 15px;">

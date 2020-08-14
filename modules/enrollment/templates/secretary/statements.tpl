@@ -3,6 +3,7 @@
     require_once __DIR__ . "/../../../../configurations/main.php";
     $crypt = new CryptService($ciphers["database"]);
 ?>
+<script type="text/javascript"> document.title = "Управление принятыми заявлениями"; </script>
 <header style="min-height: 100vh;">
     <div style="width: 100%;min-height: 100vh;padding-top: 80px;">
         <div class="container">
@@ -53,7 +54,25 @@
                 <div class="border rounded col-md-9 tab-content bg-white" style="padding: 15px;margin-bottom: 15px;">
                     <?php $specialties = $this -> database -> query("SELECT * FROM `enr_specialties`");
                     $counter = 10;
-                    while ($row = $specialties -> fetch_assoc()) { ?>
+                    while ($row = $specialties -> fetch_assoc()) {
+                        $enrolleesList = [];
+                        $placesQueries = [
+                            "original" => $this -> database -> query("SELECT `id`, `averageMark` FROM `enr_statements` WHERE `specialty` = {$row["id"]} AND `averageMark` IS NOT NULL AND `withOriginalDiploma` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;"),
+                            "all" => $this -> database -> query("SELECT `id`, `averageMark` FROM `enr_statements` WHERE `specialty` = {$row["id"]} AND `averageMark` IS NOT NULL ORDER BY `averageMark` DESC, `timestamp` ASC;"),
+                        ];
+                        $check_i = 1;
+                        while ($check_row = $placesQueries["all"] -> fetch_assoc()) {
+                            $enrolleesList[$check_row["id"]] = [
+                                "all" => $check_i,
+                                "original" => NULL,
+                            ];
+                            $check_i++;
+                        }
+                        $check_i = 1;
+                        while ($check_row = $placesQueries["original"] -> fetch_assoc()) {
+                            $enrolleesList[$check_row["id"]]["original"] = $check_i;
+                            $check_i++;
+                        } ?>
                         <div id="v-pills-statements-<?php echo boolval($row["forExtramural"]) ? "extramural" : "fulltime"; ?>-<?php echo $row["id"]; ?>" class="tab-pane fade <?php echo $counter == 10 ? "show active" : ""; ?>" role="tabpanel" aria-labelledby="v-pills-statements-<?php echo boolval($row["forExtramural"]) ? "extramural" : "fulltime"; ?>-<?php echo $row["id"]; ?>-pill">
                             <h3><?php echo explode("@", $row["fullname"])[0] . (!empty(explode("@", $row["fullname"])[1]) ? " <i>" . explode("@", $row["fullname"])[1] . "</i>" : ""); ?></h3>
                             <p>Мест на бюджет: <b><?php echo $row["budget"]; ?></b></p>
@@ -67,11 +86,12 @@
                                     </div>
                                     <div class="collapse show item-1" role="tabpanel" data-parent="#accordion-<?php echo $counter; ?>">
                                         <div class="card-body">
-                                            <?php $enrollies = $this -> database -> query("SELECT `id`, `lastname`, `firstname`, `patronymic`, `averageMark`, `isOnline`, `withStatement`, `withOriginalDiploma`, `possibleContract`, `degree`, `compositeKey`, `timestamp` FROM `enr_statements` WHERE `specialty` = {$row["id"]} AND `educationalType` = '" . (boolval($row["forExtramural"]) ? "extramural" : "fulltime") . "' AND `paysType` = 1 AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
+                                            <?php $enrollies = $this -> database -> query("SELECT `id`, `lastname`, `firstname`, `patronymic`, `averageMark`, `isOnline`, `withStatement`, `withOriginalDiploma`, `possibleContract`, `degree`, `compositeKey`, `timestamp` FROM `enr_statements` WHERE `specialty` = {$row["id"]} AND `educationalType` = '" . (boolval($row["forExtramural"]) ? "extramural" : "fulltime") . "' AND `paysType` = 1 AND `isChecked` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;");
                                             if ($enrollies -> num_rows != 0) {
                                                 $firstElement = true;
                                                 $average = -1;
                                                 $sub_counter = 1;
+                                                $possiblePlace = 1;
                                                 while ($enrollee = $enrollies -> fetch_assoc()) {
                                                     $key = [
                                                         "specialty" => $row["compositeKey"],
@@ -83,7 +103,7 @@
                                                         <ul class="list-group">
                                                     <?php } ?>
                                                         <li class="list-group-item d-flex justify-content-between align-items-center <?php echo $average == $enrollee["averageMark"] ? "bg-warning" : ""; ?>" data-id="<?php echo $enrollee["id"]; ?>">
-                                                        <span><?php echo (boolval($enrollee["withOriginalDiploma"]) ? "<i class=\"" . (boolval($enrollee["possibleContract"]) ? "text-info " : "") . "fas fa-bell possible-contract-button\" style=\"width: 23px; text-align: center; cursor: pointer;\" data-id=\"{$enrollee["id"]}\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"С оригиналом документа об образовании!\"></i>" : "<i class=\"" . (boolval($enrollee["possibleContract"]) ? "text-info " : "") . "fas fa-bell-slash possible-contract-button\" style=\"width: 23px; text-align: center; cursor: pointer;\" data-id=\"{$enrollee["id"]}\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Без оригинала документа об образовании!\"></i>") . "{$sub_counter}. {$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? " " . $crypt -> decrypt($enrollee["patronymic"]) : "") . " ({$enrollee["averageMark"]}) ({$key["count"]}-{$key["level"]}-{$key["specialty"]})" . (boolval($enrollee["isOnline"]) ? "<i class=\"fas fa-cloud\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Онлайн-заявление\"></i>" : "") . (boolval($enrollee["isOnline"]) && !boolval($enrollee["withStatement"]) ? "<i class=\"fas fa-user-alt-slash\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Оригинала заявления нет!\"></i>" : (boolval($enrollee["isOnline"]) && boolval($enrollee["withStatement"]) ? "<i class=\"fas fa-user-alt\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Оригинал заявления присутствует!\"></i>" : "")); ?></span>
+                                                        <span><?php echo (boolval($enrollee["withOriginalDiploma"]) ? "<i class=\"" . (boolval($enrollee["possibleContract"]) ? "text-info " : "") . "fas fa-bell possible-contract-button\" style=\"width: 23px; text-align: center; cursor: pointer;\" data-id=\"{$enrollee["id"]}\" type=\"button\"></i>" : "<i class=\"" . (boolval($enrollee["possibleContract"]) ? "text-info " : "") . "fas fa-bell-slash possible-contract-button\" style=\"width: 23px; text-align: center; cursor: pointer;\" data-id=\"{$enrollee["id"]}\" type=\"button\"></i>") . "{$sub_counter}. {$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])}" . (!empty($enrollee["patronymic"]) ? " " . $crypt -> decrypt($enrollee["patronymic"]) : "") . " ({$enrollee["averageMark"]}) ({$key["count"]}-{$key["level"]}-{$key["specialty"]})" . (boolval($enrollee["isOnline"]) ? "<i class=\"fas fa-cloud\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Онлайн-заявление\"></i>" : "") . (boolval($enrollee["isOnline"]) && !boolval($enrollee["withStatement"]) ? "<i class=\"fas fa-user-alt-slash\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Оригинала заявления нет!\"></i>" : (boolval($enrollee["isOnline"]) && boolval($enrollee["withStatement"]) ? "<i class=\"fas fa-user-alt\" style=\"margin-left: 10px; cursor: default;\" data-toggle=\"tooltip\" data-bs-tooltip=\"\" type=\"button\" title=\"Оригинал заявления присутствует!\"></i>" : "")); ?></span>
                                                             <div class="btn-group btn-group-sm float-right" role="group">
                                                                 <div class="dropleft btn-group" role="group">
                                                                     <button class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">
@@ -101,10 +121,15 @@
                                                                 <button class="btn btn-outline-danger button-enrollee-delete" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Удалить">
                                                                     <i class="fas fa-eraser"></i>
                                                                 </button>
+                                                                <button class="btn btn-outline-primary" data-toggle="popover" title="Информация о позиции" data-content="Место в общем рейтинге: <?php echo $enrolleesList[$enrollee["id"]]["all"]; ?>. <?php echo !is_null($enrolleesList[$enrollee["id"]]["original"]) ? "Среди оригиналов документов об образовании: {$enrolleesList[$enrollee["id"]]["original"]}." : "Возможное место среди оригиналов документов об образовании: {$possiblePlace}."; ?>">
+                                                                    <i class="fas fa-info"></i>
+                                                                </button>
                                                             </div>
                                                         </li>
                                                     <?php $average = $enrollee["averageMark"];
                                                     $sub_counter++;
+                                                    if (!is_null($enrolleesList[$enrollee["id"]]["original"]))
+                                                        $possiblePlace++;
                                                 } ?>
                                                 </ul>
                                             <?php } else { ?>
@@ -121,7 +146,7 @@
                                     </div>
                                     <div class="collapse item-2" role="tabpanel" data-parent="#accordion-<?php echo $counter; ?>">
                                         <div class="card-body">
-                                            <?php $enrollies = $this -> database -> query("SELECT `id`, `lastname`, `firstname`, `patronymic`, `averageMark`, `degree`, `compositeKey`, `isOnline`, `withOriginalDiploma`, `withStatement` FROM `enr_statements` WHERE `specialty` = {$row["id"]} AND `educationalType` = '" . (boolval($row["forExtramural"]) ? "extramural" : "fulltime") . "' AND `paysType` = 2 AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
+                                            <?php $enrollies = $this -> database -> query("SELECT `id`, `lastname`, `firstname`, `patronymic`, `averageMark`, `degree`, `compositeKey`, `isOnline`, `withOriginalDiploma`, `withStatement` FROM `enr_statements` WHERE `specialty` = {$row["id"]} AND `educationalType` = '" . (boolval($row["forExtramural"]) ? "extramural" : "fulltime") . "' AND `paysType` = 2 AND `isChecked` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;");
                                             if ($enrollies -> num_rows != 0) {
                                                 $firstElement = true;
                                                 $sub_counter = 1;
@@ -148,14 +173,14 @@
                                                                         <a role="presentation" data-id="<?php echo $enrollee["id"]; ?>" class="dropdown-item button-enrollee-statement">Заявление</a>
                                                                     </div>
                                                                 </div>
-                                                                <!-- <button class="btn btn-outline-primary button-enrollee-archive" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Архив документов">
-                                                                    <i class="fas fa-archive"></i>
-                                                                </button> -->
                                                                 <button class="btn btn-outline-primary button-enrollee-edit" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Редактировать">
                                                                     <i class="fas fa-edit"></i>
                                                                 </button>
                                                                 <button class="btn btn-outline-danger button-enrollee-delete" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Удалить">
                                                                     <i class="fas fa-eraser"></i>
+                                                                </button>
+                                                                <button class="btn btn-outline-primary" data-toggle="popover" title="Информация о позиции" data-content="Место в общем рейтинге: <?php echo $enrolleesList[$enrollee["id"]]["all"]; ?>. <?php echo !is_null($enrolleesList[$enrollee["id"]]["original"]) ? "Среди оригиналов документов об образовании: {$enrolleesList[$enrollee["id"]]["original"]}" : ""; ?>">
+                                                                    <i class="fas fa-info"></i>
                                                                 </button>
                                                             </div>
                                                         </li>
@@ -187,6 +212,7 @@
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
     });
     (function() {
         // hold onto the drop down menu

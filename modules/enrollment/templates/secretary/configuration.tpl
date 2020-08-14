@@ -1,3 +1,4 @@
+<script type="text/javascript"> document.title = "Конфигурация модуля"; </script>
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-edit-new" data-backdrop="static">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -515,15 +516,17 @@
                                                         <li>
                                                             <span>Среди оригиналов документов об образовании:</span>
                                                             <ul>
-                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', false, true);">С номерами личных дел (PDF)</a></li>
-                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', true, true);">С данными об общежитии (PDF)</a></li>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', 'codes', true);">С номерами личных дел (PDF)</a></li>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', 'hostel', true);">С данными об общежитии (PDF)</a></li>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', 'categories', true);">С данными о категориях граждан (PDF)</a></li>
                                                             </ul>
                                                         </li>
                                                         <li>
                                                             <span>Среди всех:</span>
                                                             <ul>
-                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', false, false);">С номерами личных дел (PDF)</a></li>
-                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', true, false);">С данными об общежитии (PDF)</a></li>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', 'codes', false);">С номерами личных дел (PDF)</a></li>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', 'hostel', false);">С данными об общежитии (PDF)</a></li>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', 'categories', false);">С данными о категориях граждан (PDF)</a></li>
                                                             </ul>
                                                         </li>
                                                     </ul>

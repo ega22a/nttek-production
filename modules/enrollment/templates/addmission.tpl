@@ -6,8 +6,8 @@
 <?php $statement = $this -> database -> query("SELECT `enr_statements`.* FROM `enr_statements` INNER JOIN `main_users` ON `main_users`.`id` = `enr_statements`.`usersId` INNER JOIN `main_user_auth` ON `main_users`.`id` = `main_user_auth`.`usersId` WHERE `main_user_auth`.`id` = {$this -> user -> _authId};") -> fetch_assoc();
     $specialty = $this -> database -> query("SELECT * FROM `enr_specialties` WHERE `id` = {$statement["specialty"]};") -> fetch_assoc();
     $information = json_decode(file_get_contents(__DIR__ . "/../../../configurations/json/about.json")) -> school -> enrollment;
-    $subQuery = $this -> database -> query("SELECT `id`, `averageMark` FROM `enr_statements` WHERE `specialty` = {$statement["specialty"]} AND `averageMark` IS NOT NULL ORDER BY `averageMark` DESC;");
-    $originalQuery = $this -> database -> query("SELECT `id`, `averageMark` FROM `enr_statements` WHERE `specialty` = {$statement["specialty"]} AND `averageMark` IS NOT NULL AND `withOriginalDiploma` = 1 ORDER BY `averageMark` DESC;");
+    $subQuery = $this -> database -> query("SELECT `id`, `averageMark` FROM `enr_statements` WHERE `specialty` = {$statement["specialty"]} AND `averageMark` IS NOT NULL ORDER BY `averageMark` DESC, `timestamp` ASC;");
+    $originalQuery = $this -> database -> query("SELECT `id`, `averageMark` FROM `enr_statements` WHERE `specialty` = {$statement["specialty"]} AND `averageMark` IS NOT NULL AND `withOriginalDiploma` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;");
     $place = 1;
     $originalPlace = 1;
     while ($row = $subQuery -> fetch_assoc())
@@ -21,6 +21,7 @@
         else
             $originalPlace++;
     ?>
+<script type="text/javascript"> document.title = "Личный кабинет абитуриента"; </script>
 <div role="dialog" tabindex="-1" class="modal fade" id="modal-news-archive" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
@@ -148,6 +149,18 @@
                                     <li>Скан документа об образовании.</li>
                                 </ol>
                                 <p class="card-text">Когда будете доносить документы, обязательно возьмите с собой Заявление и Согласие на хранение и обработку персональных данных!</p>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+                <?php if (!is_null($statement["additionalText"])) { ?>
+                    <div class="col-md-12" style="margin: 15px;">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Важная информация для Вас!</h4>
+                                <div>
+                                    <?php echo htmlspecialchars_decode($statement["additionalText"]); ?>
+                                </div>
                             </div>
                         </div>
                     </div>

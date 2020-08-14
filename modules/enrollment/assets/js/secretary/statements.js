@@ -34,8 +34,8 @@ $(".button-enrollee-delete").click(function() {
 $(".button-enrollee-archive").click(function() {
     var id = $(this).data("id");
     createConfirm("Подтвердите скачивание архива документов абитуриента.", () => {
-		$("#modal-spinner").modal();
-		$.post(
+        $("#modal-spinner").modal();
+        $.post(
             "../api/secretary/statements/get-archive",
             {
                 token: Cookies.get("token"),

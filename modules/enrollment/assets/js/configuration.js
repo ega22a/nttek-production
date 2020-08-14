@@ -277,7 +277,7 @@ function getOperationalSummary(_type = "all") {
         createAlert("Неправильный тип запроса!");
 }
 
-function getListOfEnrollees(_type = "fulltime", _hostel = false, _onlyOriginal = false) {
+function getListOfEnrollees(_type = "fulltime", _additional = "codes", _onlyOriginal = false) {
     var _granted = false;
     switch (_type) {
         case "fulltime":
@@ -292,7 +292,7 @@ function getListOfEnrollees(_type = "fulltime", _hostel = false, _onlyOriginal =
                 token: Cookies.get("token"),
                 type: "enrollee",
                 enrollee: _type,
-                hostel: _hostel ? 1 : 0,
+                additional: _additional,
                 original: _onlyOriginal ? 1: 0
             },
             (data) => {

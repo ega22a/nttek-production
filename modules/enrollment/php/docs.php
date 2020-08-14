@@ -1214,7 +1214,7 @@
             return false;
     }
 
-    function listOfEnrollees($user = [], string $type = "fulltime", $withKey = true, $onlyOriginal = false) {
+    function listOfEnrollees($user = [], string $type = "fulltime", $additional = "codes", $onlyOriginal = false) {
         if (!empty($user)) {
             if ($user -> check_level(1001) || $user -> check_level(1002)) {
                 require __DIR__ . "/../../../configurations/database/class.php";
@@ -1273,14 +1273,49 @@
                         else
                             $pdf -> AddPage();
                         $pdf -> SetFont("PTSerif", "B", 12);
-                        $pdf -> SetWidths([14.38, 95, 23.03, 25.92, 31.67]);
                         $pdf -> MultiCell(190, 5, $pdf -> cyrilic(explode("@", $specialty["fullname"])[0]), 0, "C");
-                        $pdf -> SetAligns(["C", "C", "C", "C", "C"]);
-                        if ($withKey)
-                            $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Средний балл"), $pdf -> cyrilic("Оригинал"), $pdf -> cyrilic("№ личного дела")]);
-                        else
-                            $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Средний балл"), $pdf -> cyrilic("Оригинал"), $pdf -> cyrilic("Общежитие")]);
-                        $pdf -> SetAligns(["L", "L", "C", "C", "C"]);
+                        switch ($additional) {
+                            default:
+                            case "codes":
+                                if ($onlyOriginal) {
+                                    $pdf -> SetWidths([14.38, 95, 23.03, 57.59]);
+                                    $pdf -> SetAligns(["C", "C", "C", "C"]);
+                                    $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Средний балл"), $pdf -> cyrilic("№ личного дела")]);
+                                    $pdf -> SetAligns(["L", "L", "C", "C"]);
+                                } else {
+                                    $pdf -> SetWidths([14.38, 95, 23.03, 25.92, 31.67]);
+                                    $pdf -> SetAligns(["C", "C", "C", "C", "C"]);
+                                    $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Средний балл"), $pdf -> cyrilic("Оригинал"), $pdf -> cyrilic("№ личного дела")]);
+                                    $pdf -> SetAligns(["L", "L", "C", "C", "C"]);
+                                }
+                            break;
+                            case "hostel":
+                                if ($onlyOriginal) {
+                                    $pdf -> SetWidths([14.38, 95, 23.03, 57.59]);
+                                    $pdf -> SetAligns(["C", "C", "C", "C", "C"]);
+                                    $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Средний балл"), $pdf -> cyrilic("Общежитие")]);
+                                    $pdf -> SetAligns(["L", "L", "C", "C"]);
+                                } else {
+                                    $pdf -> SetWidths([14.38, 95, 23.03, 25.92, 31.67]);
+                                    $pdf -> SetAligns(["C", "C", "C", "C", "C"]);
+                                    $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Средний балл"), $pdf -> cyrilic("Оригинал"), $pdf -> cyrilic("Общежитие")]);
+                                    $pdf -> SetAligns(["L", "L", "C", "C", "C"]);
+                                }
+                            break;
+                            case "categories":
+                                if ($onlyOriginal) {
+                                    $pdf -> SetWidths([14.38, 95, 80.62]);
+                                    $pdf -> SetAligns(["C", "C", "C", "C", "C"]);
+                                    $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Статус гражданина")]);
+                                    $pdf -> SetAligns(["L", "L", "L"]);
+                                } else {
+                                    $pdf -> SetWidths([14.38, 95, 25.92, 54.7]);
+                                    $pdf -> SetAligns(["C", "C", "C", "C", "C"]);
+                                    $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Оригинал"), $pdf -> cyrilic("Статус гражданина")]);
+                                    $pdf -> SetAligns(["L", "L", "C", "L"]);
+                                }
+                            break;
+                        }
                         $pdf -> SetFont("PTSerif", "", 12);
                         $counters = [
                             "item" => 1,
@@ -1288,9 +1323,9 @@
                         ];
                         $pdf -> SetFillColor(255, 255, 255);
                         if ($onlyOriginal)
-                            $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 AND `withOriginalDiploma` = 1 ORDER BY `averageMark` DESC;");
+                            $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline`, `category` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 AND `withOriginalDiploma` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;");
                         else
-                            $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
+                            $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline`, `category` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;");
                         if ($enrollees -> num_rows != 0)
                             while ($enrollee = $enrollees -> fetch_assoc()) {
                                 $fill = [];
@@ -1306,19 +1341,43 @@
                                 }
                                 if (!boolval($enrollee["withStatement"]) && boolval($enrollee["isOnline"]))
                                     $pdf -> SetFont("PTMono", "", 12);
-                                if ($counters["item"] % 40 == 0)
+                                if ($counters["item"] % 41 == 0)
                                     $pdf -> AddPage();
-                                if ($withKey) {
-                                    $key = [
-                                        "specialty" => $database -> query("SELECT `compositeKey` FROM `enr_specialties` WHERE `id` = {$enrollee["specialty"]}") -> fetch_assoc()["compositeKey"],
-                                        "level" => $database -> query("SELECT `compositeKey` FROM `enr_education_levels` WHERE `id` = {$enrollee["degree"]}") -> fetch_assoc()["compositeKey"],
-                                        "count" => $database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$enrollee["id"]}") -> fetch_assoc()["compositeKey"],
-                                        "year" => Date("Y", $enrollee["timestamp"]),
-                                    ];
-                                    $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $enrollee["averageMark"], (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), $pdf -> cyrilic("{$key["count"]}-{$key["level"]}-{$key["specialty"]}")], $fill);
-                                } else
-                                    $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $enrollee["averageMark"], (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), (boolval($enrollee["hostel"]) ? "+" : "-")], $fill);
-                                $counters["item"]++;
+                                switch ($additional) {
+                                    default:
+                                    case "codes":
+                                        $key = [
+                                            "specialty" => $database -> query("SELECT `compositeKey` FROM `enr_specialties` WHERE `id` = {$enrollee["specialty"]}") -> fetch_assoc()["compositeKey"],
+                                            "level" => $database -> query("SELECT `compositeKey` FROM `enr_education_levels` WHERE `id` = {$enrollee["degree"]}") -> fetch_assoc()["compositeKey"],
+                                            "count" => $database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$enrollee["id"]}") -> fetch_assoc()["compositeKey"]
+                                        ];
+                                        if ($onlyOriginal)
+                                            $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $enrollee["averageMark"], $pdf -> cyrilic("{$key["count"]}-{$key["level"]}-{$key["specialty"]}")], $fill);
+                                        else
+                                            $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $enrollee["averageMark"], (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), $pdf -> cyrilic("{$key["count"]}-{$key["level"]}-{$key["specialty"]}")], $fill);
+                                    break;
+                                    case "hostel":
+                                        if ($onlyOriginal) {
+                                            $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $enrollee["averageMark"], (boolval($enrollee["hostel"]) ? "+" : "-")], $fill);
+                                        } else {
+                                            $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $enrollee["averageMark"], (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), (boolval($enrollee["hostel"]) ? "+" : "-")], $fill);
+                                        }
+                                    break;
+                                    case "categories":
+                                        if (!is_null($enrollee["category"])) {
+                                            $category = $database -> query("SELECT `name` FROM `enr_category_of_citizen` WHERE `id` = {$enrollee["category"]};") -> fetch_assoc()["name"];
+                                            if ($onlyOriginal) {
+                                                $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $pdf -> cyrilic($category)], $fill);
+                                            } else {
+                                                $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), $pdf -> cyrilic($category)], $fill);
+                                            }
+                                        }
+                                    break;
+                                }
+                                if ($additional == "categories" && !is_null($enrollee["category"]))
+                                    $counters["item"]++;
+                                elseif ($additional !== "categories")
+                                    $counters["item"]++;
                                 $counters["previousGrade"] = floatval($enrollee["averageMark"]);
                                 $pdf -> SetFont("PTSerif", "", 12);
                             }
@@ -1345,7 +1404,7 @@
                             "previousGrade" => 0,
                         ];
                         $pdf -> SetFillColor(255, 255, 255);
-                        $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC;");
+                        $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;");
                         if ($enrollees -> num_rows != 0)
                             while ($enrollee = $enrollees -> fetch_assoc()) {
                                 $fill = [];
@@ -1384,6 +1443,7 @@
         } else
             return false;
     }
+
     function listOfHostel($user = []) {
         if (!empty($user)) {
             if ($user -> check_level(1001) || $user -> check_level(1002)) {

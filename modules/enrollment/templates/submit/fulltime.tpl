@@ -1,3 +1,4 @@
+<script type="text/javascript"> document.title = "Онлайн-подача заявления (Очное отделение)"; </script>
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-representative" data-backdrop="static">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -72,7 +73,7 @@
                             <?php }
                         } ?>
                     </div>
-                    <p style="margin: 15px;"><strong>Вам нужно распечатать Согласие на обработку и хранение персональных данных, пописать его и отсканировать!</strong></p>
+                    <p style="margin: 15px;"><strong>Вам нужно распечатать Согласие на обработку и хранение персональных данных, подписать его и отсканировать!</strong></p>
                     <button class="btn btn-primary btn-block" type="button" style="margin-top: 10px;" id="submit-docs">Принять условия и продолжить</button>
                 </div>
                 <div id="div-second-step" style="display: none;">

@@ -3,6 +3,7 @@
     require_once __DIR__ . "/../../../../configurations/main.php";
     $crypt = new CryptService($ciphers["database"]);
 ?>
+<script type="text/javascript"> document.title = "Онлайн-проверка поданный заявлений" </script>
 <div class="modal fade" role="dialog" tabindex="-1" id="modal-dismiss-enrollee" data-backdrop="static" style="z-index: 1000000;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
