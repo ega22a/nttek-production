@@ -483,6 +483,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="card">
+                                <div class="card-header" role="tab">
+                                    <h5 class="mb-0">
+                                        <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-5" href="#accordion-1 .item-5">Сообщение в личный кабинет</a>
+                                    </h5>
+                                </div>
+                                <div class="collapse item-5" role="tabpanel" data-parent="#accordion-1">
+                                    <div class="card-body">
+                                        <div class="wysiwyg-summernote" id="wysiwyg"></div>
+                                        <button class="btn btn-primary btn-block" type="button" style="margin-top: 15px;" id="button-add-additional-text">Сохранить</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -496,6 +509,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
 <script src="/global-assets/js/jquery.mask.js"></script>
 <script src="/global-assets/js/dropdown-bootstrap.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script src="/global-assets/js/summernote-ru-RU.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css">
 </body>
 
 </html>

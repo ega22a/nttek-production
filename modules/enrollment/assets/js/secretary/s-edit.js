@@ -285,3 +285,61 @@ document.getElementById("button-average-grade-save").onclick = function() {
     } else
         createAlert("Для того, чтобы посчитать оценку, нужно ввести оценки!");
 }
+
+document.getElementById("button-add-additional-text").onclick = function() {
+    createConfirm("Вы уверены, что хотите сохранить сообщение или его удалить?", () => {
+        $.post(
+            "../api/secretary/s-edit/additional/push",
+            {
+                token: Cookies.get("token"),
+                statement: enrollee.id,
+                message: $("#wysiwyg").summernote("isEmpty") ? null : $("#wysiwyg").summernote("code")
+            },
+            (data) => {
+                switch (data.status) {
+                    case "OK":
+                        createAlert("Изменения успешно внесены!", "alert-success");
+                    break;
+                    default:
+                        createAlert(`Ошибка при обработке заявления. Побробнее: <b>${data.status}</b>.`, "alert-danger");
+                    break;
+                }
+                console.log(data);
+            }
+        );
+    });
+}
+
+$(document).ready(function() {
+    $('.wysiwyg-summernote').summernote({
+        height: 350,
+        lang: "ru-RU",
+        toolbar: [
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ["insert", ["picture", "table", "link"]],
+          ['height', ['height']]
+        ]
+    });
+    $.post(
+        "../api/secretary/s-edit/additional/get",
+        {
+            token: Cookies.get("token"),
+            statement: enrollee.id
+        },
+        (data) => {
+            switch (data.status) {
+                case "OK":
+                    if (data.message.length != 0)
+                        $("#wysiwyg").summernote("code", data.message);
+                break;
+                default:
+                    createAlert(`Ошибка при обработке заявления. Побробнее: <b>${data.status}</b>.`, "alert-danger");
+                break;
+            }
+        }
+    );
+  });
