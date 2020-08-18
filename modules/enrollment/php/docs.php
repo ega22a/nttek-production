@@ -1247,7 +1247,7 @@
                         $this -> Cell(3, 5, "");
                         $this -> Cell(182, 5, $this -> cyrilic(" - у абитуриента выше такой же средний балл."));
                         $this -> Ln(-5);
-                        $this -> SetFillColor(51, 153, 255);
+                        $this -> SetFillColor(210, 210, 210);
                         $this -> Cell(5, 5, "", 1, 0, "L", true);
                         $this -> Cell(3, 5, "");
                         $this -> Cell(182, 5, $this -> cyrilic(" - абитуриент с заключенным договором."));
@@ -1336,7 +1336,7 @@
                                     $fill = [true, true, true, true, true];
                                 }
                                 if ($enrollee["paysType"] == "2") {
-                                    $pdf -> SetFillColor(51, 153, 255);
+                                    $pdf -> SetFillColor(210, 210, 210);
                                     $fill = [true, true, true, true, true];
                                 }
                                 if (!boolval($enrollee["withStatement"]) && boolval($enrollee["isOnline"]))

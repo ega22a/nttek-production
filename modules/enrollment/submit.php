@@ -11,19 +11,26 @@
             $tengine -> set("database", $database);
             $tengine -> display("../../../../global-templates/header");
             $tengine -> display("../../../../global-templates/header-menu");
-            if (time() >= $json -> school -> enrollment -> startDate && time() <= strtotime($json -> school -> enrollment -> date))
-                switch ($_GET["type"]) {
-                    case "extramural":
+            switch ($_GET["type"]) {
+                case "extramural":
+                    if (time() >= $json -> school -> enrollment -> startDate && time() <= $json -> school -> enrollment -> endTime -> extramural)
                         $tengine -> display("extramural");
-                    break;
-                    case "fulltime":
-                    default:
+                    else {
+                        $tengine -> set("endTime", $json -> school -> enrollment -> endTime -> extramural);
+                        $tengine -> set("startTime", $json -> school -> enrollment -> startDate);
+                        $tengine -> display("time");
+                    }
+                break;
+                case "fulltime":
+                default:
+                    if (time() >= $json -> school -> enrollment -> startDate && time() <= $json -> school -> enrollment -> endTime -> fulltime)
                         $tengine -> display("fulltime");
-                    break;
-                }
-            else {
-                $tengine -> set("time", $json -> school -> enrollment);
-                $tengine -> display("time");
+                    else {
+                        $tengine -> set("endTime", $json -> school -> enrollment -> endTime -> fulltime);
+                        $tengine -> set("startTime", $json -> school -> enrollment -> startDate);
+                        $tengine -> display("time");
+                    }
+                break;
             }
         }
     } else

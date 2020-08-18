@@ -7,7 +7,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Информация о приеме</h4>
-                                <p class="card-text">Уважаемые абитуриенты! Приемная кампания начнется с <strong><?php echo Date("d.m.Y H:i", $this -> time -> startDate); ?></strong> и закончится <strong><?php echo $this -> time -> date; ?></strong>.</p>
+                                <p class="card-text">Уважаемые абитуриенты! Приемная кампания начнется с <strong><?php echo Date("d.m.Y H:i", $this -> startTime); ?></strong> и закончится <strong><?php echo Date("d.m.Y H:i", $this -> endTime); ?></strong>.</p>
                             </div>
                         </div>
                     </div>

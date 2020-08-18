@@ -48,6 +48,10 @@
         },
         "enrollment": {
             "date": "15.08.2020",
+            "endTime": {
+                "fulltime": 1597485600,
+                "extramural": 1601467200
+            },
             "startDate": 1591588800,
             "email": "enrollee@nttek.ru",
             "telephone": "+7 (3435) 41-75-58",
