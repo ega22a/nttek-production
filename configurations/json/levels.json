@@ -14,5 +14,9 @@
     {
         "level": 1003,
         "description": "Модуль Enrollment. Абитуриент."
+    },
+    {
+        "level": 2001,
+        "description": "Модуль Forms. Составитель форм."
     }
 ]
