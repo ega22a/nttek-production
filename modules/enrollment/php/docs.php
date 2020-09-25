@@ -1,6 +1,7 @@
 <?php
     require __DIR__ . "/../../../libraries/fpdf/fpdf.php";
     require __DIR__ . "/../../../libraries/petrovich/Petrovich.php";
+    require __DIR__ . "/../../../libraries/simplexlsxgen/SimpleXLSXGen.php";
 
     function statement($user = [], int $id = -1) {
         if (!empty($user) && $id != -1) {
@@ -1247,7 +1248,7 @@
                         $this -> Cell(3, 5, "");
                         $this -> Cell(182, 5, $this -> cyrilic(" - у абитуриента выше такой же средний балл."));
                         $this -> Ln(-5);
-                        $this -> SetFillColor(210, 210, 210);
+                        $this -> SetFillColor(236, 236, 236);
                         $this -> Cell(5, 5, "", 1, 0, "L", true);
                         $this -> Cell(3, 5, "");
                         $this -> Cell(182, 5, $this -> cyrilic(" - абитуриент с заключенным договором."));
@@ -1315,6 +1316,32 @@
                                     $pdf -> SetAligns(["L", "L", "C", "L"]);
                                 }
                             break;
+                            case "not-city":
+                                if ($onlyOriginal) {
+                                    $pdf -> SetWidths([14.38, 95, 80.62]);
+                                    $pdf -> SetAligns(["C", "C", "C", "C", "C"]);
+                                    $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Город факт. проживания")]);
+                                    $pdf -> SetAligns(["L", "L", "C"]);
+                                } else {
+                                    $pdf -> SetWidths([14.38, 95, 25.92, 54.7]);
+                                    $pdf -> SetAligns(["C", "C", "C", "C", "C"]);
+                                    $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Оригинал"), $pdf -> cyrilic("Город факт. проживания")]);
+                                    $pdf -> SetAligns(["L", "L", "C", "C"]);
+                                }
+                            break;
+                            case "birthday":
+                                if ($onlyOriginal) {
+                                    $pdf -> SetWidths([14.38, 95, 80.62]);
+                                    $pdf -> SetAligns(["C", "C", "C", "C", "C"]);
+                                    $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Дата рождения")]);
+                                    $pdf -> SetAligns(["L", "L", "C"]);
+                                } else {
+                                    $pdf -> SetWidths([14.38, 95, 25.92, 54.7]);
+                                    $pdf -> SetAligns(["C", "C", "C", "C", "C"]);
+                                    $pdf -> Row([$pdf -> cyrilic("№ п/п"), $pdf -> cyrilic("ФИО"), $pdf -> cyrilic("Оригинал"), $pdf -> cyrilic("Дата рождения")]);
+                                    $pdf -> SetAligns(["L", "L", "C", "C"]);
+                                }
+                            break;
                         }
                         $pdf -> SetFont("PTSerif", "", 12);
                         $counters = [
@@ -1323,20 +1350,20 @@
                         ];
                         $pdf -> SetFillColor(255, 255, 255);
                         if ($onlyOriginal)
-                            $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline`, `category` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 AND `withOriginalDiploma` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;");
+                            $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline`, `category`, `address`, `birthday` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 AND `withOriginalDiploma` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;");
                         else
-                            $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline`, `category` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;");
+                            $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `averageMark`, `hostel`, `paysType`, `withOriginalDiploma`, `withStatement`, `isOnline`, `category`, `address`, `birthday` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;");
                         if ($enrollees -> num_rows != 0)
                             while ($enrollee = $enrollees -> fetch_assoc()) {
                                 $fill = [];
                                 if ($counters["item"] > intval($specialty["budget"]))
                                     $pdf -> SetFont("PTSerif", "I", 12);
-                                if ($counters["previousGrade"] == floatval($enrollee["averageMark"])) {
+                                if ($counters["previousGrade"] == floatval($enrollee["averageMark"]) && !in_array($additional, ["categories", "not-city"])) {
                                     $pdf -> SetFillColor(153, 153, 153);
                                     $fill = [true, true, true, true, true];
                                 }
                                 if ($enrollee["paysType"] == "2") {
-                                    $pdf -> SetFillColor(210, 210, 210);
+                                    $pdf -> SetFillColor(236, 236, 236);
                                     $fill = [true, true, true, true, true];
                                 }
                                 if (!boolval($enrollee["withStatement"]) && boolval($enrollee["isOnline"]))
@@ -1371,6 +1398,26 @@
                                             } else {
                                                 $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), $pdf -> cyrilic($category)], $fill);
                                             }
+                                        }
+                                    break;
+                                    case "not-city":
+                                        $address = json_decode($crypt -> decrypt($enrollee["address"]));
+                                        if (mb_strtoupper($address -> city) != mb_strtoupper("Нижний Тагил")) {
+                                            if ($onlyOriginal) {
+                                                $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $pdf -> cyrilic($address -> city)], $fill);
+                                            } else {
+                                                $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), $pdf -> cyrilic($address -> city)], $fill);
+                                            }
+                                        } else
+                                            $counters["item"]--;
+                                    break;
+                                    case "birthday":
+                                        if ($onlyOriginal) {
+                                            $birthday = explode("-", $crypt -> decrypt($enrollee["birthday"]));
+                                            $birthday = "{$birthday[2]}.{$birthday[1]}.{$birthday[0]}";
+                                            $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), $pdf -> cyrilic($birthday)], $fill);
+                                        } else {
+                                            $pdf -> Row(["{$counters["item"]}.", $pdf -> cyrilic("{$crypt -> decrypt($enrollee["lastname"])} {$crypt -> decrypt($enrollee["firstname"])} " . (!empty($enrollee["patronymic"]) ? "{$crypt -> decrypt($enrollee["patronymic"])}" : "")), (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"), $pdf -> cyrilic($birthday)], $fill);
                                         }
                                     break;
                                 }
@@ -1571,6 +1618,66 @@
                     }
                 }
                 return $pdf -> Output("S");
+                $database -> close();
+            } else
+                return false;
+        } else
+            return false;
+    }
+
+    function XLSXlistOfEnrollees($user = [], string $type = "fulltime", $onlyOriginal = false) {
+        if (!empty($user)) {
+            if ($user -> check_level(1001) || $user -> check_level(1002)) {
+                require __DIR__ . "/../../../configurations/database/class.php";
+                require_once __DIR__ . "/../../../configurations/main.php";
+                require __DIR__ . "/../../../configurations/cipher-keys.php";
+                $crypt = new CryptService($ciphers["database"]);
+                $parsed = [];
+                if ($type == "fulltime") {
+                    $specialties = $database -> query("SELECT `id`, `fullname`, `budget` FROM `enr_specialties` WHERE `forExtramural` = 0;");
+                    $parsed[] = ["№ личного дела", "Фамилия", "Имя", "Отчество", "Дата рождения", "Адрес фактического проживания", "Статус гражданина", "Иностранный язык", "Адрес электронной почты", "Номер мобильного телефона", "Оригинал документа об образовании", "Договор", "Общежитие"];
+                    while ($specialty = $specialties -> fetch_assoc()) {
+                        $enrollees;
+                        if ($onlyOriginal)
+                            $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `email`, `telephone`, `hostel`, `paysType`, `withOriginalDiploma`, `category`, `address`, `birthday`, `language` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 AND `withOriginalDiploma` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;");
+                        else
+                            $enrollees = $database -> query("SELECT `id`, `specialty`, `degree`, `timestamp`, `firstname`, `lastname`, `patronymic`, `email`, `telephone`, `hostel`, `paysType`, `withOriginalDiploma`, `category`, `address`, `birthday`, `language` FROM `enr_statements` WHERE `specialty` = {$specialty["id"]} AND `isChecked` = 1 ORDER BY `averageMark` DESC, `timestamp` ASC;");
+                        if ($enrollees -> num_rows != 0) {
+                            while ($enrollee = $enrollees -> fetch_assoc()) {
+                                $key = [
+                                    "specialty" => $database -> query("SELECT `compositeKey` FROM `enr_specialties` WHERE `id` = {$enrollee["specialty"]}") -> fetch_assoc()["compositeKey"],
+                                    "level" => $database -> query("SELECT `compositeKey` FROM `enr_education_levels` WHERE `id` = {$enrollee["degree"]}") -> fetch_assoc()["compositeKey"],
+                                ];
+                                $address = json_decode($crypt -> decrypt($enrollee["address"]));
+                                $birthday = explode("-", $crypt -> decrypt($enrollee["birthday"]));
+                                $category = "-";
+                                if (!is_null($enrollee["category"]))
+                                    $category = $database -> query("SELECT `name` FROM `enr_category_of_citizen` WHERE `id` = {$enrollee["category"]};") -> fetch_assoc()["name"];
+                                    $language = $database -> query("SELECT `name` FROM `enr_languages` WHERE `id` = {$enrollee["language"]};") -> fetch_assoc()["name"];
+                                    $parsed[] = [
+                                    "{$key["level"]}-{$key["specialty"]}",
+                                    $crypt -> decrypt($enrollee["lastname"]),
+                                    $crypt -> decrypt($enrollee["firstname"]),
+                                    (!empty($enrollee["patronymic"]) ? $crypt -> decrypt($enrollee["patronymic"]) : ""),
+                                    "{$birthday[2]}.{$birthday[1]}.{$birthday[0]}",
+                                    "{$address -> zipCode}, {$address -> country}, {$address -> region}, {$address -> city}, {$address -> street}, {$address -> house}" . (!empty($address -> building) ? ", {$address -> building}" : "") . (!empty($address -> flat) ? ", {$address -> flat}" : ""),
+                                    $category,
+                                    $language,
+                                    $crypt -> decrypt($enrollee["email"]),
+                                    $crypt -> decrypt($enrollee["telephone"]),
+                                    (boolval($enrollee["withOriginalDiploma"]) ? "+" : "-"),
+                                    ($enrollee["paysType"] == 2 ? "+" : "-"),
+                                    (boolval($enrollee["hostel"]) ? "+" : "-")
+                                ];
+                            }
+                        }
+                    }
+                    $xlsx = SimpleXLSXGen::fromArray($parsed);
+                    return $xlsx -> getRaw();
+                } elseif ($type == "extramural") {
+                    
+                } else
+                    return false;
                 $database -> close();
             } else
                 return false;

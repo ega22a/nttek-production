@@ -312,6 +312,48 @@ function getListOfEnrollees(_type = "fulltime", _additional = "codes", _onlyOrig
         createAlert("Неправильный тип запроса!");
 }
 
+function s2ab(s) {
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+  }
+
+function XLSXgetListOfEnrollees(_type = "fulltime", _onlyOriginal = false) {
+    var _granted = false;
+    switch (_type) {
+        case "fulltime":
+        case "extramural":
+            _granted = true;
+    }
+    if (_granted) {
+        $("#modal-spinner").modal();
+        $.post(
+            "../api/secretary/configuration/docs/get",
+            {
+                token: Cookies.get("token"),
+                type: "XLSXenrollee",
+                enrollee: _type,
+                original: _onlyOriginal ? 1: 0
+            },
+            (data) => {
+                console.log(data);
+                switch (data.status) {
+                    case "OK":
+                        setTimeout(() => { $("#modal-spinner").modal("hide"); }, 250);
+                        download(new Blob([s2ab(atob(data.doc))]), `Список абитуриентов.xlsx`, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                    break;
+                    default:
+                        setTimeout(() => { $("#modal-spinner").modal("hide"); }, 250);
+                        createAlert(`На сервере произошла ошибка. Побробнее: <b>${data.status}</b>.`, "alert-danger");
+                    break;
+                }
+            }
+        )
+    } else
+        createAlert("Неправильный тип запроса!");
+}
+
 function getHostelList(_type = "enrollees") {
     switch (_type) {
         case "enrollees":

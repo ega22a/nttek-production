@@ -523,6 +523,9 @@
                                                                 <li><a href="#" onclick="getListOfEnrollees('fulltime', 'codes', true);">С номерами личных дел (PDF)</a></li>
                                                                 <li><a href="#" onclick="getListOfEnrollees('fulltime', 'hostel', true);">С данными об общежитии (PDF)</a></li>
                                                                 <li><a href="#" onclick="getListOfEnrollees('fulltime', 'categories', true);">С данными о категориях граждан (PDF)</a></li>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', 'not-city', true);">С данными о фактическом проживании вне Нижнего Тагила (PDF)</a></li>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', 'birthday', true);">С данными о днях рождениях (PDF)</a></li>
+                                                                <li><a href="#" onclick="XLSXgetListOfEnrollees('fulltime', true);">Срез данных (XLSX)</a></li>
                                                             </ul>
                                                         </li>
                                                         <li>
@@ -531,6 +534,9 @@
                                                                 <li><a href="#" onclick="getListOfEnrollees('fulltime', 'codes', false);">С номерами личных дел (PDF)</a></li>
                                                                 <li><a href="#" onclick="getListOfEnrollees('fulltime', 'hostel', false);">С данными об общежитии (PDF)</a></li>
                                                                 <li><a href="#" onclick="getListOfEnrollees('fulltime', 'categories', false);">С данными о категориях граждан (PDF)</a></li>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', 'not-city', false);">С данными о фактическом проживании вне Нижнего Тагила (PDF)</a></li>
+                                                                <li><a href="#" onclick="getListOfEnrollees('fulltime', 'birthday', false);">С данными о днях рождениях (PDF)</a></li>
+                                                                <li><a href="#" onclick="XLSXgetListOfEnrollees('fulltime', false);">Срез данных (XLSX)</a></li>
                                                             </ul>
                                                         </li>
                                                     </ul>

@@ -29,6 +29,17 @@
                                 "status" => "ENROLLEE_IS_EMPTY",
                             ]);
                     break;
+                    case "XLSXenrollee":
+                        if (isset($_POST["enrollee"])) {
+                            echo json_encode([
+                                "status" => "OK",
+                                "doc" => base64_encode(XLSXlistOfEnrollees($_user, $_POST["enrollee"], boolval($_POST["original"]))),
+                            ]);
+                        } else
+                            echo json_encode([
+                                "status" => "ENROLLEE_IS_EMPTY",
+                            ]);
+                    break;
                     case "analysis":
                         echo json_encode([
                             "status" => "OK",
