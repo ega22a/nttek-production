@@ -264,8 +264,8 @@ class formGenerator {
                             id: item.id,
                             data: []
                         }
-                        for (var _radioButton of item.children[1].children)
-                            _piece.data.push(_radioButton.children[1].value);
+                        for (var _radioButton of item.children[2].children)
+                            _piece.data.push(_radioButton.children[0].children[0].children[0].value);
                     break;
                     case "checkbox":
                         _piece = {

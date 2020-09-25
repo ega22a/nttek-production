@@ -45,17 +45,17 @@
                                             case "select": ?>
                                                 <div class="form-row" data-extend="select">
                                                     <div class="form-group col-md-12">
-                                                        <select class="custom-select" id="<?php echo $form_value -> id; ?>" <?php echo $form_value -> muliple ? "multiple=\"\"" : ""; echo $form_value -> required ? "required=\"\"" : ""; ?>>
+                                                        <select class="custom-select" type="select" id="<?php echo $form_value -> id; ?>" <?php echo $form_value -> multiple ? "multiple=\"\"" : ""; echo $form_value -> required ? "required=\"\"" : ""; ?>>
                                                             <option selected="" disabled=""><?php echo $form_value -> label; ?></option>
                                                             <?php foreach ($form_value -> data as $data_key => $data_value) {
                                                                 if ($data_value -> optgroup) { ?>
                                                                     <optgroup label="<?php echo $data_value -> value; ?>">
                                                                         <?php foreach ($data_value -> data as $opt_key => $opt_value) { ?>
-                                                                            <option value="<?php echo "{$data_key}-{$opt_key}"; ?>"><?php echo $opt_value; ?></option>
+                                                                            <option value="<?php echo $opt_value; ?>"><?php echo $opt_value; ?></option>
                                                                         <?php } ?>
                                                                     </optgroup>
                                                                 <?php } else { ?>
-                                                                    <option value="<?php echo "{$data_key}"; ?>"><?php echo $data_value -> value    ; ?></option>
+                                                                    <option value="<?php echo $opt_value; ?>"><?php echo $data_value -> value; ?></option>
                                                                 <?php } ?>
                                                             <?php } ?>
                                                         </select>
@@ -63,11 +63,12 @@
                                                 </div>
                                             <?php break;
                                             case "radio": ?>
+                                                <h4><?php echo $form_value -> label; ?></h4>
                                                 <div class="form-row" data-extend="radio">
-                                                    <?php foreach ($form_value as $radio_key => $radio_button) { ?>
+                                                    <?php foreach ($form_value -> data as $radio_key => $radio_button) { ?>
                                                         <div class="form-group col-md-12">
                                                             <div class="custom-control custom-control-inline custom-radio">
-                                                                <input type="radio" class="custom-control-input" id="<?php echo "{$form_value -> id}-radio-{$radio_key}"; ?>">
+                                                                <input type="radio" class="custom-control-input" id="<?php echo "{$form_value -> id}-radio-{$radio_key}"; ?>" name="<?php echo "{$form_value -> id}-name"; ?>">
                                                                 <label class="custom-control-label" for="<?php echo "{$form_value -> id}-radio-{$radio_key}"; ?>"><?php echo $radio_button; ?></label>
                                                             </div>
                                                         </div>

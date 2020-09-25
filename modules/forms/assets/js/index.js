@@ -8,22 +8,26 @@ $(".send-form").click(function() {
                 type: item.getAttribute("type"),
                 id: item.id,
                 name: item.getAttribute("placeholder"),
-                value: item.getAttribute("type") == "checkbox" ? item.checked : item.value
+                value: item.getAttribute("type") == "checkbox" || item.getAttribute("type") == "radio" ? item.checked : item.value
             });
         $("#modal-spinner").modal();
         $.post(
             "api/push",
             {
-                payload: JSON.stringify(collect)
+                payload: JSON.stringify(collect),
+                id: id
             },
             (data) => {
+                console.log(data);
                 switch (data.status) {
                     case "OK":
-
+                        createAlert("Ваша форма успешно отправлена!", "alert-success");
+                        setTimeout(() => { $("#modal-spinner").modal("hide"); }, 500);
                     break;
                     default:
-
-                    break;  
+                        createAlert(`На сервере произошла ошибка. Подробнее: <b>${data.status}</b>.`, "alert-danger");
+                        setTimeout(() => { $("#modal-spinner").modal("hide"); }, 500);
+                    break;
                 }
             }
         );
