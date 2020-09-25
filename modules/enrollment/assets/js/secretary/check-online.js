@@ -26,7 +26,7 @@ $(".item-enrollee-action").click(function() {
                 break;
                 default:
 					setTimeout(() => { $("#modal-spinner").modal("hide"); }, 250);
-                    createAlert(`На сервере произошла ошибка. Побробнее: <b>${data.status}</b>.`, "alert-danger");
+                    createAlert(`На сервере произошла ошибка. Подробнее: <b>${data.status}</b>.`, "alert-danger");
                 break;
             }
         }
