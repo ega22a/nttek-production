@@ -15,6 +15,7 @@
             if ($user -> check_level(1001)) {
                 $tengine -> set("user", $user);
                 $tengine -> set("database", $database);
+                $tengine -> set("title", "Конфигурация модуля");
                 $tengine -> display("../../../global-templates/header");
                 $tengine -> display("../../../global-templates/header-menu");
                 $tengine -> display("secretary/configuration");

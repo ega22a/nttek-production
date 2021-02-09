@@ -15,6 +15,7 @@
             if ($user -> check_level(0) || $user -> check_level(2001)) {
                 $tengine -> set("user", $user);
                 $tengine -> set("database", $database);
+                $tengine -> set("title", "Архив обращений");
                 $tengine -> display("../../../global-templates/header");
                 $tengine -> display("../../../global-templates/header-menu");
                 $tengine -> display("admin/archive");

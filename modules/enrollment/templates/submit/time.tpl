@@ -1,4 +1,3 @@
-<script type="text/javascript"> document.title = "Подача документов закрыта"; </script>
 <header style="min-height: 100vh;">
         <div style="width: 100%;min-height: 100vh;padding-top: 80px;">
             <div class="container">

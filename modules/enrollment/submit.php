@@ -9,6 +9,7 @@
             $json = json_decode(file_get_contents(__DIR__  . "/../../configurations/json/about.json"));
             require DATABASE;
             $tengine -> set("database", $database);
+            $tengine -> set("title", "Подать документы онлайн");
             $tengine -> display("../../../../global-templates/header");
             $tengine -> display("../../../../global-templates/header-menu");
             switch ($_GET["type"]) {

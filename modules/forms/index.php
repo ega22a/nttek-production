@@ -15,6 +15,7 @@
                 $tengine -> set("user", $user);
         }
         $tengine -> set("database", $database);
+        $tengine -> set("title", "Заполнить форму");
         $tengine -> display("../../../global-templates/header");
         $tengine -> display("../../../global-templates/header-menu");
         $tengine -> display("index");

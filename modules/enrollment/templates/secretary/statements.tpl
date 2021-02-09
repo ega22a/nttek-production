@@ -3,7 +3,6 @@
     require_once __DIR__ . "/../../../../configurations/main.php";
     $crypt = new CryptService($ciphers["database"]);
 ?>
-<script type="text/javascript"> document.title = "Управление принятыми заявлениями"; </script>
 <header style="min-height: 100vh;">
     <div style="width: 100%;min-height: 100vh;padding-top: 80px;">
         <div class="container">

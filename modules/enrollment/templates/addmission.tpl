@@ -21,7 +21,6 @@
         else
             $originalPlace++;
     ?>
-<script type="text/javascript"> document.title = "Личный кабинет абитуриента"; </script>
 <div role="dialog" tabindex="-1" class="modal fade" id="modal-news-archive" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">

@@ -1,4 +1,3 @@
-<script type="text/javascript"> document.title = "Конфигурация модуля"; </script>
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-edit-new" data-backdrop="static">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">

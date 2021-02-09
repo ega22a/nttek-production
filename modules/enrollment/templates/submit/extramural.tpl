@@ -1,4 +1,3 @@
-<script type="text/javascript"> document.title = "Онлайн-подача документов (Заочное отделение)"; </script>
 <body>
     <nav class="navbar navbar-light navbar-expand-md" style="background-color: rgba(255, 255, 255, 0.9);position: absolute;width: 100%;">
         <div class="container-fluid"><a class="navbar-brand" href="#">${systemName}</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>

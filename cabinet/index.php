@@ -18,6 +18,7 @@
         $c = new configuration();
         $tengine -> set ("config", $c);
         $tengine -> set("user", $user);
+        $tengine -> set("title", "Конфигурационный кабинет");
         $tengine -> display("header");
         $tengine -> display("header-menu");
         $tengine -> display("cabinet-body");

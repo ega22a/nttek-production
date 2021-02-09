@@ -15,6 +15,7 @@
             if ($user -> check_level(1001) || $user -> check_level(1002)) {
                 $tengine -> set("user", $user);
                 $tengine -> set("database", $database);
+                $tengine -> set("title", "Принять документы");
                 $tengine -> display("../../../../global-templates/header");
                 $tengine -> display("../../../../global-templates/header-menu");
                 $tengine -> display("submit");

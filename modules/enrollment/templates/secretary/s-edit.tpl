@@ -5,7 +5,6 @@
     "count" => $this -> database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$this -> statement["id"]}") -> fetch_assoc()["compositeKey"],
     "year" => Date("Y", $this -> statement["timestamp"]),
 ]; ?>
-<script type="text/javascript"> document.title = "Редактирование абитуриента"; </script>
 <header style="min-height: 100vh;">
     <div style="width: 100%;min-height: 100vh;padding-top: 80px;">
         <div class="container">
@@ -22,7 +21,7 @@
                 };
             </script>
             <div class="row col-md-12" style="margin: 0 auto; align-items: flex-start;">
-                <div class="col-md-3">
+                <div class="col-lg-3">
                     <ul class="nav nav-pills flex-column" role="tablist" area-orientation="vertical" data-count="1">
                         <li class="nav-item">
                             <a class="nav-link active" id="v-pills-statement-edit-pill" href="#v-pills-statement-edit" data-toggle="pill" role="tab" aria-controls="v-pills-statement-edit" aria-selected="true">Редактировать данные</a>
@@ -32,7 +31,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="border rounded col-md-9 tab-content" style="padding: 15px;margin-bottom: 15px;">
+                <div class="border rounded col-lg-9 tab-content" style="padding: 15px;margin-bottom: 15px;">
                     <div id="v-pills-statement-edit" class="tab-pane fade show active" role="tabpanel" aria-labelledby="v-pills-statement-edit-pill">
                         <form id="form">
                             <h4>Персональные данные</h4>

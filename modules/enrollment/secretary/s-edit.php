@@ -21,6 +21,7 @@
                     $tengine -> set("database", $database);
                     $tengine -> set("crypt", new CryptService($ciphers["database"]));
                     $tengine -> set("statement", $statement -> fetch_assoc());
+                    $tengine -> set("title", "Редактирование абитуриента");
                     $tengine -> display("../../../../global-templates/header");
                     $tengine -> display("../../../../global-templates/header-menu");
                     $tengine -> display("s-edit");

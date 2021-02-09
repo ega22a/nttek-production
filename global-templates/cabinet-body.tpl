@@ -177,7 +177,7 @@
         <div style="width: 100%;min-height: 100vh;padding-top: 80px;">
             <div class="container">
                 <div class="row col-md-12" style="margin: 0 auto;">
-                    <div class="col-md-3" style="margin-bottom: 15px;">
+                    <div class="col-lg-3" style="margin-bottom: 15px;">
                         <ul class="nav nav-pills flex-column" role="tablist" area-orientation="vertical">
                             <li class="nav-item"><a class="nav-link active" id="v-pills-personal-data-tab" href="#v-pills-personal-data" data-toggle="pill" role="tab" aria-controls="v-pills-personal-data" aria-selected="true">Персональные данные</a></li>
                             <li class="nav-item"><a class="nav-link" id="v-pills-auth-data-tab" href="#v-pills-auth-data" data-toggle="pill" role="tab" aria-controls="v-pills-auth-data" aria-selected="false">Аутентификация</a></li>
@@ -186,7 +186,7 @@
                             <?php } ?>
                         </ul>
                     </div>
-                    <div class="border rounded col-md-9 tab-content" style="padding: 15px;margin-bottom: 15px;">
+                    <div class="border rounded col-lg-9 tab-content" style="padding: 15px;margin-bottom: 15px;">
                         <div id="v-pills-personal-data" class="tab-pane fade show active" role="tabpanel" aria-labelledby="v-pills-personal-data-tab">
                             <form>
                                 <div class="form-row col-md-12">

@@ -3,7 +3,7 @@
     <div style="width: 100%;min-height: 100vh;padding-top: 80px;">
         <div class="container">
             <div class="row col-md-12" style="margin: 0 auto;">
-                <div class="col-md-3">
+                <div class="col-lg-3">
                     <ul class="nav nav-pills flex-column" role="tablist" area-orientation="vertical">
                         <?php if ($forms -> num_rows != 0) {
                             $counter = 0;
@@ -16,7 +16,7 @@
                         }?>
                     </ul>
                 </div>
-                <div class="border rounded col-md-9 tab-content" style="padding: 15px; margin-bottom: 15px;">
+                <div class="border rounded col-lg-9 tab-content" style="padding: 15px; margin-bottom: 15px;">
                     <?php $forms -> data_seek(0);
                     if ($forms -> num_rows != 0) {
                         $counter = 0;

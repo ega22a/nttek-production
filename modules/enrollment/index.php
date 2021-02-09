@@ -13,6 +13,7 @@
             } else
                 $tengine -> set("user", $user);
         }
+        $tengine -> set("title", "Приемная кампания");
         $tengine -> display("../../../global-templates/header");
         $tengine -> display("../../../global-templates/header-menu");
         $tengine -> display("index");

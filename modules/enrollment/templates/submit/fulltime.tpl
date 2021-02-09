@@ -1,4 +1,3 @@
-<script type="text/javascript"> document.title = "Онлайн-подача заявления (Очное отделение)"; </script>
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-representative" data-backdrop="static">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">

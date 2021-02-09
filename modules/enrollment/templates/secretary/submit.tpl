@@ -1,4 +1,3 @@
-<script type="text/javascript"> document.title = "Принять абитуриента"; </script>
     <div class="modal fade" role="dialog" tabindex="-1" data-backdrop="static" id="modal-statement-receipt">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
