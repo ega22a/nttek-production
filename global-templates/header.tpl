@@ -20,7 +20,7 @@
     <script type="text/javascript" src="/global-assets/js/download.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
     <link rel="stylesheet" href="/global-assets/css/styles.css?<?php echo time(); ?>">
-    <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/female-scientist_1f469-200d-1f52c.png">
+    <link rel="icon" href="/global-assets/img/logotype.svg">
 </head>
 
 <body>

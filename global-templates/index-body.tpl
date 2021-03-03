@@ -3,6 +3,7 @@
             <div>
                 <div class="container text-light">
                     <div>
+                        <img src="/global-assets/img/logotype.svg" style="margin: 0 auto;display: block;max-width:250px;">
                         <h1 class="text-center display-3">Ассистент</h1>
                         <p class="text-center" style="max-width: 350px;margin: 0 auto; font-size: 20px;">Единая информационная система для студентов, сотрудников и абитуриентов образовательного учреждения.&nbsp;</p>
                         <?php if (!is_object($this -> user)) { ?>
