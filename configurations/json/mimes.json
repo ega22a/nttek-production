@@ -18,5 +18,9 @@
     {
         "mime": "image/gif",
         "extension": ".gif"
+    },
+    {
+        "mime": "application/zip",
+        "extension": ".zip"
     }
 ]

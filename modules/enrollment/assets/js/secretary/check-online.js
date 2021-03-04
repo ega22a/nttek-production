@@ -22,7 +22,7 @@ $(".item-enrollee-action").click(function() {
             switch (data.status) {
                 case "OK":
 					setTimeout(() => { $("#modal-spinner").modal("hide"); }, 250);
-                    download(`data:application/zip;base64,${data.archive}`, `${data.name}.zip`, "appication/zip");
+                    download(`https://assistant.nttek.ru/download?id=${data.archive}`, `${data.name}.zip`, "appication/zip");
                 break;
                 default:
 					setTimeout(() => { $("#modal-spinner").modal("hide"); }, 250);

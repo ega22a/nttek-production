@@ -7,7 +7,7 @@
             if ($_user -> check_level(1001) || $_user -> check_level(1002)) {
                 require __DIR__ . "/../../../../../configurations/database/class.php";
                 $id = intval($_POST["id"]);
-                $enrollee = $database -> query("SELECT `id`, `firstname`, `lastname`, `patronymic`, `attachedDocsIds`, `hostel` FROM `enr_statements` WHERE `id` = {$id} AND `isChecked` = 1 AND `usersId` IS NOT NULL");
+                $enrollee = $database -> query("SELECT `id`, `firstname`, `lastname`, `patronymic`, `attachedDocsIds`, `pathToZip`, `hostel` FROM `enr_statements` WHERE `id` = {$id} AND `isChecked` = 1 AND `usersId` IS NOT NULL");
                 if ($enrollee -> num_rows == 1) {
                     $enrollee = $enrollee -> fetch_assoc();
                     require __DIR__ . "/../../../../../configurations/cipher-keys.php";
@@ -51,9 +51,25 @@
                         file_put_contents($receipt_name, receipt($_user, $id));
                         $archive -> addFile($receipt_name, "Расписка.pdf");
                         $archive -> close();
+                        if (!empty($enrollee["idOfZip"])) {
+                            $files -> delete(intval($enrollee["idOfZip"]));
+                        }
+                        $files -> setPath("/enrollment/enrolles/zips");
+                        $zipId = $files -> upload(
+                            [
+                            "name" => $thumb["name"],
+                            "type" => "application/zip",
+                            "size" => 3000,
+                            "tmp_name" => $name_of_archive
+                            ],
+                            $thumb["name"],
+                            false,
+                            [1001, 1002]
+                        );
+                        $database -> query("UPDATE INTO `enr_statements` SET `idOfZip` = {$zipId} WHERE `id` = {$id};");
                         echo json_encode([
                             "status" => "OK",
-                            "archive" => base64_encode(file_get_contents($name_of_archive)),
+                            "archive" => $zipId,
                             "name" => $thumb["name"],
                         ]);
                         unlink($name_of_archive);

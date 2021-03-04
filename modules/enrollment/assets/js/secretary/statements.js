@@ -45,7 +45,7 @@ $(".button-enrollee-archive").click(function() {
                 setTimeout(() => { $("#modal-spinner").modal("hide"); }, 350);
                 switch (data.status) {
                     case "OK":
-                        download(`data:application/zip;base64,${data.archive}`, `${data.name}.zip`, "appication/zip");
+                        download(`https://assistant.nttek.ru/download?id=${data.archive}`, `${data.name}.zip`, "appication/zip");
                     break;
                     default:
                         createAlert(`Произошла ошибка на сервере. Подробнее: <b>${data.status}</b>`);

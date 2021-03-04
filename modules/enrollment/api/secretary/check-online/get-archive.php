@@ -34,9 +34,25 @@
                                 $archive -> addFile($file["path"], "{$translatedName}/{$parsed_path[2]}");
                             }
                             $archive -> close();
+                            if (!empty($enrollee["idOfZip"])) {
+                                $files -> delete(intval($enrollee["idOfZip"]));
+                            }
+                            $files -> setPath("/enrollment/enrolles/zips");
+                            $zipId = $files -> upload(
+                                [
+                                "name" => $thumb["name"],
+                                "type" => "application/zip",
+                                "size" => 3000,
+                                "tmp_name" => $name_of_archive
+                                ],
+                                $thumb["name"],
+                                false,
+                                [1001, 1002]
+                            );
+                            $database -> query("UPDATE INTO `enr_statements` SET `idOfZip` = {$zipId} WHERE `id` = {$id};");
                             echo json_encode([
                                 "status" => "OK",
-                                "archive" => base64_encode(file_get_contents($name_of_archive)),
+                                "archive" => $zipId,
                                 "name" => $thumb["name"],
                             ]);
                             unlink($name_of_archive);

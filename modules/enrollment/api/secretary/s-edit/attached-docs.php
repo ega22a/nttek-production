@@ -93,30 +93,28 @@
                             }
                             $sql .= "`attachedDocsIds` = '{$crypt -> encrypt(json_encode($newFiles))}', `attachedDocs` = '{$crypt -> encrypt(json_encode($newAttachedDocs))}', `withOriginalDiploma` = " . ($_POST["checkbox-original-diploma"] == "true" ? "1" : "0");
                             $database -> query("UPDATE `enr_statements` SET {$sql} WHERE `id` = {$_statement_id};");
-                            if (boolval($_statement["isOnline"])) {
-                                require __DIR__ . "/../../../../../configurations/email/class.php";
-                                $key = [
-                                    "specialty" => $database -> query("SELECT `compositeKey` FROM `enr_specialties` WHERE `id` = {$_statement["specialty"]}") -> fetch_assoc()["compositeKey"],
-                                    "level" => $database -> query("SELECT `compositeKey` FROM `enr_education_levels` WHERE `id` = {$_statement["degree"]}") -> fetch_assoc()["compositeKey"],
-                                    "count" => $database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$_statement["id"]}") -> fetch_assoc()["compositeKey"],
-                                    "year" => Date("Y", $_statement["timestamp"]),
-                                ];
-                                $mail -> addAddress($crypt -> decrypt($_statement["email"]));
-                                $college = json_decode(file_get_contents(__DIR__ . "/../../../../../configurations/json/about.json"));
-                                $mail -> Subject = "Подача документов в {$college -> school -> name -> short} онлайн";
-                                $body = "
-                                    <h2>Подача документов в {$college -> school -> name -> short} онлайн</h2>
-                                    <p>Здравствуйте, {$crypt -> decrypt($_statement["firstname"])} {$crypt -> decrypt($_statement["patronymic"])}!</p>
-                                    <p>У вас изменился список прилагаемых файлов! В <a href=\"https://{$college -> address}/login\">личном кабинете</a> Вы можете ознакомиться со списком.</p>
-                                    <p>Вашему личному делу был присвоен следующий номер: <b><code>{$key["count"]}-{$key["level"]}-{$key["specialty"]}/{$key["year"]} ({$_statement_id})</code></b>.</p>
-                                    <p>Также, не забывайте, что зачисление в образовательное учреждение происходит при условии, что у вы подали оригинал документа об образовании.</p>
-                                    <p>Если у Вас остались вопросы, то их можно задать, написав на следующий адрес электронной почты: <a href=\"mailto:{$college -> school -> enrollment -> email}\">{$college -> school -> enrollment -> email}</a>.</p>
-                                    <hr>
-                                    <sub>Это письмо было сгенерировано автоматически. На него не нужно отвечать!</sub>
-                                ";
-                                $mail -> Body = $body;
-                                $mail -> send();
-                            }
+                            require __DIR__ . "/../../../../../configurations/email/class.php";
+                            $key = [
+                                "specialty" => $database -> query("SELECT `compositeKey` FROM `enr_specialties` WHERE `id` = {$_statement["specialty"]}") -> fetch_assoc()["compositeKey"],
+                                "level" => $database -> query("SELECT `compositeKey` FROM `enr_education_levels` WHERE `id` = {$_statement["degree"]}") -> fetch_assoc()["compositeKey"],
+                                "count" => $database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$_statement["id"]}") -> fetch_assoc()["compositeKey"],
+                                "year" => Date("Y", $_statement["timestamp"]),
+                            ];
+                            $mail -> addAddress($crypt -> decrypt($_statement["email"]));
+                            $college = json_decode(file_get_contents(__DIR__ . "/../../../../../configurations/json/about.json"));
+                            $mail -> Subject = "Подача документов в {$college -> school -> name -> short} онлайн";
+                            $body = "
+                                <h2>Подача документов в {$college -> school -> name -> short} онлайн</h2>
+                                <p>Здравствуйте, {$crypt -> decrypt($_statement["firstname"])} {$crypt -> decrypt($_statement["patronymic"])}!</p>
+                                <p>У вас изменился список прилагаемых файлов! В <a href=\"https://{$college -> address}/login\">личном кабинете</a> Вы можете ознакомиться со списком.</p>
+                                <p>Вашему личному делу был присвоен следующий номер: <b><code>{$key["count"]}-{$key["level"]}-{$key["specialty"]}/{$key["year"]} ({$_statement_id})</code></b>.</p>
+                                <p>Также, не забывайте, что зачисление в образовательное учреждение происходит при условии, что у вы подали оригинал документа об образовании.</p>
+                                <p>Если у Вас остались вопросы, то их можно задать, написав на следующий адрес электронной почты: <a href=\"mailto:{$college -> school -> enrollment -> email}\">{$college -> school -> enrollment -> email}</a>.</p>
+                                <hr>
+                                <sub>Это письмо было сгенерировано автоматически. На него не нужно отвечать!</sub>
+                            ";
+                            $mail -> Body = $body;
+                            $mail -> send();
                             echo json_encode([
                                 "status" => "OK",
                             ]);
@@ -186,30 +184,28 @@
                             $sql .= "`attachedDocs` = '{$crypt -> encrypt(json_encode($newAttachedDocs))}', `withOriginalDiploma` = " . ($_POST["checkbox-original-diploma"] == "true" ? "1" : "0");
                             $sql .= !empty($non_erased_files) ? ", `attachedDocsIds` = '{$crypt -> encrypt(json_encode($non_erased_files))}'" : "";
                             $database -> query("UPDATE `enr_statements` SET {$sql} WHERE `id` = {$_statement_id};");
-                            if (boolval($_statement["isOnline"])) {
-                                require __DIR__ . "/../../../../../configurations/email/class.php";
-                                $key = [
-                                    "specialty" => $database -> query("SELECT `compositeKey` FROM `enr_specialties` WHERE `id` = {$_statement["specialty"]}") -> fetch_assoc()["compositeKey"],
-                                    "level" => $database -> query("SELECT `compositeKey` FROM `enr_education_levels` WHERE `id` = {$_statement["degree"]}") -> fetch_assoc()["compositeKey"],
-                                    "count" => $database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$_statement["id"]}") -> fetch_assoc()["compositeKey"],
-                                    "year" => Date("Y", $_statement["timestamp"]),
-                                ];
-                                $mail -> addAddress($crypt -> decrypt($_statement["email"]));
-                                $college = json_decode(file_get_contents(__DIR__ . "/../../../../../configurations/json/about.json"));
-                                $mail -> Subject = "Подача документов в {$college -> school -> name -> short} онлайн";
-                                $body = "
-                                    <h2>Подача документов в {$college -> school -> name -> short} онлайн</h2>
-                                    <p>Здравствуйте, {$crypt -> decrypt($_statement["firstname"])} {$crypt -> decrypt($_statement["patronymic"])}!</p>
-                                    <p>У вас изменился список прилагаемых файлов! В <a href=\"https://{$college -> address}/login\">личном кабинете</a> Вы можете ознакомиться со списком.</p>
-                                    <p>Вашему личному делу был присвоен следующий номер: <b><code>{$key["count"]}-{$key["level"]}-{$key["specialty"]}/{$key["year"]} ({$_statement_id})</code></b>.</p>
-                                    <p>Также, не забывайте, что зачисление в образовательное учреждение происходит при условии, что у вы подали оригинал документа об образовании.</p>
-                                    <p>Если у Вас остались вопросы, то их можно задать, написав на следующий адрес электронной почты: <a href=\"mailto:{$college -> school -> enrollment -> email}\">{$college -> school -> enrollment -> email}</a>.</p>
-                                    <hr>
-                                    <sub>Это письмо было сгенерировано автоматически. На него не нужно отвечать!</sub>
-                                ";
-                                $mail -> Body = $body;
-                                $mail -> send();
-                            }
+                            require __DIR__ . "/../../../../../configurations/email/class.php";
+                            $key = [
+                                "specialty" => $database -> query("SELECT `compositeKey` FROM `enr_specialties` WHERE `id` = {$_statement["specialty"]}") -> fetch_assoc()["compositeKey"],
+                                "level" => $database -> query("SELECT `compositeKey` FROM `enr_education_levels` WHERE `id` = {$_statement["degree"]}") -> fetch_assoc()["compositeKey"],
+                                "count" => $database -> query("SELECT `compositeKey` FROM `enr_statements` WHERE `id` = {$_statement["id"]}") -> fetch_assoc()["compositeKey"],
+                                "year" => Date("Y", $_statement["timestamp"]),
+                            ];
+                            $mail -> addAddress($crypt -> decrypt($_statement["email"]));
+                            $college = json_decode(file_get_contents(__DIR__ . "/../../../../../configurations/json/about.json"));
+                            $mail -> Subject = "Подача документов в {$college -> school -> name -> short} онлайн";
+                            $body = "
+                                <h2>Подача документов в {$college -> school -> name -> short} онлайн</h2>
+                                <p>Здравствуйте, {$crypt -> decrypt($_statement["firstname"])} {$crypt -> decrypt($_statement["patronymic"])}!</p>
+                                <p>У вас изменился список прилагаемых файлов! В <a href=\"https://{$college -> address}/login\">личном кабинете</a> Вы можете ознакомиться со списком.</p>
+                                <p>Вашему личному делу был присвоен следующий номер: <b><code>{$key["count"]}-{$key["level"]}-{$key["specialty"]}/{$key["year"]} ({$_statement_id})</code></b>.</p>
+                                <p>Также, не забывайте, что зачисление в образовательное учреждение происходит при условии, что у вы подали оригинал документа об образовании.</p>
+                                <p>Если у Вас остались вопросы, то их можно задать, написав на следующий адрес электронной почты: <a href=\"mailto:{$college -> school -> enrollment -> email}\">{$college -> school -> enrollment -> email}</a>.</p>
+                                <hr>
+                                <sub>Это письмо было сгенерировано автоматически. На него не нужно отвечать!</sub>
+                            ";
+                            $mail -> Body = $body;
+                            $mail -> send();
                             echo json_encode([
                                 "status" => "OK",
                             ]);
