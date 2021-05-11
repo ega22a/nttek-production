@@ -21,6 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
     <link rel="stylesheet" href="/global-assets/css/styles.css?<?php echo time(); ?>">
     <link rel="icon" href="/global-assets/img/logotype.svg">
+    <!-- <script src="//code-ya.jivosite.com/widget/DPLBOeZcfx" async></script> -->
 </head>
 
 <body>

@@ -5,9 +5,281 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         <h2>Общая информация</h2>
-                        <p>Бюджетных мест для целевого приема не предусмотрено. Для иногородних студентов есть общежитие.</p>
+                        <p>Для целевого обучения бюджетных мест не предусмотрено.</p>
+                        <p>Для иногородних студентов есть общежитие. <b>Заполнение Заявления на предоставление места в общежитии не является гарантией предоставления места в общежитии!</b></p>
+                        <?php if (is_object($this -> user)) {
+                            $about = $this -> user -> getDecrypted();
+                            if (in_array(1003, $about -> levels)) { ?>
+                                <p><strong>Не знаете как попасть в личный кабинет абитуриента?</strong> В верхнем меню нажмите на пункт "Приемная комиссия", и там будет кнопка "Личный кабинет абитуриента".</p>
+                            <?php } else { ?>
+                                <p><strong>Хотите подать документы онлайн?</strong> Вы можете <a href="https://assistant.nttek.ru/modules/enrollment/submit?type=fulltime">нажать здесь для подачи документов на очную форму обучения</a> или же <a href="https://assistant.nttek.ru/modules/enrollment/submit?type=extramural">здесь, если хотите подать документы на заочную форму обучения</a>.</p>
+                            <?php }
+                        } ?>
                         <p><a href="operational-summary">Оперативная сводка на <?php echo Date("d.m.Y"); ?></a>.</p>
-                        <p><strong>Хотите подать документы онлайн?</strong> Вы можете <a href="https://assistant.nttek.ru/modules/enrollment/submit?type=fulltime">нажать здесь для подачи документов на очную форму обучения</a> или же <a href="https://assistant.nttek.ru/modules/enrollment/submit?type=extramural">здесь, если хотите подать документы на заочную форму обучения</a>.</p>
+                        <div role="tablist" id="accordion-info" class="accordion">
+                            <div class="card">
+                                <div role="tab" class="card-header">
+                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-info .item-1" href="#accordion-info .item-1">Контрольные цифры приёма на 2021 - 2022 учебный год</a></h5>
+                                </div>
+                                <div role="tabpanel" data-parent="#accordion-info" class="collapse item-1">
+                                    <div class="card-body">
+                                        <div class="table-responsive table-bordered">
+                                            <table class="table table-bordered table-sm text-center" style="margin-bottom: 0 !important;">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="align-middle">Код специальности</th>
+                                                        <th class="align-middle">Специальность</th>
+                                                        <th class="align-middle">Уровень СПО</th>
+                                                        <th class="align-middle">Источник финансирования</th>
+                                                        <th class="align-middle">Срок обучения</th>
+                                                        <th class="align-middle">План приёма</th>
+                                                        <th class="align-middle">Квалификация</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th colspan="9" class="align-middle">ОЧНОЕ ОТДЕЛЕНИЕ</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="9" class="align-middle">База 9 классов</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">40.02.01</td>
+                                                        <td class="align-middle">Право и организация социального обеспечения</td>
+                                                        <td class="align-middle">Углубленная подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">3 года 10 мес.</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">Юрист</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">09.02.07</td>
+                                                        <td class="align-middle">Информационные системы и программирование</td>
+                                                        <td class="align-middle">Базовая подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">3 года 10 мес.</td>
+                                                        <td class="align-middle">50</td>
+                                                        <td class="align-middle">Специалист по информационным системам</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">38.02.06</td>
+                                                        <td class="align-middle">Финансы</td>
+                                                        <td class="align-middle">Базовая подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">2 года 10 мес.</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">Финансист</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">38.02.04</td>
+                                                        <td class="align-middle">Коммерция (по отраслям)</td>
+                                                        <td class="align-middle">Базовая подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">2 года 10 мес.</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">Менеджер по продажам</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">38.02.01</td>
+                                                        <td class="align-middle">Экономика и бухгалтерский учет (по отраслям)</td>
+                                                        <td class="align-middle">Базовая подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">2 года 10 мес.</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">Бухгалтер</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">42.02.01</td>
+                                                        <td class="align-middle">Реклама</td>
+                                                        <td class="align-middle">Базовая подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">3 года 10 мес.</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">Специалист по рекламе</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">43.02.15</td>
+                                                        <td class="align-middle">Поварское и кондитерское дело</td>
+                                                        <td class="align-middle">Базовая подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">3 года 10 мес.</td>
+                                                        <td class="align-middle">50</td>
+                                                        <td class="align-middle">Специалист поварского и кондитерского дела</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">43.02.14</td>
+                                                        <td class="align-middle">Гостиничное дело</td>
+                                                        <td class="align-middle">Базовая подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">3 года 10 мес.</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">Специалист по гостеприимству</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="9" class="align-middle">База 11 классов</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">38.02.04</td>
+                                                        <td class="align-middle">Коммерция (по отраслям)</td>
+                                                        <td class="align-middle">Базовая подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">1 год 10 мес.</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">Менеджер по продажам</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">40.02.01</td>
+                                                        <td class="align-middle">Право и организация социального обеспечения</td>
+                                                        <td class="align-middle">Базовая подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">1 год 10 мес.</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">Юрист</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">38.02.01</td>
+                                                        <td class="align-middle">Экономика и бухгалтерский учет (по отраслям)</td>
+                                                        <td class="align-middle">Базовая подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">1 год 10 мес.</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">Бухгалтер</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="9" class="align-middle">ЗАОЧНОЕ ОТДЕЛЕНИЕ (база 11 классов)</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">38.02.04</td>
+                                                        <td class="align-middle">Коммерция (по отраслям)</td>
+                                                        <td class="align-middle">Базовая подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">2 год 10 мес.</td>
+                                                        <td class="align-middle">15</td>
+                                                        <td class="align-middle">Менеджер по продажам</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">43.02.15</td>
+                                                        <td class="align-middle">Поварское и кондитерское дело</td>
+                                                        <td class="align-middle">Базовая подготовка</td>
+                                                        <td class="align-middle">бюджет</td>
+                                                        <td class="align-middle">2 года 10 мес.</td>
+                                                        <td class="align-middle">15</td>
+                                                        <td class="align-middle">Специалист поварского и кондитерского дела</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div role="tab" class="card-header">
+                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-info .item-2" href="#accordion-info .item-2">О результатах приёма в ГАПОУ СО &quot;НТТЭК&quot; в 2020 году</a></h5>
+                                </div>
+                                <div role="tabpanel" data-parent="#accordion-info" class="collapse item-2">
+                                    <div class="card-body">
+                                        <div class="table-responsive table-bordered">
+                                            <table class="table table-bordered table-sm text-center" style="margin-bottom: 0 !important;">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="align-middle">Код специальности</th>
+                                                        <th class="align-middle">Специальность</th>
+                                                        <th class="align-middle">Кол-во мест, финансируемых за счет бюджетов РФ</th>
+                                                        <th class="align-middle">Средний балл</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th colspan="9" class="align-middle">База 9 классов</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">40.02.01</td>
+                                                        <td class="align-middle">Право и организация социального обеспечения</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">4,37</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">38.02.03</td>
+                                                        <td class="align-middle">Операционная деятельность в логистике</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">3,95</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">42.02.01</td>
+                                                        <td class="align-middle">Реклама</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">3,42</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">38.02.01</td>
+                                                        <td class="align-middle">Экономика и бухгалтерский учет (по отраслям)</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">4,22</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">38.02.06</td>
+                                                        <td class="align-middle">Финансы</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">4,29</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">09.02.07</td>
+                                                        <td class="align-middle">Информационные системы и программирование</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">4,04</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">43.02.15</td>
+                                                        <td class="align-middle">Поварское и кондитерское дело</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">3,81</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">19.02.10</td>
+                                                        <td class="align-middle">Технология продукции общественного питания</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">3,87</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">43.02.14</td>
+                                                        <td class="align-middle">Гостиничное дело</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">3,63</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">43.02.01</td>
+                                                        <td class="align-middle">Организация обслуживания в общественном питании</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">3,61</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="9" class="align-middle">База 11 классов</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">38.02.04</td>
+                                                        <td class="align-middle">Коммерция (по отраслям)</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">3,61</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">40.02.01</td>
+                                                        <td class="align-middle">Право и организация социального обеспечения</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">4,16</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="align-middle">19.02.10</td>
+                                                        <td class="align-middle">Технология продукции общественного питания</td>
+                                                        <td class="align-middle">25</td>
+                                                        <td class="align-middle">3,45</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                     <li class="list-group-item">
                         <h3>Запись на личный прием в Приемную комиссию</h3>
